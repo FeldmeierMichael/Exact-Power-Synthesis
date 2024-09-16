@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "abs.h": "c",
+        "satstore.h": "c"
+    }
+}

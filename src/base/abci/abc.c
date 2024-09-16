@@ -9795,7 +9795,7 @@ usage:
 int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
     extern void Exa_ManExactSynthesis( Bmc_EsPar_t * pPars );
-    extern void Exa_ManExactSynthesis2( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis4( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis5( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis6( Bmc_EsPar_t * pPars, char * pFileName );
@@ -9929,7 +9929,7 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
     else if ( pPars->fGlucose )
         Exa_ManExactSynthesis( pPars );
     else
-        Exa_ManExactSynthesis2( pPars );
+        Exa_ManExactPowerSynthesis2( pPars );
     return 0;
 
 usage:
