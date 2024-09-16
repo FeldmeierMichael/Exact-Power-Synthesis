@@ -1,1 +1,1 @@
-# exact_power_synthesis
+# exact power synthesis
