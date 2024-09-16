@@ -30,7 +30,8 @@ src/base/abci/abc.d src/base/abci/abc.o: src/base/abci/abc.c src/base/abc/abc.h 
  src/opt/dar/darInt.h src/opt/dar/dar.h src/proof/cec/cec.h \
  src/proof/acec/acec.h src/proof/pdr/pdr.h src/bdd/llb/llb.h \
  src/bdd/bbr/bbr.h src/map/cov/cov.h src/map/cov/covInt.h \
- src/proof/abs/abs.h src/sat/bmc/bmc.h src/proof/ssc/ssc.h \
- src/opt/sfm/sfm.h src/opt/sbd/sbd.h src/bool/rpo/rpo.h \
- src/bool/rpo/literal.h src/map/mpm/mpm.h src/opt/fret/fretime.h \
- src/opt/nwk/nwkMerge.h src/base/acb/acbPar.h src/base/abci/abciUnfold2.c
+ src/proof/abs/abs.h src/sat/bmc/bmc.h src/sat/pexact/bmc.h \
+ src/proof/ssc/ssc.h src/opt/sfm/sfm.h src/opt/sbd/sbd.h \
+ src/bool/rpo/rpo.h src/bool/rpo/literal.h src/map/mpm/mpm.h \
+ src/opt/fret/fretime.h src/opt/nwk/nwkMerge.h src/base/acb/acbPar.h \
+ src/base/abci/abciUnfold2.c

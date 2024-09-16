@@ -55,6 +55,7 @@
 #include "base/cmd/cmd.h"
 #include "proof/abs/abs.h"
 #include "sat/bmc/bmc.h"
+#include "sat/pexact/bmc.h"
 #include "proof/ssc/ssc.h"
 #include "opt/sfm/sfm.h"
 #include "opt/sbd/sbd.h"
@@ -163,6 +164,7 @@ static int Abc_CommandBmsStop                ( Abc_Frame_t * pAbc, int argc, cha
 static int Abc_CommandBmsPs                  ( Abc_Frame_t * pAbc, int argc, char ** argv );
 static int Abc_CommandMajExact               ( Abc_Frame_t * pAbc, int argc, char ** argv );
 static int Abc_CommandTwoExact               ( Abc_Frame_t * pAbc, int argc, char ** argv );
+static int Abc_CommandPowerExact               ( Abc_Frame_t * pAbc, int argc, char ** argv );
 static int Abc_CommandLutExact               ( Abc_Frame_t * pAbc, int argc, char ** argv );
 static int Abc_CommandAllExact               ( Abc_Frame_t * pAbc, int argc, char ** argv );
 static int Abc_CommandTestExact              ( Abc_Frame_t * pAbc, int argc, char ** argv );
@@ -964,6 +966,7 @@ void Abc_Init( Abc_Frame_t * pAbc )
     Cmd_CommandAdd( pAbc, "Exact synthesis", "bms_ps",     Abc_CommandBmsPs,            0 );
     Cmd_CommandAdd( pAbc, "Exact synthesis", "majexact",   Abc_CommandMajExact,         0 );
     Cmd_CommandAdd( pAbc, "Exact synthesis", "twoexact",   Abc_CommandTwoExact,         0 );
+    Cmd_CommandAdd( pAbc, "Exact synthesis", "powertwoexact",   Abc_CommandPowerExact,         0 );
     Cmd_CommandAdd( pAbc, "Exact synthesis", "lutexact",   Abc_CommandLutExact,         0 );
     Cmd_CommandAdd( pAbc, "Exact synthesis", "allexact",   Abc_CommandAllExact,         0 );
     Cmd_CommandAdd( pAbc, "Exact synthesis", "testexact",  Abc_CommandTestExact,        0 );
@@ -9620,6 +9623,176 @@ usage:
 
 ***********************************************************************/
 int Abc_CommandTwoExact( Abc_Frame_t * pAbc, int argc, char ** argv )
+{
+    extern void Exa_ManExactSynthesis( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactSynthesis2( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactSynthesis4( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactSynthesis5( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactSynthesis6( Bmc_EsPar_t * pPars, char * pFileName );
+    extern void Exa_ManExactSynthesis7( Bmc_EsPar_t * pPars, int GateSize );
+    int c, fKissat = 0, fKissat2 = 0, fUseNands = 0, GateSize = 0;
+    Bmc_EsPar_t Pars, * pPars = &Pars;
+    Bmc_EsParSetDefault( pPars );
+    Extra_UtilGetoptReset();
+    while ( ( c = Extra_UtilGetopt( argc, argv, "INTGabdconugklvh" ) ) != EOF )
+    {
+        switch ( c )
+        {
+        case 'I':
+            if ( globalUtilOptind >= argc )
+            {
+                Abc_Print( -1, "Command line switch \"-I\" should be followed by an integer.\n" );
+                goto usage;
+            }
+            pPars->nVars = atoi(argv[globalUtilOptind]);
+            globalUtilOptind++;
+            if ( pPars->nVars < 0 )
+                goto usage;
+            break;
+        case 'N':
+            if ( globalUtilOptind >= argc )
+            {
+                Abc_Print( -1, "Command line switch \"-N\" should be followed by an integer.\n" );
+                goto usage;
+            }
+            pPars->nNodes = atoi(argv[globalUtilOptind]);
+            globalUtilOptind++;
+            if ( pPars->nNodes < 0 )
+                goto usage;
+            break;
+        case 'T':
+            if ( globalUtilOptind >= argc )
+            {
+                Abc_Print( -1, "Command line switch \"-T\" should be followed by an integer.\n" );
+                goto usage;
+            }
+            pPars->RuntimeLim = atoi(argv[globalUtilOptind]);
+            globalUtilOptind++;
+            if ( pPars->RuntimeLim < 0 )
+                goto usage;
+            break;
+        case 'G':
+            if ( globalUtilOptind >= argc )
+            {
+                Abc_Print( -1, "Command line switch \"-G\" should be followed by an integer.\n" );
+                goto usage;
+            }
+            GateSize = atoi(argv[globalUtilOptind]);
+            globalUtilOptind++;
+            if ( GateSize < 0 )
+                goto usage;
+            break;            
+        case 'a':
+            pPars->fOnlyAnd ^= 1;
+            break;
+        case 'b':
+            fUseNands ^= 1;
+            break;            
+        case 'd':
+            pPars->fDynConstr ^= 1;
+            break;
+        case 'c':
+            pPars->fDumpCnf ^= 1;
+            break;
+        case 'o':
+            pPars->fFewerVars ^= 1;
+            break;
+        case 'n':
+            pPars->fOrderNodes ^= 1;
+            break;
+        case 'u':
+            pPars->fUniqFans ^= 1;
+            break;
+        case 'g':
+            pPars->fGlucose ^= 1;
+            break;
+        case 'k':
+            fKissat ^= 1;
+            break;
+        case 'l':
+            fKissat2 ^= 1;
+            break;
+        case 'v':
+            pPars->fVerbose ^= 1;
+            break;
+        case 'h':
+            goto usage;
+        default:
+            goto usage;
+        }
+    }
+    if ( argc == globalUtilOptind + 1 )
+    {
+        if ( strstr(argv[globalUtilOptind], ".") )
+        {
+            Exa_ManExactSynthesis6( pPars, argv[globalUtilOptind] );
+            return 0;
+        }
+        pPars->pTtStr = argv[globalUtilOptind];
+    }
+    if ( pPars->pTtStr == NULL )
+    {
+        Abc_Print( -1, "Truth table should be given on the command line.\n" );
+        return 1;
+    }
+    if ( pPars->nVars >= 2 && (1 << (pPars->nVars-2)) != (int)strlen(pPars->pTtStr) )
+    {
+        Abc_Print( -1, "Truth table is expected to have %d hex digits (instead of %d).\n", (1 << (pPars->nVars-2)), strlen(pPars->pTtStr) );
+        return 1;
+    }
+    if ( pPars->nVars > pPars->nNodes * (2 - 1) + 1 )
+    {
+        Abc_Print( -1, "Function with %d variales cannot be implemented with %d two-input gates.\n", pPars->nVars, pPars->nNodes );
+        return 1;
+    }
+    if ( pPars->nVars > 10 )
+    {
+        Abc_Print( -1, "Function should not have more than 10 inputs.\n" );
+        return 1;
+    }
+    if ( fUseNands )
+        Exa_ManExactSynthesis7( pPars, GateSize );
+    else if ( fKissat )
+        Exa_ManExactSynthesis4( pPars );
+    else if ( fKissat2 )
+        Exa_ManExactSynthesis5( pPars );
+    else if ( pPars->fGlucose )
+        Exa_ManExactSynthesis( pPars );
+    else
+        Exa_ManExactSynthesis2( pPars );
+    return 0;
+
+usage:
+    Abc_Print( -2, "usage: twoexact [-INTG <num>] [-abdconugklvh] <hex>\n" );
+    Abc_Print( -2, "\t           exact synthesis of multi-input function using two-input gates\n" );
+    Abc_Print( -2, "\t-I <num> : the number of input variables [default = %d]\n", pPars->nVars );
+    Abc_Print( -2, "\t-N <num> : the number of two-input nodes [default = %d]\n", pPars->nNodes );
+    Abc_Print( -2, "\t-T <num> : the runtime limit in seconds [default = %d]\n", pPars->RuntimeLim );
+    Abc_Print( -2, "\t-G <num> : the largest allowed gate size (NANDs only) [default = %d]\n", GateSize );
+    Abc_Print( -2, "\t-a       : toggle using only AND-gates (without XOR-gates) [default = %s]\n", pPars->fOnlyAnd ? "yes" : "no" );
+    Abc_Print( -2, "\t-b       : toggle using only NAND-gates [default = %s]\n", fUseNands ? "yes" : "no" );
+    Abc_Print( -2, "\t-d       : toggle using dynamic constraint addition [default = %s]\n", pPars->fDynConstr ? "yes" : "no" );
+    Abc_Print( -2, "\t-c       : toggle dumping CNF into a file [default = %s]\n", pPars->fDumpCnf ? "yes" : "no" );
+    Abc_Print( -2, "\t-o       : toggle using additional optimizations [default = %s]\n", pPars->fFewerVars ? "yes" : "no" );
+    Abc_Print( -2, "\t-n       : toggle ordering internal nodes [default = %s]\n", pPars->fOrderNodes ? "yes" : "no" );
+    Abc_Print( -2, "\t-u       : toggle using unique fanouts [default = %s]\n", pPars->fUniqFans ? "yes" : "no" );
+    Abc_Print( -2, "\t-g       : toggle using Glucose 3.0 by Gilles Audemard and Laurent Simon [default = %s]\n", pPars->fGlucose ? "yes" : "no" );
+    Abc_Print( -2, "\t-k       : toggle using Kissat by Armin Biere [default = %s]\n", fKissat ? "yes" : "no" );
+    Abc_Print( -2, "\t-l       : toggle using Kissat by Armin Biere [default = %s]\n", fKissat2 ? "yes" : "no" );
+    Abc_Print( -2, "\t-v       : toggle verbose printout [default = %s]\n", pPars->fVerbose ? "yes" : "no" );
+    Abc_Print( -2, "\t-h       : print the command usage\n" );
+    Abc_Print( -2, "\t<hex>    : truth table in hex notation\n" );
+    Abc_Print( -2, "\t           \n" );
+    Abc_Print( -2, "\t           For example, command line \"twoexact -g -I 5 -N 12 169AE443\"\n" );
+    Abc_Print( -2, "\t           synthesizes the smallest circuit composed of two-input gates\n" );
+    Abc_Print( -2, "\t           for the only NPN class of 5-input functions that requires 12 gates;\n" );
+    Abc_Print( -2, "\t           all other functions can be realized with 11 two-input gates or less\n" );
+    Abc_Print( -2, "\t           (see Section 7.1.2 \"Boolean evaluation\" in the book by Donald Knuth\n" );
+    Abc_Print( -2, "\t           http://www.cs.utsa.edu/~wagner/knuth/fasc0c.pdf)\n" );
+    return 1;
+}
+
+int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
     extern void Exa_ManExactSynthesis( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis2( Bmc_EsPar_t * pPars );
