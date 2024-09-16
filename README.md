@@ -1,0 +1,1 @@
+# exact_power_synthesis
