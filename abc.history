@@ -1,0 +1,2 @@
+source -s abc.rc
+twoexact -N 2 -I 2 5
