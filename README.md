@@ -1,3 +1,3 @@
-# exact power synthesis
+# Exact-Power-Synthesis
 
-exact synthesis algorithm to calculate network with minimized switching activity
+Exact synthesis algorithm to calculate network with minimized switching activity.
