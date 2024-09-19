@@ -326,7 +326,7 @@ static int Exa_ManAddCnf( Exa_Man_t * p, int iMint ,int iact)
     for ( i = 0; i < p->nVars; i++ )
         p->VarVals[i] = (iMint >> i) & 1;
     sat_solver_setnvars( p->pSat, p->iVar + 3*p->nNodes );
-    //printf( "Adding clauses for minterm %d with value %d.\n", iMint, Value );
+    printf( "Adding clauses for minterm %d with value %d.\n", iMint, Value );
     for ( i = p->nVars; i < p->nObjs; i++ )
     {
         // fanin connectivity
@@ -366,50 +366,47 @@ static int Exa_ManAddCnf( Exa_Man_t * p, int iMint ,int iact)
                 if ( i != p->nObjs - 1 ) pLits[nLits++] = Abc_Var2Lit( iBaseSatVarI + 2, !n );
                 if ( k > 0 )             pLits[nLits++] = Abc_Var2Lit( iVarStart +  k-1,  n );
                 assert( nLits <= 4 );
-                if ( !sat_solver_addclause( p->pSat, pLits, pLits+nLits ) )
+                if (!sat_solver_addclause(p->pSat, pLits, pLits+nLits))
                     return 0;
             }
         }
-
-
-        
+           
     }
-    ///////////Cardinality Clauses for constraining number of switches in Network
-    for ( i = p->nVars; i < p->nObjs; i++ )
-    {
-        
-        int iVarStart = 1 + 3*(i - p->nVars);
-        int iBaseSatVarI = p->iVar + 3*(i - p->nVars);
-        for ( k = 0; k < 2; k++ )
-        {
-            for ( j = 0; j < p->nObjs; j++ ) if ( p->VarMarks[i][k][j] )
-            {
-                int iBaseSatVarJ = p->iVar + 3*(j - p->nVars);
-                for ( n = 0; n < 2; n++ )
-                {
-                    int pLits[3], nLits = 0;
-                    pLits[nLits++] = Abc_Var2Lit( p->VarMarks[i][k][j], 1 );
-                    pLits[nLits++] = Abc_Var2Lit( iBaseSatVarI + k, n );
-                    if ( j >= p->nVars )
-                        pLits[nLits++] = Abc_Var2Lit( iBaseSatVarJ + 2, !n );
-                    else if ( p->VarVals[j] == n )
-                        continue;
-                    if ( !sat_solver_addclause( p->pSat, pLits, pLits+nLits ) )
-                        return 0;
-                }
-            }
-        }
-       
-        
-
-    }
-
-
-
-    ///////////
+    
     p->iVar += 3*p->nNodes;
     return 1;
 }
+int Exa_ManAddPowerClauses(Exa_Man_t * p,int iact){
+    ///////////Cardinality Clauses for constraining number of switches in Network
+    int i,t;
+    int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;  
+    int litsize=pow(2,p->nVars);      
+    int pLits[litsize]; 
+    int pLits_p[litsize/2];
+
+    
+
+    int x_it=0; 
+    int p_startvar=p->iVar;
+    sat_solver_setnvars( p->pSat, p->iVar + pow(2,p->nVars-1)); 
+    for(int p=0;p<litsize/2;p++){
+        pLits_p[p]=Abc_Var2Lit( p_startvar++ , 0); ;
+    }  
+    
+    for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++){
+        for(int m=1;m<pow(2,p->nVars);m++){ 
+            for(int t=1;t<pow(2,p->nVars);t++){
+                x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);  
+                pLits[t-1] = Abc_Var2Lit( x_it , 0);                
+            }
+            pLits[litsize-1]=pLits_p[0];
+            sat_solver_addclause( p->pSat, pLits, pLits+litsize );
+        }
+    }
+    ///////////
+}
+
+
 void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
 {
     int i, status, iMint = 1;
@@ -443,6 +440,10 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
             break;
         }
         iMint = Exa_ManEval( p );
+        if(iMint== -1){
+            Exa_ManAddPowerClauses(p,10);
+
+        }
     }
     if ( iMint == -1 )
         Exa_ManPrintSolution( p, fCompl );

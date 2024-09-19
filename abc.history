@@ -1,4 +1,10 @@
 twoexact -N 2 -I 2 5
-source -s abc.rc
 powertwoexact -help
+powertowexact -N 2 -I 2 5
+powertwowexact -N 2 -I 2 5
 powertwoexact -N 2 -I 2 5
+powertwoexact -N 2 -I 2 3
+powertwoexact -I 2 -N 2 5
+powertwoexact -N 2-I 2 5
+source -s abc.rc
+powertwoexact -N 2 -I 2  5
