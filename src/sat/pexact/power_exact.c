@@ -297,14 +297,14 @@ static inline int Exa_ManEval( Exa_Man_t * p )
 static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
 {
     int i, k, iVar;
-    printf( "Realization of given %d-input function using %d two-input gates:\n", p->nVars, p->nNodes );
+    printf( "Realization of given %d-input function using %d two-input gates complementary=%d:\n", p->nVars, p->nNodes,fCompl );
 //    for ( i = p->nVars + 2; i < p->nObjs; i++ )
     for ( i = p->nObjs - 1; i >= p->nVars; i-- )
     {
-        int iVarStart = 1 + 3*(i - p->nVars);
-        int Val1 = sat_solver_var_value(p->pSat, iVarStart);
-        int Val2 = sat_solver_var_value(p->pSat, iVarStart+1);
-        int Val3 = sat_solver_var_value(p->pSat, iVarStart+2);
+        int iVarStart = 2 + 3*(i - p->nVars);
+        int Val1 = sat_solver_var_value(p->pSat, 1);
+        int Val2 = sat_solver_var_value(p->pSat, 2);
+        int Val3 = sat_solver_var_value(p->pSat, 3);
         if ( i == p->nObjs - 1 && fCompl )
             printf( "%02d = 4\'b%d%d%d1(", i, !Val3, !Val2, !Val1 );
         else
@@ -361,6 +361,7 @@ static int Exa_ManAddCnfStart( Exa_Man_t * p, int fOnlyAnd )
             if ( k == 1 )
                 break;
             // symmetry breaking
+            
             for ( j = 0; j < p->nObjs; j++ ) if ( p->VarMarks[i][k][j] )
             for ( n = j; n < p->nObjs; n++ ) if ( p->VarMarks[i][k+1][n] )
             {
@@ -401,16 +402,24 @@ static int Exa_ManAddCnfStart( Exa_Man_t * p, int fOnlyAnd )
         }
     }
     // outputs should be used
+    printf("output used\n");
     for ( i = 0; i < p->nObjs - 1; i++ )
     {
         Vec_Int_t * vArray = Vec_WecEntry(p->vOutLits, i);
+        for (int *j = Vec_IntArray(vArray); j < Vec_IntLimit(vArray); j++)
+        {
+            printf("p_outlit i=%d:%d\n",i,*(j));
+        }
+        
+        
+        
         assert( Vec_IntSize(vArray) > 0 );
         if ( !sat_solver_addclause( p->pSat, Vec_IntArray(vArray), Vec_IntLimit(vArray) ) )
             return 0;
     }
     return 1;
 }
-static int Exa_ManAddCnf( Exa_Man_t * p, int iMint ,int iact)
+static int Exa_ManAddCnf( Exa_Man_t * p, int iMint )
 {
     // save minterm values
     int i, k, n, j, Value = Abc_TtGetBit(p->pTruth, iMint);
@@ -467,29 +476,31 @@ static int Exa_ManAddCnf( Exa_Man_t * p, int iMint ,int iact)
     p->iVar += 3*p->nNodes;
     return 1;
 }
-void Exa_ManAddPClauses(Exa_Man_t * p,int iact){
-   
+void Exa_ManAddPClauses(Exa_Man_t * p){
+    printf("adding P Clause\n");
     int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;  
-    int litsize=pow(2,p->nVars);      
+    int litsize=pow(2,p->nVars); 
+    int n_combs=pow(2,pow(2,p->nVars)-1);
+    int n_p=pow(2,p->nVars-1);      
     int pLits[litsize]; 
-    int pLits_p[litsize/2];
+    int pLits_p[litsize];
 
     int x_it=0; 
     for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++){
-        
         int p_startvar=p->iVar;
-        p->iVar+=litsize-1;
-        sat_solver_setnvars( p->pSat, p->iVar + pow(2,p->nVars-1)); 
-        for(int p=0;p<litsize/2;p++){
+        p->iVar+=n_p;
+        printf("adding power CLauses for i:%d\n",i);
+        sat_solver_setnvars( p->pSat, p->iVar + n_p); 
+        for(int p=0;p<n_p;p++){
                 pLits_p[p]=Abc_Var2Lit( p_startvar++ , 0);
         }  
 
-        for(int m=1;m<pow(2,p->nVars);m++){ 
+        for(int m=1;m<n_combs;m++){ 
             for(int t=1;t<pow(2,p->nVars);t++){
                 x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);  
                 pLits[t-1] = Abc_Var2Lit( x_it , value_of_nthbit(m, t-1));                
             }
-            pLits[litsize-1]=pLits_p[amound_of_1s(m)-1];
+            pLits[litsize-1]=pLits_p[amound_of_1s(m,litsize-1)-1];
             sat_solver_addclause( p->pSat, pLits, pLits+litsize );
         }
     }
@@ -580,11 +591,14 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
     status = Exa_ManAddCnfStart( p, pPars->fOnlyAnd );
     assert( status );
     printf( "Running exact synthesis for %d-input function with %d two-input gates...\n", p->nVars, p->nNodes );
-    for ( i = 0; iMint != -1; i++ )
+    for ( iMint = 1; iMint <pow(2,p->nVars); iMint++ )
     {
         abctime clk = Abc_Clock();
-        if ( !Exa_ManAddCnf( p, iMint,0 ) )
+        if ( !Exa_ManAddCnf( p, iMint)){
+            printf( "The problem has no solution.\n" );
+            iMint=0;
             break;
+        }
         status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
         if ( pPars->fVerbose )
         {
@@ -598,15 +612,18 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
         if ( status == l_False )
         {
             printf( "The problem has no solution.\n" );
+            Exa_ManAddPClauses(p);
+            iMint=0;
             break;
         }
-        iMint = Exa_ManEval( p );
+        /*iMint = Exa_ManEval( p );
         if(iMint== -1){
             Exa_ManAddPClauses(p);
             
-        }
+        }*/
     }
-    if ( iMint == -1 )
+    Exa_ManAddPClauses(p);
+    if ( iMint != 0 )    
         Exa_ManPrintSolution( p, fCompl );
     Exa_ManFree( p );
     Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
@@ -658,13 +675,15 @@ void Exa_ManExactPowerSynthesis_actual( Bmc_EsPar_t * pPars )
         
 }
 
-int amound_of_1s(int value){
-    int ret=0;
-    while(value>0){
-        ret+=value&1;
+int amound_of_1s(int value,int len){
+    int ret_1=0;
+    int ret_0=1;
+    for(int i=0;i<len;i++){
+        ret_1+=value&1;
+        ret_0+=!(value&1);
         value>>=1;
     }
-    return ret;
+    return ret_0>=ret_1 ? ret_1 : ret_0;
 }
 
 int value_of_nthbit(int value, int n){
