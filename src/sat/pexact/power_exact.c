@@ -69,19 +69,26 @@ typedef struct comb_list_ comb_list;
 struct comb_list_
 {
     comb* start;
-    int k;
+    int len;
+    int length;
     
 };
 
 void add_combi(int act,int r,int* combi,comb_list* list){
-    int k=list->k;
+    
+    int len=list->len;
     comb* node=(comb*) malloc(sizeof(comb));
     node->act=act;
     node->r=r;
-    node->combi=combi;
-
+    
+    
+    node->combi=(int*) malloc(len*sizeof(int));
+    for(int i=0;i<len;i++){
+        *(node->combi+i)=*(combi+i);
+    }
+   
     comb *ptr=list->start;
-    if (ptr==NULL)
+    if (list->length==0)
     {
         list->start=node;
     }
@@ -91,36 +98,46 @@ void add_combi(int act,int r,int* combi,comb_list* list){
             node->next=ptr;
 
         }
-        else{
-        while (ptr->next!=NULL)
+        else
         {
-        
-        if(((ptr->act < act)&&(ptr->next->act>act)) || (((ptr->act== act)&&(r > ptr->r))&&(ptr->next->act > act))||((ptr->act== act)&&(ptr->next->act== act)&&(r > ptr->r)&&(r < ptr->next->r))){
-            break;
+            for(int l=0;l<list->length-1;l++)
+            {
+                if(((ptr->act <= act)&&(ptr->next->act>act)) ||
+                  
+                  
+                  ((ptr->act== act)&&(ptr->next->act== act)&&(r >= ptr->r)&&(r <= ptr->next->r)))
+                 {
+                    node->next=ptr->next;
+                    break;
+                }
+                ptr=ptr->next;
+            }
+            ptr->next=node;
         }
-        ptr=ptr->next;
-        }
-        comb* tmp=ptr->next;
-        ptr->next=node;
-        node->next=tmp;
-
     }
-    }
+    list->length++;
 }
-void pop_comb(comb_list* list,int act, comb * node){
-    
-        comb* ret=list->start;
+comb* pop_comb(comb_list* list,int act){
+        list->length--;
+        comb* node=list->start;
         list->start=list->start->next;
-        node=ret;
+        return node;
+        
     
 }
 
 void print_combi_list(comb_list* list){
+    printf("List length:%d len:%d\n",list->length,list->len);
     comb* ptr=list->start;
-    if(ptr!=NULL){
-        while (ptr->next!=NULL)
+    if(list->length>0){
+        while (ptr!=NULL)
         {
-            printf("r=%d,act=%d\n",ptr->r,ptr->act);
+            printf("r=%d,act=%d combi:",ptr->r,ptr->act);
+            for (int i = 0; i < list->len; i++)
+            {
+                printf("%d;",*(ptr->combi+i));
+            }
+            printf("\n");
             ptr=ptr->next;
         }
         
@@ -450,9 +467,8 @@ static int Exa_ManAddCnf( Exa_Man_t * p, int iMint ,int iact)
     p->iVar += 3*p->nNodes;
     return 1;
 }
-void Exa_ManAddPowerClauses(Exa_Man_t * p,int iact){
-    ///////////Cardinality Clauses for constraining number of switches in Network
-    int i,t;
+void Exa_ManAddPClauses(Exa_Man_t * p,int iact){
+   
     int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;  
     int litsize=pow(2,p->nVars);      
     int pLits[litsize]; 
@@ -477,7 +493,7 @@ void Exa_ManAddPowerClauses(Exa_Man_t * p,int iact){
             sat_solver_addclause( p->pSat, pLits, pLits+litsize );
         }
     }
-    ///////////
+    
 }
 
 void convert_base_int(int base,int value,int size,int* results){
@@ -497,7 +513,7 @@ void convert_base_int(int base,int value,int size,int* results){
 void calculate_comb_array(int k,int r,comb_list* list){
     
     int size=pow(r+1,pow(2,k-1));
-    int array[size];
+    
     int size_single=pow(2,k-1);
     int array_single[size_single];
    
@@ -506,7 +522,7 @@ void calculate_comb_array(int k,int r,comb_list* list){
         //printf("for i=%d:%d\n",i,array_single[i]);
     }
     for(int i=0;i<size;i++){
-       
+      // printf("i:%d\n",i);
        int res[size_single];
        convert_base_int(r+1,i,size_single,res);
        int sum=0;
@@ -515,18 +531,18 @@ void calculate_comb_array(int k,int r,comb_list* list){
        {
         sum+=*(res+j);
         sum_act+=array_single[j]*(*(res+j));
-        
-       }
+        }
        
        if(sum == r){
-            /*for (int j = size_single-1; j >= 0; j--)
+        /*
+            for (int j = size_single-1; j >= 0; j--)
             {
-                printf("%d",*(res+j));
+                printf("%d;",*(res+j));
             }
             printf("->sum: %d\n",sum_act);
             printf("\n");*/
 
-            add_combi(sum_act,r,res,list);
+           add_combi(sum_act,r,res,list);
        }
        
        
@@ -586,34 +602,7 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
         }
         iMint = Exa_ManEval( p );
         if(iMint== -1){
-            
-            
-            Exa_ManAddPowerClauses(p,10);
-            comb_list* list=(comb_list*) malloc(sizeof(comb_list));
-            list->k=p->nVars;
-            int r=0;
-            for (size_t act = 0; act < 100; act++)
-            {
-                if(act >= calc_min_act(r+1,p->nVars)){
-                    printf("act:%d size %d added\n",act,r+1);
-                    r++;
-                    calculate_comb_array(p->nVars,r,list);
-                }
-                comb *node;
-                if(r>0){
-                    printf("%d",list->start->act);
-                    if(list->start->act==act){
-                        pop_comb(list,act,node);
-                        for (size_t i = 0; i < 2; i++)
-                        {
-                            printf("%d",(node->act));
-                        }
-                        printf("\n");
-                        
-                    }
-                }
-            }
-            print_combi_list(list);
+            Exa_ManAddPClauses(p);
             
         }
     }
@@ -621,6 +610,52 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
         Exa_ManPrintSolution( p, fCompl );
     Exa_ManFree( p );
     Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
+}
+
+void Exa_ManExactPowerSynthesis_actual( Bmc_EsPar_t * pPars )
+{           
+        int i, status, iMint = 1;
+        abctime clkTotal = Abc_Clock();
+        Exa_Man_t * p; int fCompl = 0;
+        word pTruth[16]; Abc_TtReadHex( pTruth, pPars->pTtStr );
+        assert( pPars->nVars <= 10 );
+        p = Exa_ManAlloc( pPars, pTruth );
+        if ( pTruth[0] & 1 ) { fCompl = 1; Abc_TtNot( pTruth, p->nWords ); }
+        status = Exa_ManAddCnfStart( p, pPars->fOnlyAnd );
+        assert( status );
+            comb_list* list=(comb_list*) malloc(sizeof(comb_list));
+            list->len=pow(2,p->nVars-1);
+            list->length=0;
+            int r=0;
+            int act=0;
+            
+            while (1)
+            {
+                printf("act:%d\n",act);
+                if(act >= calc_max_act(r+1,p->nVars)){
+                    printf("act:%d size %d added\n",act,r+1);
+                    r++;
+                    calculate_comb_array(p->nVars,r,list);
+                }
+                if(list->length >0){
+                    if(list->start->act==act){
+                            comb* node=pop_comb(list,act);
+                            printf("act:%d,r:%d consumerd combi:",(node->act),node->r);
+                            for (int im = 0; im < list->len; im++)
+                            {
+                                printf("%d;",*(node->combi+im));
+                            }
+                            printf("\n");
+                            continue;;
+                    }
+                }
+                act++;
+                if(act>100)
+                    break;
+            }
+            print_combi_list(list);
+            
+        
 }
 
 int amound_of_1s(int value){

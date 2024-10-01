@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "abs.h": "c",
-        "satstore.h": "c"
+        "satstore.h": "c",
+        "string_view": "c"
     }
 }

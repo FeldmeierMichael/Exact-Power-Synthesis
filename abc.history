@@ -24,6 +24,32 @@ powertwoexact -N 2 -I 3 5
 powertwoexact -N 2 -I 3 10
 powertwoexact -N 3 -I 3 10
 powertwoexact -N 7 -I 3 10
+powertwoexact -N 2-I 2 5
+powertwoeact -N 2 -I 2  5
 powertwoexact -N 2 -I 2  5
-source -s abc.rc
+powertwoexact -N 2 -I 3  50
+powertwoexact -N 2 -I 3  10
+powertwoexact -N 2 -I 3 5
+powertwoexact -N 2 -I 2 5
 powertwoexact -N 2 -I  2 5
+powertwoexact -N 2 -I  3 10
+powertwoexact -N 2 -I 2 3
+powertwoexact -N 2 -I 3 1-
+powertwoexact -N 2 -I 3 100
+powertwoexact -N 2 -I 3 10
+powertwoexact -N 2 -I 4 100
+powertwoexact -N 2 -I 4 1000
+powertwoexact -N 5 -I 4 1000
+powertwoexact -N 5 -I 4 1005
+powertwoexact -N 5 -I 5 10005
+powertwoexact -N 5 -I 5 11111111
+powertwoexact -N 2 -I  2 5
+source -s abc.rc
+powertwoexact -N 2 -I 2 5
+powertwoexact -N 1 -I 2 3
+powertwoexact -N 1 -I 2 4
+powertwoexact -N 1 -I 2 5
+powertwoexact -N 1 -I 2 6
+powertwoexact -N 1 -I 2 1
+powertwoexact -N 1 -I 2 2
+powertwoexact -N 1 -I 2 0
