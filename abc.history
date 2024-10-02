@@ -107,8 +107,9 @@ powertwoexact -N 1 -I 2 6
 powertwoexact -N 1 -I 2 7
 powertwoexact -N 1 -I 2 8
 powertwoexact -N 1 -I 2 9
-source -s abc.rc
 powertwoexact -N 1 -I 2 1
 powertwoexact -N 2 -I 2 1
 powertwoexact -N 3 -I 2 1
 powertwoexact -N 2 -I 3 10
+source -s abc.rc
+powertwoexact -N 2 -I 2 5

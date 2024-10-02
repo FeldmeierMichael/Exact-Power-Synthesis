@@ -504,8 +504,15 @@ void Exa_ManAddPClauses(Exa_Man_t * p){
             sat_solver_addclause( p->pSat, pLits, pLits+litsize );
         }
     }
+}
+
+void Exa_ManAddCardinality_P(Exa_Man_t * p){
+
+
     
 }
+
+
 
 void convert_base_int(int base,int value,int size,int* results){
     
