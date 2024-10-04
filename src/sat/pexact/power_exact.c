@@ -47,6 +47,7 @@ struct Exa_Man_t_
     int               nObjs;     // total objects (nVars inputs + nNodes internal nodes)
     int               nWords;    // the truth table size in 64-bit words
     int               iVar;      // the next available SAT variable
+    int               i_p;       //start of p variables
     word *            pTruth;    // truth table
     Vec_Wrd_t *       vInfo;     // nVars + nNodes + 1
     int               VarMarks[MAJ_NOBJS][2][MAJ_NOBJS]; // variable marks
@@ -217,6 +218,7 @@ static Exa_Man_t * Exa_ManAlloc( Bmc_EsPar_t * pPars, word * pTruth )
     p->nObjs      = pPars->nVars + pPars->nNodes;
     p->nWords     = Abc_TtWordNum(pPars->nVars);
     p->pTruth     = pTruth;
+    p->i_p        =0;
     p->vOutLits   = Vec_WecStart( p->nObjs );
     p->iVar       = Exa_ManMarkup( p );
     p->vInfo      = Exa_ManTruthTables( p );
@@ -486,6 +488,7 @@ void Exa_ManAddPClauses(Exa_Man_t * p){
     int pLits_p[litsize];
 
     int x_it=0; 
+    p->i_p=p->iVar;
     for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++){
         int p_startvar=p->iVar;
         p->iVar+=n_p;
@@ -506,10 +509,59 @@ void Exa_ManAddPClauses(Exa_Man_t * p){
     }
 }
 
-void Exa_ManAddCardinality_P(Exa_Man_t * p){
+
+void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
+    int n_p = pow(2,p->nVars-1);
+    for(int pi=0;p<n_p;pi++){
+    int pLits[n_p];
+    int lit=0;
+    int l=*(combi+pi);        
+    //less then l    
+    int j=l+1;
+    for (int i = 0; i < pow(2,n_p); i++)
+    {
+        int res[n_p];
+        convert_base_int(2,i,n_p,res);
+        int sum=0;
+        for (int l = 0; l < n_p; l++)
+        {
+            sum+=*(res+l);
+        }
+        if(sum==j){
+            for (int l = 0; l < n_p; l++){
+                    if(*(res+l)==1){
+                        printf("%d,",l+1);
+                        pLits[lit++]=Abc_Var2Lit(p->i_p+pi,0);
+                    }
+            }
+        sat_solver_addclause(p->pSat,pLits,pLits+lit);
+        printf("less then\n");        
+        }       
+    }
+
+    //more then l    
+    j=n_p-l+1;
+    for (int i = 0; i < pow(2,n_p); i++)
+    {
+        int res[n_p];
+        convert_base_int(2,i,n_p,res);
+        int sum=0;
+        for (int l = 0; l < n_p; l++)
+        {
+            sum+=*(res+l);
+        }
+        if(sum==j){
+            for (int l = 0; l < n_p; l++){
+                    if(*(res+l)==1){
+                        printf("%d,",l+1);
+                    }
+            }
+        printf("more then\n");        
+        }       
+    }
+} 
 
 
-    
 }
 
 
@@ -619,7 +671,8 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
         if ( status == l_False )
         {
             printf( "The problem has no solution.\n" );
-            Exa_ManAddPClauses(p);
+            
+            
             iMint=0;
             break;
         }
@@ -630,6 +683,8 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
         }*/
     }
     Exa_ManAddPClauses(p);
+    int combi=1;
+    Exa_ManAddCardinality_P(p,&combi);
     if ( iMint != 0 )    
         Exa_ManPrintSolution( p, fCompl );
     Exa_ManFree( p );
@@ -674,7 +729,7 @@ void Exa_ManExactPowerSynthesis_actual( Bmc_EsPar_t * pPars )
                     }
                 }
                 act++;
-                if(act>100)
+                if(act>100);
                     break;
             }
             print_combi_list(list);
