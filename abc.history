@@ -128,10 +128,18 @@ powertwoeexact -N 2 -I 3 10
 powertwoexact -N 2 -I  3 10
 powertwoexact -N 2 -I 2 5
 make
-powertwoexact -N 3 -I 2 5
 powertwoexact -N 4 -I 2 5
 powertwoexact -N 5 -I 2 5
 powertwoexact -N 2 -I 3 5
 powertwoexact -N 3 -I 2 5 
-source -s abc.rc
 powertwoexact -N 3 -I 2 4
+powertwoexact -N 3 -I 2 5
+powertwoexact -N 3 -I 2 6
+powertwoexact -N 3 -I 2 7
+powertwoexact -N 3 -I 2 8
+powertwoexact -N 3 -I 2 9
+powertwoexact -N 3 -I 2 1
+powertwoexact -N 3 -I 2 2
+powertwoexact -N 3 -I 2 3
+source -s abc.rc
+powertwoexact -N 2 -I 2 5

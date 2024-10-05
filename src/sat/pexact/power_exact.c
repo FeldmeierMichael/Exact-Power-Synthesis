@@ -336,7 +336,7 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
     for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++)
     {
         printf("i=%d:",i);
-        for (int t = 0; t < pow(2,p->nVars); t++)
+        for (int t = 0; t < pow(2,p->nVars)-1; t++)
         {
             x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);
             printf("%d",sat_solver_var_value(p->pSat,x_it)); 
@@ -765,12 +765,11 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
     }
     Exa_ManAddPClauses(p);
     int combi[2];
-    combi[0]=1;
+    combi[0]=0;
     combi[1]=1;    
     Exa_ManAddCardinality_P(p,&combi);
     status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
-    if ( status == l_False )
-        printf("no solution");
+    printf("solution: %d \n",status);
     if ( iMint != 0 )    
         Exa_ManPrintSolution( p, fCompl );
     Exa_ManFree( p );
