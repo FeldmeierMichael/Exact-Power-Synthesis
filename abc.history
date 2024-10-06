@@ -141,5 +141,15 @@ powertwoexact -N 3 -I 2 9
 powertwoexact -N 3 -I 2 1
 powertwoexact -N 3 -I 2 2
 powertwoexact -N 3 -I 2 3
+powertwoexact -N 2 -I 2 6
+powertwoexact -N 2 -I 2 7
+powertwoexact -N 2 -I 2 8
+twoexact -N 2 -I 2 5
+twoexact -N 2 -I 2 1
 source -s abc.rc
+powertwoexact -N 2 -I 2 1
+powertwoexact -N 2 -I 2 2
+powertwoexact -N 2 -I 2 3
+powertwoexact -N 2 -I 2 4
 powertwoexact -N 2 -I 2 5
+powertwoexact -N 2 -I 2 6

@@ -303,7 +303,7 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
 //    for ( i = p->nVars + 2; i < p->nObjs; i++ )
     for ( i = p->nObjs - 1; i >= p->nVars; i-- )
     {
-        int iVarStart = 2 + 3*(i - p->nVars);
+        int iVarStart = 1 + 3*(i - p->nVars);
         int Val1 = sat_solver_var_value(p->pSat, 1);
         int Val2 = sat_solver_var_value(p->pSat, 2);
         int Val3 = sat_solver_var_value(p->pSat, 3);
@@ -430,17 +430,10 @@ static int Exa_ManAddCnfStart( Exa_Man_t * p, int fOnlyAnd )
         }
     }
     // outputs should be used
-    printf("output used\n");
     for ( i = 0; i < p->nObjs - 1; i++ )
     {
         Vec_Int_t * vArray = Vec_WecEntry(p->vOutLits, i);
-        for (int *j = Vec_IntArray(vArray); j < Vec_IntLimit(vArray); j++)
-        {
-            printf("p_outlit i=%d:%d\n",i,*(j));
-        }
-        
-        
-        
+               
         assert( Vec_IntSize(vArray) > 0 );
         if ( !sat_solver_addclause( p->pSat, Vec_IntArray(vArray), Vec_IntLimit(vArray) ) )
             return 0;
@@ -611,7 +604,7 @@ void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
                 }
             //printf("\n");
             sat_solver_addclause(p->pSat,pLits,pLits+lit);
-            printf("less then\n");        
+             
             }       
         }
         
@@ -631,13 +624,12 @@ void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
                 lit=0;
                 for (int l = 0; l < n_i; l++){
                         if(*(res+l)==1){
-                            //printf("%d,",l+1);
                             pLits[lit++]=Abc_Var2Lit(p->i_p+l*n_p+pi,0);
                         }
                 }
-            //printf("\n");
+            
             sat_solver_addclause(p->pSat,pLits,pLits+lit);
-            printf("more then\n");        
+                   
             }       
     }
 } 
@@ -719,7 +711,7 @@ int calc_min_act(int r,int k){
     return ret;
 }
 
-void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
+/*void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
 {
     int i, status, iMint = 1;
     abctime clkTotal = Abc_Clock();
@@ -752,16 +744,10 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
         if ( status == l_False )
         {
             printf( "The problem has no solution.\n" );
-            
-            
             iMint=0;
             break;
         }
-        /*iMint = Exa_ManEval( p );
-        if(iMint== -1){
-            Exa_ManAddPClauses(p);
-            
-        }*/
+       
     }
     Exa_ManAddPClauses(p);
     int combi[2];
@@ -774,9 +760,9 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
         Exa_ManPrintSolution( p, fCompl );
     Exa_ManFree( p );
     Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
-}
+}*/
 
-void Exa_ManExactPowerSynthesis_actual( Bmc_EsPar_t * pPars )
+void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
 {           
         int i, status, iMint = 1;
         abctime clkTotal = Abc_Clock();
@@ -784,40 +770,68 @@ void Exa_ManExactPowerSynthesis_actual( Bmc_EsPar_t * pPars )
         word pTruth[16]; Abc_TtReadHex( pTruth, pPars->pTtStr );
         assert( pPars->nVars <= 10 );
         p = Exa_ManAlloc( pPars, pTruth );
-        if ( pTruth[0] & 1 ) { fCompl = 1; Abc_TtNot( pTruth, p->nWords ); }
-        status = Exa_ManAddCnfStart( p, pPars->fOnlyAnd );
-        assert( status );
-            comb_list* list=(comb_list*) malloc(sizeof(comb_list));
-            list->len=pow(2,p->nVars-1);
-            list->length=0;
-            int r=0;
-            int act=0;
-            
-            while (1)
+        if ( pTruth[0] & 1 ) { fCompl = 1; Abc_TtNot( pTruth, p->nWords );}            
+        comb_list* list=(comb_list*) malloc(sizeof(comb_list));
+        list->len=pow(2,p->nVars-1);
+        list->length=0;
+        int r=0; 
+        int act=0;
+        while (1)
             {
-                printf("act:%d\n",act);
+                
                 if(act >= calc_max_act(r+1,p->nVars)){
-                    printf("act:%d size %d added\n",act,r+1);
+                    printf("######ACT:%d -> R= %d ADDED\n",act,r+1);
                     r++;
                     calculate_comb_array(p->nVars,r,list);
+                    
+
                 }
                 if(list->length >0){
                     if(list->start->act==act){
                             comb* node=pop_comb(list,act);
-                            printf("act:%d,r:%d consumerd combi:",(node->act),node->r);
+                            printf("###ACT:%d,r:%d CONSUMED COMBINATION:",(node->act),node->r);
                             for (int im = 0; im < list->len; im++)
                             {
-                                printf("%d;",*(node->combi+im));
+                                printf("%d,",*(node->combi+im));
                             }
                             printf("\n");
-                            continue;;
+                            ////////////////////////////////////////////////////programm sat solver
+                            Exa_ManFree( p );
+                            p = Exa_ManAlloc( pPars, pTruth );
+                            p->nNodes=node->r+1;
+                            status = Exa_ManAddCnfStart( p, pPars->fOnlyAnd);
+                            assert( status );
+                            for ( iMint = 1; iMint <pow(2,p->nVars); iMint++ )
+                            {
+                                abctime clk = Abc_Clock();
+                                if ( !Exa_ManAddCnf( p, iMint)){
+                                    printf( "The problem has no solution.\n" );
+                                    iMint=0;
+                                    break;
+                                }           
+                            }
+                            Exa_ManAddPClauses(p);
+                            Exa_ManAddCardinality_P(p,node->combi);
+                                status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
+                                printf("solution: %d \n",status);
+                                if ( status == 1 ){
+                                    Exa_ManPrintSolution( p, fCompl );
+                                    Exa_ManFree( p );
+                                    Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
+                                    break;
+
+                                }    
+                                    
+                            ////////////////////////////////////////////////////
+
+                            continue;
                     }
                 }
                 act++;
-                if(act>100);
+                if(act>40)
                     break;
             }
-            print_combi_list(list);
+            //print_combi_list(list);
             
         
 }
