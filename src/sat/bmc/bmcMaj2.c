@@ -703,6 +703,19 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
         }
         printf( " )\n" );
     }
+    printf("Printing overall Truth Table...\n");
+    int x_it;
+    int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;
+    for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++)
+    {
+        printf("i=%d:0",i-1);
+        for (int t = 1; t < pow(2,p->nVars); t++)
+        {
+            x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);
+            printf("%d",sat_solver_var_value(p->pSat,x_it)); 
+        }
+        printf("\n");
+    }
 }
 
 
@@ -801,7 +814,7 @@ static int Exa_ManAddCnf( Exa_Man_t * p, int iMint )
     for ( i = 0; i < p->nVars; i++ )
         p->VarVals[i] = (iMint >> i) & 1;
     sat_solver_setnvars( p->pSat, p->iVar + 3*p->nNodes );
-    //printf( "Adding clauses for minterm %d with value %d.\n", iMint, Value );
+    printf( "Adding clauses for minterm %d with value %d.\n", iMint, Value );
     for ( i = p->nVars; i < p->nObjs; i++ )
     {
         // fanin connectivity

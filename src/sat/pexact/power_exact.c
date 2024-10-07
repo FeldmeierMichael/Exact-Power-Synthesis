@@ -304,9 +304,9 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
     for ( i = p->nObjs - 1; i >= p->nVars; i-- )
     {
         int iVarStart = 1 + 3*(i - p->nVars);
-        int Val1 = sat_solver_var_value(p->pSat, 1);
-        int Val2 = sat_solver_var_value(p->pSat, 2);
-        int Val3 = sat_solver_var_value(p->pSat, 3);
+        int Val1 = sat_solver_var_value(p->pSat, iVarStart);
+        int Val2 = sat_solver_var_value(p->pSat, iVarStart+1);
+        int Val3 = sat_solver_var_value(p->pSat, iVarStart+2);
         if ( i == p->nObjs - 1 && fCompl )
             printf( "%02d = 4\'b%d%d%d1(", i, !Val3, !Val2, !Val1 );
         else
@@ -335,8 +335,8 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
     int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;
     for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++)
     {
-        printf("i=%d:",i);
-        for (int t = 0; t < pow(2,p->nVars)-1; t++)
+        printf("i=%d:0",i-1);
+        for (int t = 1; t < pow(2,p->nVars); t++)
         {
             x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);
             printf("%d",sat_solver_var_value(p->pSat,x_it)); 
@@ -710,8 +710,8 @@ int calc_min_act(int r,int k){
     int ret=(int)(((pow(2,2*k)-pow(2,2*k-1)))*r);
     return ret;
 }
-
-/*void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
+/*
+void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
 {
     int i, status, iMint = 1;
     abctime clkTotal = Abc_Clock();
@@ -753,7 +753,7 @@ int calc_min_act(int r,int k){
     int combi[2];
     combi[0]=0;
     combi[1]=1;    
-    Exa_ManAddCardinality_P(p,&combi);
+    //Exa_ManAddCardinality_P(p,&combi);
     status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
     printf("solution: %d \n",status);
     if ( iMint != 0 )    
@@ -761,6 +761,7 @@ int calc_min_act(int r,int k){
     Exa_ManFree( p );
     Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
 }*/
+
 
 void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
 {           
@@ -783,8 +784,6 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
                     printf("######ACT:%d -> R= %d ADDED\n",act,r+1);
                     r++;
                     calculate_comb_array(p->nVars,r,list);
-                    
-
                 }
                 if(list->length >0){
                     if(list->start->act==act){
@@ -797,8 +796,8 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
                             printf("\n");
                             ////////////////////////////////////////////////////programm sat solver
                             Exa_ManFree( p );
+                            pPars->nNodes=node->r+1;
                             p = Exa_ManAlloc( pPars, pTruth );
-                            p->nNodes=node->r+1;
                             status = Exa_ManAddCnfStart( p, pPars->fOnlyAnd);
                             assert( status );
                             for ( iMint = 1; iMint <pow(2,p->nVars); iMint++ )
@@ -806,12 +805,11 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
                                 abctime clk = Abc_Clock();
                                 if ( !Exa_ManAddCnf( p, iMint)){
                                     printf( "The problem has no solution.\n" );
-                                    iMint=0;
                                     break;
                                 }           
                             }
                             Exa_ManAddPClauses(p);
-                            Exa_ManAddCardinality_P(p,node->combi);
+                            Exa_ManAddCardinality_P(p,node->combi);                          
                                 status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
                                 printf("solution: %d \n",status);
                                 if ( status == 1 ){
@@ -828,7 +826,7 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
                     }
                 }
                 act++;
-                if(act>40)
+                if(act>200)
                     break;
             }
             //print_combi_list(list);

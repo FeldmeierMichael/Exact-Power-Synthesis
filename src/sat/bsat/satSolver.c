@@ -1737,7 +1737,7 @@ int sat_solver_addclause(sat_solver* s, lit* begin, lit* end)
     int maxvar;
     lit last;
     assert( begin < end );
-    if ( 0 )
+    if (0)
     {
         for ( i = begin; i < end; i++ )
             printf( "%s%d ", (*i)&1 ? "!":"", (*i)>>1 );
