@@ -704,18 +704,7 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
         printf( " )\n" );
     }
     printf("Printing overall Truth Table...\n");
-    int x_it;
-    int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;
-    for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++)
-    {
-        printf("i=%d:0",i-1);
-        for (int t = 1; t < pow(2,p->nVars); t++)
-        {
-            x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);
-            printf("%d",sat_solver_var_value(p->pSat,x_it)); 
-        }
-        printf("\n");
-    }
+    
 }
 
 

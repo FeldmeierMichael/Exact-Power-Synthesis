@@ -826,7 +826,7 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
                     }
                 }
                 act++;
-                if(act>200)
+                if(act>2000)
                     break;
             }
             //print_combi_list(list);

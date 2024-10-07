@@ -167,11 +167,24 @@ powertwoexact -N 2 -I 2 7
 powertwoexact -N 2 -I 2 8
 powertwoexact -N 2 -I 2 9
 twoexact -N 2 -I 3 10
-source -s abc.rc
-powertwoexact -N 2 -I 3 10
-powertwoexact -N 2 -I 3 11
-powertwoexact -N 2 -I 3 12
 powertwoexact -N 2 -I 3 13
 powertwoexact -N 2 -I 3 14
 powertwoexact -N 2 -I 3 15
 powertwoexact -N 2 -I 3 16
+twoexact -N 2 -I 2 10
+source -s abc.rc
+powertwoexact -N 2 -I 3 10
+powertwoexact -N 2 -I 3 11
+powertwoexact -N 2 -I 3 12
+twoexact -N 2 -I 3 12
+twoexact -N 2 -I 3 13
+twoexact -N 2 -I 3 14
+twoexact -N 2 -I 3 15
+twoexact -N 2 -I 3 16
+twoexact -N 3 -I 3 16
+twoexact -N 4 -I 3 16
+twoexact -N 4 -I 3 17
+twoexact -N 4 -I 3 18
+twoexact -N 3 -I 3 18
+twoexact -N 4 -I 4 1811
+twoexact -N 4 -I 4 1800
