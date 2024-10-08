@@ -703,7 +703,93 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
         }
         printf( " )\n" );
     }
+
+
     printf("Printing overall Truth Table...\n");
+    int len=(p->nObjs)*(pow(2,p->nVars));
+    int x_it[len];
+   
+    for (int i = 0; i < p->nVars; i++)
+    {
+        for (int t = 0; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            x_it[index] = value_of_nthbit(t,i);
+        }
+    }
+    
+    for(int i=p->nVars;i<p->nVars+p->nNodes;i++)
+    {
+
+        int i0 = Exa_ManFindFanin( p, i, 0);
+        int i1 = Exa_ManFindFanin( p, i, 1);
+        int index=i*(pow(2,p->nVars));
+        x_it[index]=0;
+        int iVarStart = 1 + 3*(i - p->nVars);
+        int f_out[4];
+        f_out[0]=0;
+        f_out[1] =sat_solver_var_value(p->pSat, iVarStart);
+        f_out[2] =sat_solver_var_value(p->pSat, iVarStart+1);
+        f_out[3] =sat_solver_var_value(p->pSat, iVarStart+2);
+        for (int t = 1; t < pow(2,p->nVars); t++)
+        {
+            int index_0=i0*(pow(2,p->nVars))+t;
+            int index_1=i1*(pow(2,p->nVars))+t;
+            int index=(x_it[index_1]<<1)+(x_it[index_0]);
+            //printf("%d",f_out[index]);
+            int index_it=i*(pow(2,p->nVars))+t;
+            x_it[index_it] = f_out[index];           
+        }
+        
+    }
+    for (int i = 0; i < p->nObjs; i++)
+    {
+        printf("i=%d:",i);
+        for (int t = 0; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            if((i==p->nObjs-1)&&fCompl)
+                printf("%d",!x_it[index]);
+            else
+                printf("%d",x_it[index]);
+        }
+        printf("\n");        
+    }    
+   
+    
+    printf("\n");
+    int sum_act=0;
+    for (int i = p->nVars; i < p->nObjs-1; i++)
+    {
+        int sum_0=0;
+        int sum_1=0;
+        int min_sum=0;
+        for (int t = 0; t <  pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            if(x_it[index]==1)
+                sum_1++;
+            else
+                sum_0++;                
+        }
+        min_sum=sum_1<=sum_0? sum_1: sum_0;
+        sum_act+= 2*min_sum*(pow(2,p->nVars)-min_sum);
+    }
+    printf("Switching Activity=%d\n",sum_act);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 }
 
@@ -858,36 +944,43 @@ void Exa_ManExactSynthesis2( Bmc_EsPar_t * pPars )
     Exa_Man_t * p; int fCompl = 0;
     word pTruth[16]; Abc_TtReadHex( pTruth, pPars->pTtStr );
     assert( pPars->nVars <= 10 );
-    p = Exa_ManAlloc( pPars, pTruth );
-    if ( pTruth[0] & 1 ) { fCompl = 1; Abc_TtNot( pTruth, p->nWords ); }
-    status = Exa_ManAddCnfStart( p, pPars->fOnlyAnd );
-    assert( status );
-    printf( "Running exact synthesis for %d-input function with %d two-input gates...\n", p->nVars, p->nNodes );
-    for ( i = 0; iMint != -1; i++ )
-    {
-        abctime clk = Abc_Clock();
-        if ( !Exa_ManAddCnf( p, iMint ) )
-            break;
-        status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
-        if ( pPars->fVerbose )
+    while(1){
+        p = Exa_ManAlloc( pPars, pTruth );
+        if ( pTruth[0] & 1 ) { fCompl = 1; Abc_TtNot( pTruth, p->nWords ); }
+        status = Exa_ManAddCnfStart( p, pPars->fOnlyAnd );
+        assert( status );
+        printf( "Running exact synthesis for %d-input function with %d two-input gates...\n", p->nVars, p->nNodes );
+        for ( i = 0; iMint != -1; i++ )
         {
-            printf( "Iter %3d : ", i );
-            Extra_PrintBinary( stdout, (unsigned *)&iMint, p->nVars );
-            printf( "  Var =%5d  ", p->iVar );
-            printf( "Cla =%6d  ", sat_solver_nclauses(p->pSat) );
-            printf( "Conf =%9d  ", sat_solver_nconflicts(p->pSat) );
-            Abc_PrintTime( 1, "Time", Abc_Clock() - clk );
+            abctime clk = Abc_Clock();
+            if ( !Exa_ManAddCnf( p, iMint ) )
+                break;
+            status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
+            if ( pPars->fVerbose )
+            {
+                printf( "Iter %3d : ", i );
+                Extra_PrintBinary( stdout, (unsigned *)&iMint, p->nVars );
+                printf( "  Var =%5d  ", p->iVar );
+                printf( "Cla =%6d  ", sat_solver_nclauses(p->pSat) );
+                printf( "Conf =%9d  ", sat_solver_nconflicts(p->pSat) );
+                Abc_PrintTime( 1, "Time", Abc_Clock() - clk );
+            }
+            if ( status == l_False )
+            {
+                printf( "The problem has no solution.\n" );
+                iMint=0;
+                break;
+            }
+            iMint = Exa_ManEval( p );
         }
-        if ( status == l_False )
-        {
-            printf( "The problem has no solution.\n" );
+        if ( iMint == -1 )
+            Exa_ManPrintSolution( p, fCompl );
+        Exa_ManFree( p );
+        if ( iMint == -1 )
             break;
-        }
-        iMint = Exa_ManEval( p );
+        
+        pPars->nNodes++;
     }
-    if ( iMint == -1 )
-        Exa_ManPrintSolution( p, fCompl );
-    Exa_ManFree( p );
     Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
 }
 

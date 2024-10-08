@@ -375,15 +375,15 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
     f_out[3] =fCompl ? !sat_solver_var_value(p->pSat, iVarStart+2):sat_solver_var_value(p->pSat, iVarStart+2);
     int i0 = Exa_ManFindFanin( p, p->nObjs-1, 0);
     int i1 = Exa_ManFindFanin( p, p->nObjs-1, 1);
-    printf("out=");
+    printf("i=%d:",p->nObjs-1);
     for (int t = 0; t <  pow(2,p->nVars); t++)
     {
         int index_0=i0*(pow(2,p->nVars))+t;
         int index_1=i1*(pow(2,p->nVars))+t;
         int index=(x_it[index_1]<<1)+(x_it[index_0]);
         printf("%d",f_out[index]);
-    }
-    
+    }    
+    printf("\n");
     printf("\n");
     int sum_act=0;
     for (int i = p->nVars; i < p->nObjs-1; i++)
