@@ -331,22 +331,79 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
         }
     }
     printf("Printing overall Truth Table...\n");
-    int x_it;
+    int len=(p->nObjs)*(pow(2,p->nVars));
+    int x_it[len];
     int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;
-    for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++)
+
+
+    for (int i = 0; i < p->nVars; i++)
     {
-        printf("i=%d:0",i-1);
+        for (int t = 0; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            x_it[index] = value_of_nthbit(t,i);
+        }
+    }
+    
+    for(int i=p->nVars;i<p->nVars+p->nNodes-1;i++)
+    {
+        int index=i*(pow(2,p->nVars));
+        x_it[index]=0;
         for (int t = 1; t < pow(2,p->nVars); t++)
         {
-            x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);
-            printf("%d",sat_solver_var_value(p->pSat,x_it)); 
+            int index=i*(pow(2,p->nVars))+t;
+            x_it[index] = sat_solver_var_value(p->pSat ,xi_base + 3*(i-p->nVars+1)+(t-1)*(3*p->nNodes));
+           
         }
-        printf("\n");
+        
     }
-        
-        
+    for (int i = 0; i < p->nObjs-1; i++)
+    {
+        printf("i=%d:",i);
+        for (int t = 0; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            printf("%d",x_it[index]);
+        }
+        printf("\n");        
+    }     
+    int iVarStart = 1 + 3*(p->nObjs - 1 - p->nVars);
+    int f_out[4];
+    f_out[0]=fCompl;
+    f_out[1] =fCompl ? !sat_solver_var_value(p->pSat, iVarStart) :sat_solver_var_value(p->pSat, iVarStart);
+    f_out[2] =fCompl ? !sat_solver_var_value(p->pSat, iVarStart+1):sat_solver_var_value(p->pSat, iVarStart+1);
+    f_out[3] =fCompl ? !sat_solver_var_value(p->pSat, iVarStart+2):sat_solver_var_value(p->pSat, iVarStart+2);
+    int i0 = Exa_ManFindFanin( p, p->nObjs-1, 0);
+    int i1 = Exa_ManFindFanin( p, p->nObjs-1, 1);
+    printf("out=");
+    for (int t = 0; t <  pow(2,p->nVars); t++)
+    {
+        int index_0=i0*(pow(2,p->nVars))+t;
+        int index_1=i1*(pow(2,p->nVars))+t;
+        int index=(x_it[index_1]<<1)+(x_it[index_0]);
+        printf("%d",f_out[index]);
+    }
     
-    
+    printf("\n");
+    int sum_act=0;
+    for (int i = p->nVars; i < p->nObjs-1; i++)
+    {
+        int sum_0=0;
+        int sum_1=0;
+        int min_sum=0;
+        for (int t = 0; t <  pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            if(x_it[index]==1)
+                sum_1++;
+            else
+                sum_0++;                
+        }
+        min_sum=sum_1<=sum_0? sum_1: sum_0;
+        sum_act+= 2*min_sum*(pow(2,p->nVars)-min_sum);
+    }
+    printf("Switching Activity=%d\n",sum_act);
+   
 }
 
 
