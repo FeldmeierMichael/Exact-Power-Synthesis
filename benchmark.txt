@@ -86,3 +86,4 @@ Synthesising 0x0053 pexact:304 exact:352
 Synthesising 0x0054 pexact:182 exact:216
 Synthesising 0x0055 pexact:182 exact:192
 Synthesising 0x0056 pexact:224 exact:224
+Synthesising 0x0057 pexact:216 exact:216
