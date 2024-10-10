@@ -5,3 +5,4 @@ Synthesising 0x0002 pexact:152 exact:152
 Synthesising 0x0003 pexact:182 exact:312
 Synthesising 0x0004 pexact:152 exact:152
 Synthesising 0x0005 pexact:182 exact:352
+Synthesising 0x0006 pexact:208 exact:224
