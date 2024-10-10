@@ -3,3 +3,4 @@ Synthesising 0x0000 pexact:96 exact:192
 Synthesising 0x0001 pexact:152 exact:152
 Synthesising 0x0002 pexact:152 exact:152
 Synthesising 0x0003 pexact:182 exact:312
+Synthesising 0x0004 pexact:152 exact:152
