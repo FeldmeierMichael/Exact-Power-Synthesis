@@ -7,3 +7,4 @@ Synthesising 0x0004 pexact:152 exact:152
 Synthesising 0x0005 pexact:182 exact:352
 Synthesising 0x0006 pexact:208 exact:224
 Synthesising 0x0007 pexact:182 exact:192
+Synthesising 0x0008 pexact:152 exact:192
