@@ -30,3 +30,4 @@ Synthesising 0x001B pexact:304 exact:320
 Synthesising 0x001C pexact:310 exact:336
 Synthesising 0x001D pexact:304 exact:352
 Synthesising 0x001E pexact:224 exact:224
+Synthesising 0x001F pexact:216 exact:216
