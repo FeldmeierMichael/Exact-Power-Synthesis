@@ -55,3 +55,4 @@ Synthesising 0x0034 pexact:310 exact:344
 Synthesising 0x0035 pexact:304 exact:312
 Synthesising 0x0036 pexact:224 exact:224
 Synthesising 0x0037 pexact:216 exact:216
+Synthesising 0x0038 pexact:310 exact:344
