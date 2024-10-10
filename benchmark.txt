@@ -10,3 +10,4 @@ Synthesising 0x0007 pexact:182 exact:192
 Synthesising 0x0008 pexact:152 exact:192
 Synthesising 0x0009 pexact:208 exact:224
 Synthesising 0x000A pexact:182 exact:352
+Synthesising 0x000B pexact:182 exact:216
