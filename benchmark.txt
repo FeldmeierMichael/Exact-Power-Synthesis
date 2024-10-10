@@ -17,3 +17,4 @@ Synthesising 0x000E pexact:182 exact:216
 Synthesising 0x000F pexact:182 exact:352
 Synthesising 0x0010 pexact:152 exact:152
 Synthesising 0x0011 pexact:182 exact:326
+Synthesising 0x0012 pexact:208 exact:224
