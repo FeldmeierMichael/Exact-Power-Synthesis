@@ -20,3 +20,4 @@ Synthesising 0x0011 pexact:182 exact:326
 Synthesising 0x0012 pexact:208 exact:224
 Synthesising 0x0013 pexact:182 exact:216
 Synthesising 0x0014 pexact:208 exact:224
+Synthesising 0x0015 pexact:182 exact:192
