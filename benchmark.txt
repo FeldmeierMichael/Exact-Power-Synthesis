@@ -22,3 +22,4 @@ Synthesising 0x003B pexact:216 exact:216
 Synthesising 0x003C pexact:280 exact:344
 Synthesising 0x003D pexact:326 exact:336
 Synthesising 0x003E pexact:326 exact:344
+Synthesising 0x003F pexact:238 exact:288
