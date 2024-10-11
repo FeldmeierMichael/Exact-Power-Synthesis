@@ -67,3 +67,4 @@ Synthesising 0x0068 pexact:406 exact:448
 Synthesising 0x0069 pexact:256 exact:256
 Synthesising 0x006A pexact:224 exact:224
 Synthesising 0x006B pexact:432 exact:464
+Synthesising 0x006C pexact:224 exact:224
