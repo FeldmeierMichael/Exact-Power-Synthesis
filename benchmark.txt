@@ -28,3 +28,4 @@ Synthesising 0x0041 pexact:208 exact:224
 Synthesising 0x0042 pexact:336 exact:352
 Synthesising 0x0043 pexact:310 exact:336
 Synthesising 0x0044 pexact:182 exact:320
+Synthesising 0x0045 pexact:182 exact:192
