@@ -52,3 +52,4 @@ Synthesising 0x0059 pexact:224 exact:224
 Synthesising 0x005A pexact:280 exact:352
 Synthesising 0x005B pexact:326 exact:344
 Synthesising 0x005C pexact:304 exact:320
+Synthesising 0x005D pexact:216 exact:216
