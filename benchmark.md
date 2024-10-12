@@ -8,3 +8,7 @@ Synthesising 0x0001 pexact:152 r=3 exact:152 r=3
 
 ![Bench_1](benchmark_r.png){width=70} ![Bench_2](benchmark_s.png){width=70}
 
+Synthesising 0x0002 pexact:152 r=3 exact:152 r=3
+
+![Bench_1](benchmark_r.png){width=70} ![Bench_2](benchmark_s.png){width=70}
+
