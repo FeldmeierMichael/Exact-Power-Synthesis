@@ -12,9 +12,11 @@ Synthesising 0x0004 pexact:152 r=3 exact:152 r=3
 
 Synthesising 0x0005 pexact:182 r=4 exact:352 r=4
 
+Synthesising 0x0006 pexact:208 r=4 exact:224 r=3
+
 ![image1](benchmark_r.png?)
 
 ![image2](benchmark_s.png?)
 
- avg_p_s=152.66666666666666 avg_s=218.66666666666666 avg_pr=3.5 avg_r=3.5
+ avg_p_s=160.57142857142858 avg_s=219.42857142857142 avg_pr=3.5714285714285716 avg_r=3.4285714285714284
 
