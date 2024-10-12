@@ -30,6 +30,8 @@ Synthesising 0x000D pexact:182 r=4 exact:216 r=3
 
 Synthesising 0x000E pexact:182 r=4 exact:216 r=3
 
+Synthesising 0x000F pexact:182 r=4 exact:352 r=4
+
 <img src=benchmark_r.png width=400 heigth=400>
 
 <img src=benchmark_s.png width=400 heigth=400>
