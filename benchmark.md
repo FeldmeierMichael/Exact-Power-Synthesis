@@ -22,13 +22,15 @@ Synthesising 0x0005 pexact:182 r=4 exact:352 r=4
 
 Synthesising 0x0006 pexact:208 r=4 exact:224 r=3
 
+Synthesising 0x0007 pexact:182 r=4 exact:192 r=3
+
 ```mermaid
 xychart-beta
     title "Comparison powertwoexact twoexact"
-    x-axis [0, 1, 2, 3, 4, 5, 6]
+    x-axis [0, 1, 2, 3, 4, 5, 6, 7]
     y-axis "Switching Activity" 0-->352
-    line [96, 152, 152, 182, 152, 182, 208]
-    line [192, 152, 152, 312, 152, 352, 224]
+    line [96, 152, 152, 182, 152, 182, 208, 182]
+    line [192, 152, 152, 312, 152, 352, 224, 192]
 ```
- avg_p_s=160.57 avg_s=219.43 avg_pr=3.57 avg_r=3.43
+ avg_p_s=163.25 avg_s=216.0 avg_pr=3.62 avg_r=3.38
 
