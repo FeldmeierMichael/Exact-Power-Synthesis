@@ -71,3 +71,4 @@ Synthesising 0x006C pexact:224 exact:224
 Synthesising 0x006D pexact:432 exact:472
 Synthesising 0x006E pexact:326 exact:336
 Synthesising 0x006F pexact:224 exact:224
+Synthesising 0x0070 pexact:182 exact:192
