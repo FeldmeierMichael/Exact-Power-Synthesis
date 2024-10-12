@@ -20,3 +20,7 @@ Synthesising 0x0004 pexact:152 r=3 exact:152 r=3
 
 ![Bench_1](benchmark_r.png) ![Bench_2](benchmark_s.png  )
 
+Synthesising 0x0005 pexact:182 r=4 exact:352 r=4
+
+![Bench_1](benchmark_r.png) ![Bench_2](benchmark_s.png  )
+
