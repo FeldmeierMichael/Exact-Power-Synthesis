@@ -38,6 +38,8 @@ Synthesising 0x0011 pexact:182 r=4 exact:326 r=4
 
 Synthesising 0x0012 pexact:208 r=4 exact:224 r=3
 
+Synthesising 0x0013 pexact:182 r=4 exact:216 r=3
+
 ![image1](benchmark_r.png?)
 
 ![image2](benchmark_s.png?)
