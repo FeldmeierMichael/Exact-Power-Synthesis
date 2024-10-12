@@ -78,3 +78,4 @@ Synthesising 0x0073 pexact:216 exact:216
 Synthesising 0x0074 pexact:304 exact:320
 Synthesising 0x0075 pexact:216 exact:216
 Synthesising 0x0076 pexact:326 exact:336
+Synthesising 0x0077 pexact:238 exact:320
