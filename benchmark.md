@@ -1,57 +1,15 @@
-[INFO] Running Benchmark for k=4
-
 Synthesising 0x0000 pexact:96 r=4 exact:192 r=4
-
-Synthesising 0x0001 pexact:152 r=3 exact:152 r=3
-
-Synthesising 0x0002 pexact:152 r=3 exact:152 r=3
-
-Synthesising 0x0003 pexact:182 r=4 exact:312 r=4
-
-Synthesising 0x0004 pexact:152 r=3 exact:152 r=3
-
-Synthesising 0x0005 pexact:182 r=4 exact:352 r=4
-
-Synthesising 0x0006 pexact:208 r=4 exact:224 r=3
-
-Synthesising 0x0007 pexact:182 r=4 exact:192 r=3
-
-Synthesising 0x0008 pexact:152 r=3 exact:192 r=3
-
-Synthesising 0x0009 pexact:208 r=4 exact:224 r=3
-
-Synthesising 0x000A pexact:182 r=4 exact:352 r=4
-
-Synthesising 0x000B pexact:182 r=4 exact:216 r=3
-
-Synthesising 0x000C pexact:182 r=4 exact:320 r=4
-
-Synthesising 0x000D pexact:182 r=4 exact:216 r=3
-
-Synthesising 0x000E pexact:182 r=4 exact:216 r=3
-
-Synthesising 0x000F pexact:182 r=4 exact:352 r=4
-
-Synthesising 0x0010 pexact:152 r=3 exact:152 r=3
-
-Synthesising 0x0011 pexact:182 r=4 exact:326 r=4
-
-Synthesising 0x0012 pexact:208 r=4 exact:224 r=3
-
-Synthesising 0x0013 pexact:182 r=4 exact:216 r=3
-
-Synthesising 0x0014 pexact:208 r=4 exact:224 r=3
-
-Synthesising 0x0015 pexact:182 r=4 exact:192 r=3
 
 ```mermaid
 xychart-beta
     title "Comparison powertwoexact twoexact"
-    x-axis [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
-    y-axis "Switching Activity" 0-->352
-    line [96, 152, 152, 182, 152, 182, 208, 182, 152, 208, 182, 182, 182, 182, 182, 182, 152, 182, 208, 182, 208, 182]
-    line [192, 152, 152, 312, 152, 352, 224, 192, 192, 224, 352, 216, 320, 216, 216, 352, 152, 326, 224, 216, 224, 192]
-    line [176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0, 176.0]
-    line [234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091, 234.0909090909091]
+    x-axis [0]
+    y-axis "Switching Activity" 0-->192
+    line [96]
+    line [192]
+    line [96.0]
+    line [192.0]
+    bar [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+    bar [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
 ```
 
