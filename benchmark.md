@@ -10,6 +10,8 @@ Synthesising 0x0003 pexact:182 r=4 exact:312 r=4
 
 Synthesising 0x0004 pexact:152 r=3 exact:152 r=3
 
+Synthesising 0x0005 pexact:182 r=4 exact:352 r=4
+
 <img src=benchmark_r.png? width=400 heigth=400>
 
 <img src=benchmark_s.png? width=400 heigth=400>
