@@ -18,6 +18,8 @@ Synthesising 0x0007 pexact:182 r=4 exact:192 r=3
 
 Synthesising 0x0008 pexact:152 r=3 exact:192 r=3
 
+Synthesising 0x0009 pexact:208 r=4 exact:224 r=3
+
 ![image1](https://github.com/FeldmeierMichael/Exact-Power-Synthesis/blob/main/benchmark_r.png?)
 
 ![image2](https://github.com/FeldmeierMichael/Exact-Power-Synthesis/blob/main/benchmark_s.png?)
