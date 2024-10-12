@@ -56,3 +56,13 @@ xychart-beta
 ```
  avg_p_s=146.8 avg_s=192.0 avg_pr=3.4 avg_r=3.4
 
+Synthesising 0x0005 pexact:182 r=4 exact:352 r=4
+
+```mermaid
+xychart-beta
+    x-axis [0, 1, 2, 3, 4, 5]
+    line [96, 152, 152, 182, 152, 182]
+    line [192, 152, 152, 312, 152, 352]
+```
+ avg_p_s=152.67 avg_s=218.67 avg_pr=3.5 avg_r=3.5
+
