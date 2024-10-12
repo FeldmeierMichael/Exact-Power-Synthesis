@@ -32,3 +32,5 @@ Synthesising 0x000A pexact:182 r=4 exact:352 r=4
 
 Synthesising 0x000B pexact:182 r=4 exact:216 r=3
 
+Synthesising 0x000C pexact:182 r=4 exact:320 r=4
+
