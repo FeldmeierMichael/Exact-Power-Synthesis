@@ -28,9 +28,11 @@ Synthesising 0x000C pexact:182 r=4 exact:320 r=4
 
 Synthesising 0x000D pexact:182 r=4 exact:216 r=3
 
+Synthesising 0x000E pexact:182 r=4 exact:216 r=3
+
 ![image1](benchmark_r.png?)
 
 ![image2](benchmark_s.png?)
 
- avg_p_s=171.0 avg_s=232.0 avg_pr=3.71 avg_r=3.36
+ avg_p_s=171.73 avg_s=230.93 avg_pr=3.73 avg_r=3.33
 
