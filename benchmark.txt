@@ -90,3 +90,4 @@ Synthesising 0x007F pexact:152 exact:152
 Synthesising 0x0080 pexact:152 exact:192
 Synthesising 0x0081 pexact:336 exact:352
 Synthesising 0x0082 pexact:208 exact:224
+Synthesising 0x0083 pexact:310 exact:336
