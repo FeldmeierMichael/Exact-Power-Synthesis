@@ -2,21 +2,5 @@
 
 Synthesising 0x0000 pexact:96 r=4 exact:192 r=4
 
-![Bench_1](benchmark_r.png){width=70} ![Bench_2](benchmark_s.png){width=70}
-
-Synthesising 0x0001 pexact:152 r=3 exact:152 r=3
-
-![Bench_1](benchmark_r.png){width=70} ![Bench_2](benchmark_s.png){width=70}
-
-Synthesising 0x0002 pexact:152 r=3 exact:152 r=3
-
-![Bench_1](benchmark_r.png){width=70} ![Bench_2](benchmark_s.png){width=70}
-
-Synthesising 0x0003 pexact:182 r=4 exact:312 r=4
-
-![Bench_1](benchmark_r.png){width=70} ![Bench_2](benchmark_s.png){width=70}
-
-Synthesising 0x0004 pexact:152 r=3 exact:152 r=3
-
-![Bench_1](benchmark_r.png){width=70} ![Bench_2](benchmark_s.png){width=70}
+![Bench_1](benchmark_r.png | width=50) ![Bench_2](benchmark_s.png | width=50)
 
