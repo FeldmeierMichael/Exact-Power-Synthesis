@@ -6,5 +6,7 @@
 
 <img src=benchmark_s.png width=300 heigth=300>
 
+<!--END_SECTION:update_image-->
+
 Synthesising 0x0000 pexact:96 r=4 exact:192 r=4
 
