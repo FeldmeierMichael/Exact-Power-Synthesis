@@ -98,3 +98,4 @@ Synthesising 0x0087 pexact:224 exact:224
 Synthesising 0x0088 pexact:182 exact:248
 Synthesising 0x0089 pexact:310 exact:336
 Synthesising 0x008A pexact:182 exact:192
+Synthesising 0x008B pexact:304 exact:320
