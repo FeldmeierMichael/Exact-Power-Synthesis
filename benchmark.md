@@ -12,3 +12,9 @@ Synthesising 0x0001 pexact:152 r=3 exact:152 r=3
 
 ![Bench_2](benchmark_s.png)
 
+Synthesising 0x0002 pexact:152 r=3 exact:152 r=3
+
+<img src=benchmark_r.png width=300 heigth=300>
+
+![Bench_2](benchmark_s.png)
+
