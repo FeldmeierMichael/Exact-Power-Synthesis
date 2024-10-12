@@ -14,3 +14,8 @@ Synthesising 0x0001 pexact:152 r=3 exact:152 r=3
 ![image1](https://github.com/FeldmeierMichael/Exact-Power-Synthesis/blob/main/benchmark_r.png?)
 ![image2](https://github.com/FeldmeierMichael/Exact-Power-Synthesis/blob/main/benchmark_s.png?)
 
+Synthesising 0x0002 pexact:152 r=3 exact:152 r=3
+
+![image1](https://github.com/FeldmeierMichael/Exact-Power-Synthesis/blob/main/benchmark_r.png?)
+![image2](https://github.com/FeldmeierMichael/Exact-Power-Synthesis/blob/main/benchmark_s.png?)
+
