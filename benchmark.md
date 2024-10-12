@@ -34,6 +34,8 @@ Synthesising 0x000F pexact:182 r=4 exact:352 r=4
 
 Synthesising 0x0010 pexact:152 r=3 exact:152 r=3
 
+Synthesising 0x0011 pexact:182 r=4 exact:326 r=4
+
 ![image1](benchmark_r.png?)
 
 ![image2](benchmark_s.png?)
