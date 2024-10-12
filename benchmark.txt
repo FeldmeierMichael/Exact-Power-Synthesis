@@ -24,3 +24,4 @@ Synthesising 0x008E pexact:400 exact:440
 Synthesising 0x008F pexact:216 exact:216
 Synthesising 0x0090 pexact:208 exact:224
 Synthesising 0x0091 pexact:310 exact:336
+Synthesising 0x0092 pexact:406 exact:472
