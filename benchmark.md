@@ -14,3 +14,7 @@ Synthesising 0x0001 pexact:152 r=3 exact:152 r=3
 
  avg_p_s=124.0 avg_s=172.0 avg_pr=3.5 avg_r=3.5
 
+Synthesising 0x0002 pexact:152 r=3 exact:152 r=3
+
+ avg_p_s=133.33 avg_s=165.33 avg_pr=3.33 avg_r=3.33
+
