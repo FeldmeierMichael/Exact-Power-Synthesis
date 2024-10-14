@@ -776,7 +776,7 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
         sum_act+= 2*min_sum*(pow(2,p->nVars)-min_sum);
     }
     printf("Switching Activity=%d\n",sum_act);
-
+    printf("Number of Gates: r=%d\n",p->nNodes);
 
 
 

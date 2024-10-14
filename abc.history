@@ -301,9 +301,62 @@ twoexact -N 2 -I 3 26
 twoexact -N 2 -I 3 44
 source -s abc.rc
 powertwoexact -N 2 -I 2 1
-twoexact -N 3 -I 4 1111
-twoexact -N 3 -I 4 1115
-twoexact -N 3 -I 4 1151
-twoexact -N 3 -I 4 1551
-twoexact -N 3 -I 4 5551
-twoexact -N 3 -I 4 5552
+powertwoexact -N 2 -I 4 11111111
+powertwoexact -N 2 -I 4 1111
+powertwoexact -N 3 -I 4 1111
+powertwoexact -N 3 -I 4 1115
+powertwoexact -N 3 -I 4 1151
+powertwoexact -N 3 -I 4 1551
+powertwoexact -N 3 -I 4 5551
+powertwoexact -N 3 -I 4 5552
+powertwoexact -N 3 -I 5 55520000
+powertwoexact -N 5 -I 5 55520000
+powertwoexact -N 3 -I 4 0000
+powertwoexact -N 3 -I 4 0001
+twoexact -N 3 -I 4 0001
+twoexact -N 3 -I 4 0003
+powertwoexact -N 3 -I 4 0003
+powertwoexact -N 3 -I 4 0016
+twoexact -N 3 -I 4 0016
+powertwoexct -N 2 -I 2 1
+powertwoexact -N 2 -I 2 1
+twoexact -N 2 -I 2 1
+twoexact -N 3 -I 4 0116
+source -s abc.rc
+twoexact -N 2 -I 3 0116
+twoexact -N 2 -I 4 0116
+twoexact -N 4 -I 4 0116
+twoexact -N 4 -I 4 1816
+twoexact -N 4 -I 4 1716
+twoexact -N 4 -I 4 1715
+twoexact -N 4 -I 4 1015
+twoexact -N 4 -I 4 1165
+twoexact -N 4 -I 4 2165
+twoexact -N 4 -I 4 3165
+twoexact -N 4 -I 4 3465
+twoexact -N 2 -I 3 0000
+twoexact -N 2 -I 4 0000
+powertwoexact -N 3 -I 2 0001
+powertwoexact -N 3 -I 4 0001
+twoexact -N 3 -I 4 0001
+twoexact -N 3 -I 4 0000
+powertwoexact -N 3 -I 4 0000
+powertwoexact -N 2 -I 4 0000
+exact -h
+exact 0000 -v 1
+exact 0000 -v true
+exact 0000 -v yes
+exact -v  0000 
+exact 0000
+write 0.v
+twoexact -N 3 -I 4 0000
+twoexact -N 3 -I 4 0001
+powertwoexact -N 2 -I 2 1
+powertweoxact -N 2 -I 3 11
+powertwoexact -N 2 -I 3 11
+twoexact -N 2 -I 3 11
+twoexact -N 3 -I 4 0016
+powertwoexact -N 3 -I 4 0016
+powertweoxact -N 3 -I 4 0016
+source -s abc.rc
+powertwoexact -N 2 -I 4 0016
