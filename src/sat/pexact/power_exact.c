@@ -48,6 +48,8 @@ struct Exa_Man_t_
     int               nWords;    // the truth table size in 64-bit words
     int               iVar;      // the next available SAT variable
     int               i_p;       //start of p variables
+    int               i_o;       //start of o variables
+    int               o_l;       // amound of o variables
     word *            pTruth;    // truth table
     Vec_Wrd_t *       vInfo;     // nVars + nNodes + 1
     int               VarMarks[MAJ_NOBJS][2][MAJ_NOBJS]; // variable marks
@@ -229,6 +231,8 @@ static Exa_Man_t * Exa_ManAlloc( Bmc_EsPar_t * pPars, word * pTruth )
     p->nWords     = Abc_TtWordNum(pPars->nVars);
     p->pTruth     = pTruth;
     p->i_p        =0;
+    p->o_l        =0;
+    p->i_o        =0;
     p->vOutLits   = Vec_WecStart( p->nObjs );
     p->iVar       = Exa_ManMarkup( p );
     p->vInfo      = Exa_ManTruthTables( p );
@@ -580,7 +584,7 @@ void Exa_ManAddPClauses(Exa_Man_t * p){
         int p_startvar=p->iVar;
         p->iVar+=n_p;
         //printf("adding power CLauses for i:%d\n",i);
-        sat_solver_setnvars( p->pSat, p->iVar + n_p); 
+        sat_solver_setnvars( p->pSat, p->iVar); 
         for(int p=0;p<n_p;p++){
                 pLits_p[p]=Abc_Var2Lit( p_startvar++ , 0);
         }  
@@ -644,11 +648,18 @@ void Exa_ManAddPClauses(Exa_Man_t * p){
 
 
 void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
+        if(p->o_l==0)
+            p->i_o=p->iVar;
+        p->o_l++;
+        int o_n=p->iVar;
+        p->iVar+=1;        
+        sat_solver_setnvars(p->pSat, p->iVar); 
+
         int n_i=p->nNodes-1;
         int n_p = pow(2,p->nVars-1);
         for(int pi=0;pi<n_p;pi++){
             //printf("constrain for Sum:p_%d=%d\n",pi+1,*(combi+pi));
-            int pLits[n_i];
+            int pLits[n_i+1];
             int lit=0;
             int l=*(combi+pi);        
             //less then l    
@@ -664,14 +675,16 @@ void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
                 }
                 if(sum==j){
                     lit=0;
+                    pLits[0]=Abc_Var2Lit(o_n,1);
                     for (int l = 0; l < n_i; l++){
                             if(*(res+l)==1){
                                 //printf("%d,",l+1);
-                                pLits[lit++]=Abc_Var2Lit(p->i_p+l*n_p+pi,1);
+                                pLits[lit+1]=Abc_Var2Lit(p->i_p+l*n_p+pi,1);
+                                lit++;
                             }
                     }
                 //printf("\n");
-                sat_solver_addclause(p->pSat,pLits,pLits+lit);                
+                sat_solver_addclause(p->pSat,pLits,pLits+lit+1);                
                 }       
             }            
             lit=0;
@@ -688,15 +701,69 @@ void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
                 }
                 if(sum==j){
                     lit=0;
+                    pLits[0]=Abc_Var2Lit(o_n,1);
                     for (int l = 0; l < n_i; l++){
                             if(*(res+l)==1){
-                                pLits[lit++]=Abc_Var2Lit(p->i_p+l*n_p+pi,0);
+                                pLits[lit+1]=Abc_Var2Lit(p->i_p+l*n_p+pi,0);
+                                lit++;
                             }
                     }            
-                sat_solver_addclause(p->pSat,pLits,pLits+lit);                    
+                sat_solver_addclause(p->pSat,pLits,pLits+lit+1);                    
                 }       
         }
     }
+}
+
+
+void Exa_ManAddOrClauses_equal1(Exa_Man_t * p){
+
+    int o_l=p->o_l;
+    int pLits[o_l];   
+    //printf("i_o = %d\n",p->i_o); 
+    ///////////////////////////////Sum(o)=1
+        for (int j = 0; j < pow(2,o_l); j++)
+        {
+            int pLits_sum[2];
+            int lit_sum=0;
+            int res[o_l];
+            convert_base_int(2,j,o_l,res);
+            int sum=0;
+            for (int l = 0; l < o_l; l++)
+            {
+                sum+=*(res+l);
+            }
+            if(sum==2){
+                lit_sum=0;
+                for (int l = 0; l < o_l; l++){
+                        if(*(res+l)==1){                            
+                            pLits[lit_sum++]=Abc_Var2Lit(p->i_o+l,1);
+                        }
+                }           
+            sat_solver_addclause(p->pSat,pLits,pLits+lit_sum);                
+            }
+        }
+
+        for (int j = 0; j < pow(2,o_l); j++)
+        {
+           int pLits_sum[2];
+           int lit_sum=0;
+           int res[o_l];
+            convert_base_int(2,j,o_l,res);
+            int sum=0;
+            for (int l = 0; l < o_l; l++)
+            {
+                sum+=*(res+l);
+            }
+            if(sum==o_l){
+                lit_sum=0;
+                for (int l = 0; l < o_l; l++){
+                        if(*(res+l)==1){                            
+                            pLits[lit_sum++]=Abc_Var2Lit(p->i_o+l,0);
+                        }
+                }           
+            sat_solver_addclause(p->pSat,pLits,pLits+lit_sum);                
+            }
+        }
 }
 
 
@@ -810,13 +877,52 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
        
     }
     Exa_ManAddPClauses(p);
-    int combi[2];
+    int combi[8];
+    combi[0]=1;
+    combi[1]=1;   
+    combi[2]=0;
+    combi[3]=2;
+    combi[4]=0;
+    combi[5]=0;
+    combi[6]=0;
+    combi[7]=1;
+    printf("Adding Sum Constraints\n"); 
+    Exa_ManAddCardinality_P(p,&combi); 
+    combi[0]=2;
+    combi[1]=0;   
+    combi[2]=0;
+    combi[3]=0;
+    combi[4]=2;
+    combi[5]=0;
+    combi[6]=1;
+    combi[7]=0;
+    printf("Adding Sum Constraints\n"); 
+    Exa_ManAddCardinality_P(p,&combi); 
     combi[0]=0;
-    combi[1]=1;    
-    //Exa_ManAddCardinality_P(p,&combi);
+    combi[1]=2;   
+    combi[2]=1;
+    combi[3]=1;
+    combi[4]=0;
+    combi[5]=1;
+    combi[6]=0;
+    combi[7]=0;
+    Exa_ManAddCardinality_P(p,&combi);
+    combi[0]=1;
+    combi[1]=0;   
+    combi[2]=2;
+    combi[3]=0;
+    combi[4]=2;
+    combi[5]=0;
+    combi[6]=0;
+    combi[7]=0;
+    Exa_ManAddCardinality_P(p,&combi);
+
+    printf("Adding Sum(0) equal 1 Constraints\n");
+    Exa_ManAddOrClauses_equal1(p);
+    
     status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
     printf("solution: %d \n",status);
-    if ( iMint != 0 )    
+    if ( status == 1 )    
         Exa_ManPrintSolution( p, fCompl );
     Exa_ManFree( p );
     Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
@@ -890,6 +996,20 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars ){
                             Exa_ManAddPClauses(p);
                             printf("Adding Sum Constraints\n");
                             Exa_ManAddCardinality_P(p,node->combi);   
+                            while(list->start->act==act && list->start->r+1==p->nNodes){
+                                free(node->combi);
+                                free(node);
+                                node=pop_comb(list);
+                                Exa_ManAddCardinality_P(p,node->combi);  
+                                printf("#Grouping with ACT:%d,r:%d CONSUMED COMBINATION:",(node->act),node->r+1);
+                                for (int im = 0; im < list->len; im++)
+                                {
+                                    printf("%d,",*(node->combi+im));
+                                }
+                                printf("\n");
+                            }
+                            printf("Adding Sum(0) equal 1 Constraints\n");
+                            Exa_ManAddOrClauses_equal1(p);
                             free(node->combi);
                             free(node);                       
                                 status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
