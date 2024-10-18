@@ -569,6 +569,34 @@ static int Exa_ManAddCnf( Exa_Man_t * p, int iMint )
     p->iVar += 3*p->nNodes;
     return 1;
 }
+
+int Exa_ManEvalPVariables(Exa_Man_t * p, int* combi){
+    int n_p=pow(2,p->nVars-1);
+    int combi_sol[n_p];
+    for (int i = 0; i < n_p; i++)
+    {
+        combi_sol[i]=0;
+    }
+    
+    for (int i = 0; i < p->nNodes-1; i++)
+    {
+        for (int j = 0; j < n_p; j++)
+        {
+            combi_sol[j]+=1;
+        }
+    }
+
+    for (size_t i = 0; i < n_p; i++)
+    {
+        if(*(combi+i)!=combi_sol)
+            return i;        
+    }
+    return -1;   
+}
+
+
+
+
 void Exa_ManAddPClauses(Exa_Man_t * p){
     printf("adding P Clauses\n");
     int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;  
@@ -805,14 +833,30 @@ void calculate_comb_array(int k,int r,comb_list* list){
         }
        
        if(sum == r){
-        /*
+            if(k==4){
+                int p1=*(res);
+                int p2=*(res+1);
+                int p3=*(res+2);
+                int p4=*(res+3);
+                int p5=*(res+4);
+                int p6=*(res+5);
+                int p7=*(res+6);
+                int p8=*(res+7);
+                int exep1=(p4>=2)|(p8>01)|((p4>=1)&&(p8>=1))|(((p4>=1)|(p8>=1))&&((p2>=1)|(p6>=1)));
+                int exep2=(*(res)<=r-2)&&(*(res+1)<=r-1)&&(*(res+2)<=r-1)&&(*(res+4)<=r-2)&&(*(res+5)<=r-1)&&(*(res+6)<=r-2);
+                if(exep1==1 && exep2==1)
+                  add_combi(sum_act,r,res,list);  
+            }
+            else
+                add_combi(sum_act,r,res,list);
+            /*
             for (int j = size_single-1; j >= 0; j--)
             {
                 printf("%d;",*(res+j));
             }
             printf("->sum: %d\n",sum_act);
             printf("\n");*/
-            add_combi(sum_act,r,res,list);
+            
        }
        
        
@@ -829,7 +873,8 @@ int calc_min_r(int act,int k){
     ret = ret==0 ? 1 : ret;
     return ret;
 }
-int calc_max_act(int r,int k){
+
+int calc_max_act(int r,int k){    
     int ret=(int)(((pow(2,k+1)-2))*r);
     return ret;
 }
