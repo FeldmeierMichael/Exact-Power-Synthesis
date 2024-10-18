@@ -6,6 +6,7 @@
         "bitset": "c",
         "chrono": "c",
         "algorithm": "c",
-        "unordered_map": "c"
+        "unordered_map": "c",
+        "cmath": "c"
     }
 }

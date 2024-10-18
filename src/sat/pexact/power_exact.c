@@ -582,13 +582,15 @@ int Exa_ManEvalPVariables(Exa_Man_t * p, int* combi){
     {
         for (int j = 0; j < n_p; j++)
         {
-            combi_sol[j]+=1;
+            combi_sol[j]+=sat_solver_var_value(p->pSat,p->i_p+n_p*i+j);
+            printf("p_%d_%d has value %d\n",p->nVars+i,j+1,sat_solver_var_value(p->pSat,p->i_p+n_p*i+j));
         }
     }
 
-    for (size_t i = 0; i < n_p; i++)
+    for (int i = 0; i < n_p; i++)
     {
-        if(*(combi+i)!=combi_sol)
+        printf("comparing xp=%d %d with %d\n",i+1,combi_sol[i],*(combi+i));
+        if(*(combi+i)!=combi_sol[i])
             return i;        
     }
     return -1;   
@@ -675,7 +677,8 @@ void Exa_ManAddPClauses(Exa_Man_t * p){
 }
 
 
-void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
+void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi,int xp,int grp){
+    if(grp==1){
         if(p->o_l==0)
             p->i_o=p->iVar;
         p->o_l++;
@@ -685,7 +688,8 @@ void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
 
         int n_i=p->nNodes-1;
         int n_p = pow(2,p->nVars-1);
-        for(int pi=0;pi<n_p;pi++){
+        //for(int pi=xp;pi<xp+1;pi++){
+            int pi=xp;
             //printf("constrain for Sum:p_%d=%d\n",pi+1,*(combi+pi));
             int pLits[n_i+1];
             int lit=0;
@@ -738,7 +742,63 @@ void Exa_ManAddCardinality_P(Exa_Man_t * p,int * combi){
                     }            
                 sat_solver_addclause(p->pSat,pLits,pLits+lit+1);                    
                 }       
+        //}
+    }
+    }
+    else{
+        int n_i=p->nNodes-1;
+        int n_p = pow(2,p->nVars-1);
+        for(int pi=0;pi<n_p;pi++){
+            //printf("constrain for Sum:p_%d=%d\n",pi+1,*(combi+pi));
+            int pLits[n_i];
+            int lit=0;
+            int l=*(combi+pi);        
+            //less then l    
+            int j=l+1;
+            for (int i = 0; i < pow(2,n_i); i++)
+            {
+                int res[n_i];
+                convert_base_int(2,i,n_i,res);
+                int sum=0;
+                for (int l = 0; l < n_i; l++)
+                {
+                    sum+=*(res+l);
+                }
+                if(sum==j){
+                    lit=0;
+                    for (int l = 0; l < n_i; l++){
+                            if(*(res+l)==1){
+                                //printf("%d,",l+1);
+                                pLits[lit++]=Abc_Var2Lit(p->i_p+l*n_p+pi,1);
+                            }
+                    }
+                //printf("\n");
+                sat_solver_addclause(p->pSat,pLits,pLits+lit);                
+                }       
+            }            
+            lit=0;
+            //more then l    
+            j=n_i-l+1;
+            for (int i = 0; i < pow(2,n_i); i++)
+            {
+                int res[n_i];
+                convert_base_int(2,i,n_i,res);
+                int sum=0;
+                for (int l = 0; l < n_i; l++)
+                {
+                    sum+=*(res+l);
+                }
+                if(sum==j){
+                    lit=0;
+                    for (int l = 0; l < n_i; l++){
+                            if(*(res+l)==1){
+                                pLits[lit++]=Abc_Var2Lit(p->i_p+l*n_p+pi,0);
+                            }
+                    }            
+                sat_solver_addclause(p->pSat,pLits,pLits+lit);                    
+                }       
         }
+    }
     }
 }
 
@@ -1039,8 +1099,14 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars ){
                                 }           
                             }
                             Exa_ManAddPClauses(p);
-                            printf("Adding Sum Constraints\n");
-                            Exa_ManAddCardinality_P(p,node->combi);   
+                            printf("##Adding Sum Constraints\n"); 
+                            for (int xp = 0; xp >=0 ; xp++)
+                            {
+                                printf("#CEGAR Constraining Sum(p_%d) == %d\n",xp+1,*(node->combi+xp));
+                                Exa_ManAddCardinality_P(p,node->combi,xp,0);
+                            
+                            //Grouping
+                            /*   
                             while(list->start->act==act && list->start->r+1==p->nNodes){
                                 free(node->combi);
                                 free(node);
@@ -1052,19 +1118,30 @@ void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars ){
                                     printf("%d,",*(node->combi+im));
                                 }
                                 printf("\n");
-                            }
-                            printf("Adding Sum(0) equal 1 Constraints\n");
-                            Exa_ManAddOrClauses_equal1(p);
-                            free(node->combi);
-                            free(node);                       
+                            }*/
+                            //printf("Adding Sum(0) equal 1 Constraints\n");
+                            //Exa_ManAddOrClauses_equal1(p);
+                                                   
                                 status = sat_solver_solve( p->pSat, NULL, NULL, 0, 0, 0, 0 );
                                 printf("solution: %d \n",status);
                                 if ( status == 1 ){
-                                    Exa_ManPrintSolution( p, fCompl );
-                                    Exa_ManFree( p );
-                                    Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
-                                    break;
-                                }    
+                                    xp=Exa_ManEvalPVariables(p,node->combi);
+                                    if(xp==-1){
+                                        free(node->combi);
+                                        free(node); 
+                                        Exa_ManPrintSolution( p, fCompl );
+                                        Exa_ManFree( p );
+                                        Abc_PrintTime( 1, "Total runtime", Abc_Clock() - clkTotal );
+                                        break;
+                                    }
+                                }
+                                else
+                                    xp=-2;
+
+                            }
+                            //printf("Loop breakout\n");  
+                            free(node->combi);
+                            free(node); 
                             ////////////////////////////////////////////////////
                             continue;
                     }
