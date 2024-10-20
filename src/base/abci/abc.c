@@ -9796,15 +9796,19 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
 {
     extern void Exa_ManExactSynthesis( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_base( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_gr_skip( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_cegar( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_cegar2( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis4( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis5( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis6( Bmc_EsPar_t * pPars, char * pFileName );
     extern void Exa_ManExactSynthesis7( Bmc_EsPar_t * pPars, int GateSize );
-    int c, fKissat = 0, fKissat2 = 0, fUseNands = 0, GateSize = 0;
+    int c, fKissat = 0, fKissat2 = 0, fUseNands = 0, GateSize = 0; int f_opts=0;
     Bmc_EsPar_t Pars, * pPars = &Pars;
     Bmc_EsParSetDefault( pPars );
     Extra_UtilGetoptReset();
-    while ( ( c = Extra_UtilGetopt( argc, argv, "INTGabdconugklvh" ) ) != EOF )
+    while ( ( c = Extra_UtilGetopt( argc, argv, "INTFGabdconugklvh" ) ) != EOF )
     {
         switch ( c )
         {
@@ -9848,6 +9852,17 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
                 goto usage;
             }
             GateSize = atoi(argv[globalUtilOptind]);
+            globalUtilOptind++;
+            if ( GateSize < 0 )
+                goto usage;
+            break;     
+        case 'F':
+            if ( globalUtilOptind >= argc )
+            {
+                Abc_Print( -1, "Command line switch \"-G\" should be followed by an integer.\n" );
+                goto usage;
+            }
+            f_opts = atoi(argv[globalUtilOptind]);
             globalUtilOptind++;
             if ( GateSize < 0 )
                 goto usage;
@@ -9929,7 +9944,14 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
     else if ( pPars->fGlucose )
         Exa_ManExactSynthesis( pPars );
     else
-        Exa_ManExactPowerSynthesis2( pPars );
+        if(f_opts==0)
+            Exa_ManExactPowerSynthesis_base( pPars );
+        else if(f_opts==1)
+            Exa_ManExactPowerSynthesis_gr_skip( pPars );
+        else if(f_opts==2)
+            Exa_ManExactPowerSynthesis_cegar(pPars);
+        else if(f_opts==3)
+            Exa_ManExactPowerSynthesis_cegar2(pPars);
     return 0;
 
 usage:
