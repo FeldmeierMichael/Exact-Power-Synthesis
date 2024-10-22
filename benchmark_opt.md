@@ -45,3 +45,18 @@ xychart-beta
     bar [80, 60]
 ```
 
+[INFO] Synthesising NPN Class=2 TruthTable:0x0003 pexact:182 r=4 exact:312 r=4 time=0.04min 
+
+```mermaid
+xychart-beta
+    title "Comparison powertwoexact twoexact"
+    x-axis [0, 1, 3]
+    y-axis "Switching Activity" 0-->312
+    line [182, 152, 182]
+    line [192, 152, 312]
+    line [172.0, 172.0, 172.0]
+    line [218.66666666666666, 218.66666666666666, 218.66666666666666]
+    bar [80, 60, 80]
+    bar [80, 60, 80]
+```
+
