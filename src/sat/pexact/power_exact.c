@@ -23,6 +23,7 @@
 #include "misc/util/utilTruth.h"
 #include "sat/cnf/cnf.h"
 #include "sat/bsat/satStore.h"
+#include "math.h"
 
 ABC_NAMESPACE_IMPL_START
 
@@ -683,18 +684,109 @@ int Exa_ManEvalPVariables(Exa_Man_t * p, int* combi){
     return -1;   
 }
 
+int faku(int n){
+    if(n>0)
+        return n*faku(n-1);
+    else 
+        return 1;    
+}
 
+void Exa_ManAddPClauses_bdd(Exa_Man_t * p){
+    //printf("adding P Clauses\n");
+    int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;   
+    int n_p=pow(2,p->nVars-1)+1;
+    int x_it=0;
+    int m_size=pow(2,p->nVars)-1;
+    int x_size=pow(2,p->nVars)-1;
+    int fak=0;
+   
+    for (int f = 1; f <= m_size; f++)
+    {       
+        fak=fak+f;
+    }
+    m_size=fak;
+    p->i_p=p->iVar;
+    printf("Creating %d new Variables for bdd EQ Encoding\n",m_size);    
+    for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++){
+        int m_start=p->iVar;
+        p->iVar+=m_size;
+        sat_solver_setnvars( p->pSat, p->iVar);
+        int p_start=p->iVar;
+        p->iVar+=n_p;
+        sat_solver_setnvars( p->pSat, p->iVar);
+        int lit=Abc_Var2Lit(p_start,1);
+        sat_solver_addclause(p->pSat,&lit,&lit+1);//restricting p0        
+        int p_vars[2*n_p-2];
+        for (int p = 0; p < n_p; p++)
+        {
+            p_vars[p]=p_start+p;
+        }
+        for (int p = n_p; p < 2*n_p-2; p++)
+        {
+            p_vars[p]=p_start+2*n_p-2-p;
+        }         
+        printf("Adding MUX Clasues for i=%d\n",i);
+        int x_end =pow(2,p->nVars)-1;
+        int x =0;
+        int y =0;
+        for (int m = 0; m < m_size; m++)
+        {   
+            printf("Adding MUX for m=%d\n",m);
+            int t=y+x+1;
+            x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);
+            int m1;
+            int m0;
+            if(x==x_end-1){
+                m1=p_vars[y+1];
+                m0=p_vars[y];    
+                printf("Adding Mux m_%d=(x_%d?p_%d:p_%d)\n",m+1,t,y+1,y);           
+            }
+            else{
+                m1=m_start+m+x_end;
+                m0=m_start+m+1;
+                printf("Adding Mux m_%d=(x_%d?m_%d:m_%d)\n",m+1,t,m+x_end+1,m+1+1);
+            }            
+            add_mux_encoding(p,m_start+m,x_it,m1,m0);
+            x++;
+            if(x==x_end){
+                x=0;
+                x_end--;
+                y++;
+            }            
+        }        
+    }
+        
+}
+
+void add_mux_encoding(Exa_Man_t * p,int o,int c, int i1,int i0){    
+    int pLits[3];    
+    pLits[0]=Abc_Var2Lit(c,1);
+    pLits[1]=Abc_Var2Lit(o,1);
+    pLits[2]=Abc_Var2Lit(i1,0);
+    sat_solver_addclause( p->pSat, pLits, pLits+3);
+    pLits[0]=Abc_Var2Lit(c,1);
+    pLits[1]=Abc_Var2Lit(i1,1);
+    pLits[2]=Abc_Var2Lit(o,0);
+    sat_solver_addclause( p->pSat, pLits, pLits+3);
+    pLits[0]=Abc_Var2Lit(c,0);
+    pLits[1]=Abc_Var2Lit(o,1);
+    pLits[2]=Abc_Var2Lit(i0,0);
+    sat_solver_addclause( p->pSat, pLits, pLits+3);
+    pLits[0]=Abc_Var2Lit(c,0);
+    pLits[1]=Abc_Var2Lit(i0,1);
+    pLits[2]=Abc_Var2Lit(o,0);
+    sat_solver_addclause( p->pSat, pLits, pLits+3);
+}
 
 
 void Exa_ManAddPClauses(Exa_Man_t * p){
-    printf("adding P Clauses\n");
+    //printf("adding P Clauses\n");
     int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;  
     int litsize=pow(2,p->nVars); 
     int n_combs=pow(2,pow(2,p->nVars)-1);
     int n_p=pow(2,p->nVars-1);      
     int pLits[litsize]; 
     int pLits_p[litsize];
-
     int x_it=0; 
     p->i_p=p->iVar;
     for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++){
@@ -762,6 +854,78 @@ void Exa_ManAddPClauses(Exa_Man_t * p){
 
     }
 }
+
+
+void Exa_ManAddCardinality_P_bdd(Exa_Man_t *p, int *combi, int xp)
+{
+    
+        int n_i = p->nNodes - 1;
+        int n_p = pow(2, p->nVars - 1)+1;
+        int m_len=0;
+        for (int i = 1; i <= pow(2,p->nVars)-1; i++)
+        {
+            m_len+=i;
+        }        
+        int pi = xp;
+        // printf("constrain for Sum:p_%d=%d\n",pi+1,*(combi+pi));
+        int pLits[n_i];
+        int lit = 0;
+        int l = *(combi + pi);
+        // less then l
+        int j = l + 1;
+        for (int i = 0; i < pow(2, n_i); i++)
+        {
+            int res[n_i];
+            convert_base_int(2, i, n_i, res);
+            int sum = 0;
+            for (int l = 0; l < n_i; l++)
+            {
+                sum += *(res + l);
+            }
+            if (sum == j)
+            {
+                lit = 0;
+                for (int l = 0; l < n_i; l++)
+                {
+                    if (*(res + l) == 1)
+                    {
+                        // printf("%d,",l+1);
+                        pLits[lit++] = Abc_Var2Lit(p->i_p+m_len+l*(m_len+n_p)+pi+1, 1);
+                    }
+                }
+                // printf("\n");
+                sat_solver_addclause(p->pSat, pLits, pLits + lit);
+            }
+        }
+        lit = 0;
+        // more then l
+        j = n_i - l + 1;
+        for (int i = 0; i < pow(2, n_i); i++)
+        {
+            int res[n_i];
+            convert_base_int(2, i, n_i, res);
+            int sum = 0;
+            for (int l = 0; l < n_i; l++)
+            {
+                sum += *(res + l);
+            }
+            if (sum == j)
+            {
+                lit = 0;
+                for (int l = 0; l < n_i; l++)
+                {
+                    if (*(res + l) == 1)
+                    {
+                        pLits[lit++] = Abc_Var2Lit(p->i_p+m_len+l*(m_len+n_p)+pi+1,0);
+                    }
+                }
+                sat_solver_addclause(p->pSat, pLits, pLits + lit);
+            }
+            // }
+        }
+    
+}
+
 
 void Exa_ManAddCardinality_P(Exa_Man_t *p, int *combi, int xp, int grp)
 {
@@ -906,12 +1070,7 @@ void Exa_ManAddCardinality_P(Exa_Man_t *p, int *combi, int xp, int grp)
 
 
 
-void Exa_ManAddCardinality_P_vari(Exa_Man_t *p, int *combi, int xp, int grp,int vari)
-{
-   //vari=0 -> binomial
-   //vari=1 -> binary
-   //vari=2 -> 
-}
+
 
 
 
@@ -1357,8 +1516,8 @@ void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars)
                 pPars->nNodes = node->r + 1;
                 p = Exa_ManAlloc(pPars, pTruth);
                 status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
-                assert(status);
-                printf("Adding Minterm Clauses\n");
+                printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                assert(status);                
                 for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
                 {
                     abctime clk = Abc_Clock();
@@ -1368,15 +1527,16 @@ void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars)
                         break;
                     }
                 }
-                Exa_ManAddPClauses(p);
-                printf("##Adding Sum Constraints\n");
+                printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                Exa_ManAddPClauses_bdd(p);
+                printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 for (int i0 = 0; i0 < list->len; i0++)
                 {
-                    Exa_ManAddCardinality_P(p, node->combi, i0, 0);
+                    Exa_ManAddCardinality_P_bdd(p, node->combi, i0);
                 }
-
+                printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
-                printf("solution: %d \n", status);
+                printf("###Solution: %d \n", status);
                 if (status == 1)
                 {
                     free(node->satfy);
