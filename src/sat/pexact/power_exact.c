@@ -509,6 +509,126 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
    
 }
 
+static void Exa_ManPrintSolution_bdd( Exa_Man_t * p, int fCompl )
+{
+    int i, k, iVar;
+    printf( "Realization of given %d-input function using %d two-input gates complementary=%d:\n", p->nVars, p->nNodes,fCompl );
+//    for ( i = p->nVars + 2; i < p->nObjs; i++ )
+    for ( i = p->nObjs - 1; i >= p->nVars; i-- )
+    {
+        int iVarStart = 1 + 3*(i - p->nVars);
+        int Val1 = sat_solver_var_value(p->pSat, iVarStart);
+        int Val2 = sat_solver_var_value(p->pSat, iVarStart+1);
+        int Val3 = sat_solver_var_value(p->pSat, iVarStart+2);
+        if ( i == p->nObjs - 1 && fCompl )
+            printf( "%02d = 4\'b%d%d%d1(", i, !Val3, !Val2, !Val1 );
+        else
+            printf( "%02d = 4\'b%d%d%d0(", i, Val3, Val2, Val1 );
+        for ( k = 1; k >= 0; k-- )
+        {
+            iVar = Exa_ManFindFanin( p, i, k );
+            if ( iVar >= 0 && iVar < p->nVars )
+                printf( " %c", 'a'+iVar );
+            else
+                printf( " %02d", iVar );
+        }
+        printf( " )\n" );
+    }
+    printf("Printing M Variables...\n");
+    int m_size=0;
+    for (int i = 1; i <=pow(2,p->nVars)-1; i++)
+    {
+        m_size+=i;
+    }
+    int n_p=pow(2,p->nVars-1)+1;
+    for (int i = 0; i < p->nNodes-1; i++)
+    {
+        for (int j = 0; j < m_size; j++)
+        {
+            printf("m_%d_%d has value %d\n",p->nVars+i,j+1,sat_solver_var_value(p->pSat,p->i_p+(n_p+m_size)*i+j));
+        }
+        for (int j = 0; j < n_p; j++)
+        {
+            printf("p_%d_%d has value %d\n",p->nVars+i,j,sat_solver_var_value(p->pSat,p->i_p+(n_p+m_size)*i+j+m_size));
+        }
+    }
+    printf("Printing overall Truth Table...\n");
+    int len=(p->nObjs)*(pow(2,p->nVars));
+    int x_it[len];
+    int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;
+
+
+    for (int i = 0; i < p->nVars; i++)
+    {
+        for (int t = 0; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            x_it[index] = value_of_nthbit(t,i);
+        }
+    }
+    
+    for(int i=p->nVars;i<p->nVars+p->nNodes-1;i++)
+    {
+        int index=i*(pow(2,p->nVars));
+        x_it[index]=0;
+        for (int t = 1; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            x_it[index] = sat_solver_var_value(p->pSat ,xi_base + 3*(i-p->nVars+1)+(t-1)*(3*p->nNodes));
+           
+        }
+        
+    }
+    for (int i = 0; i < p->nObjs-1; i++)
+    {
+        printf("i=%d:",i);
+        for (int t = 0; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            printf("%d",x_it[index]);
+        }
+        printf("\n");        
+    }     
+    int iVarStart = 1 + 3*(p->nObjs - 1 - p->nVars);
+    int f_out[4];
+    f_out[0]=fCompl;
+    f_out[1] =fCompl ? !sat_solver_var_value(p->pSat, iVarStart) :sat_solver_var_value(p->pSat, iVarStart);
+    f_out[2] =fCompl ? !sat_solver_var_value(p->pSat, iVarStart+1):sat_solver_var_value(p->pSat, iVarStart+1);
+    f_out[3] =fCompl ? !sat_solver_var_value(p->pSat, iVarStart+2):sat_solver_var_value(p->pSat, iVarStart+2);
+    int i0 = Exa_ManFindFanin( p, p->nObjs-1, 0);
+    int i1 = Exa_ManFindFanin( p, p->nObjs-1, 1);
+    printf("i=%d:",p->nObjs-1);
+    for (int t = 0; t <  pow(2,p->nVars); t++)
+    {
+        int index_0=i0*(pow(2,p->nVars))+t;
+        int index_1=i1*(pow(2,p->nVars))+t;
+        int index=(x_it[index_1]<<1)+(x_it[index_0]);
+        printf("%d",f_out[index]);
+    }    
+    printf("\n");
+    printf("\n");
+    int sum_act=0;
+    for (int i = p->nVars; i < p->nObjs-1; i++)
+    {
+        int sum_0=0;
+        int sum_1=0;
+        int min_sum=0;
+        for (int t = 0; t <  pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            if(x_it[index]==1)
+                sum_1++;
+            else
+                sum_0++;                
+        }
+        min_sum=sum_1<=sum_0? sum_1: sum_0;
+        sum_act+= 2*min_sum*(pow(2,p->nVars)-min_sum);
+    }
+    printf("Switching Activity=%d\n",sum_act);
+    printf("Number of Gates: r=%d\n",p->nNodes);
+   
+}
+
 
 /**Function*************************************************************
 
@@ -706,7 +826,7 @@ void Exa_ManAddPClauses_bdd(Exa_Man_t * p){
     }
     m_size=fak;
     p->i_p=p->iVar;
-    printf("Creating %d new Variables for bdd EQ Encoding\n",m_size);    
+    //printf("Creating %d new Variables for bdd EQ Encoding\n",m_size);    
     for(int i=p->nVars+1;i<p->nVars+p->nNodes;i++){
         int m_start=p->iVar;
         p->iVar+=m_size;
@@ -715,7 +835,9 @@ void Exa_ManAddPClauses_bdd(Exa_Man_t * p){
         p->iVar+=n_p;
         sat_solver_setnvars( p->pSat, p->iVar);
         int lit=Abc_Var2Lit(p_start,1);
-        sat_solver_addclause(p->pSat,&lit,&lit+1);//restricting p0        
+        sat_solver_addclause(p->pSat,&lit,&lit+1);//restricting p0   
+        lit=Abc_Var2Lit(m_start,0);
+        sat_solver_addclause(p->pSat,&lit,&lit+1);//restricting m1 needs to be fullfilled       
         int p_vars[2*n_p-2];
         for (int p = 0; p < n_p; p++)
         {
@@ -725,13 +847,13 @@ void Exa_ManAddPClauses_bdd(Exa_Man_t * p){
         {
             p_vars[p]=p_start+2*n_p-2-p;
         }         
-        printf("Adding MUX Clasues for i=%d\n",i);
+        //printf("Adding MUX Clasues for i=%d\n",i);
         int x_end =pow(2,p->nVars)-1;
         int x =0;
         int y =0;
         for (int m = 0; m < m_size; m++)
         {   
-            printf("Adding MUX for m=%d\n",m);
+            //printf("Adding MUX for m=%d\n",m);
             int t=y+x+1;
             x_it = xi_base + 3*(i-p->nVars)+(t-1)*(3*p->nNodes);
             int m1;
@@ -739,12 +861,12 @@ void Exa_ManAddPClauses_bdd(Exa_Man_t * p){
             if(x==x_end-1){
                 m1=p_vars[y+1];
                 m0=p_vars[y];    
-                printf("Adding Mux m_%d=(x_%d?p_%d:p_%d)\n",m+1,t,y+1,y);           
+                //printf("Adding Mux m_%d=(x_%d?p_%d:p_%d)\n",m+1,t,y+1,y);           
             }
             else{
                 m1=m_start+m+x_end;
                 m0=m_start+m+1;
-                printf("Adding Mux m_%d=(x_%d?m_%d:m_%d)\n",m+1,t,m+x_end+1,m+1+1);
+                //printf("Adding Mux m_%d=(x_%d?m_%d:m_%d)\n",m+1,t,m+x_end+1,m+1+1);
             }            
             add_mux_encoding(p,m_start+m,x_it,m1,m0);
             x++;
@@ -1542,7 +1664,7 @@ void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars)
                     free(node->satfy);
                     free(node->combi);
                     free(node);
-                    Exa_ManPrintSolution(p, fCompl);
+                    Exa_ManPrintSolution_bdd(p, fCompl);
                     Exa_ManFree(p);
                     Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
                     break;
