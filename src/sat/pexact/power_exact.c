@@ -79,6 +79,7 @@ struct comb_list_
     
 };
 
+
 void add_combi(int act,int r,int* combi,comb_list* list){    
     int len=list->len;
     comb* node=(comb*) malloc(sizeof(comb));
@@ -130,93 +131,108 @@ comb* pop_comb(comb_list* list){
         return node;   
 }
 
-void remove_combis(comb_list* list,int r,int * combi)
+void remove_combis(comb_list *list, int r, int *combi)
 {
-    
-    int l=0;
-    if(list->length>0){
-        comb* ptr=list->start;
-        comb* ptr_old=list->start;
-        while (ptr->next!=NULL)
-        {   
-            if((ptr->r)==r){
-                int match=0;
-                //printf("new ptr\n");               
+    int l = 0;
+    int iptr = 0;
+    if (list->length > 0)
+    {
+        comb *ptr = list->start;
+        comb *ptr_old = list->start;
+        while (ptr->next != NULL)
+        {
+            // printf("Loop Start\n");
+            if ((ptr->r) == r)
+            {
+                int match = 0;
+                // printf("new ptr\n");
                 for (int i = 0; i < list->len; i++)
                 {
-                    //printf("comparing %d with %d\n",*(ptr->combi+i),*(combi+i));
-                    if((*(combi+i)==-1)||(*(ptr->combi+i)==*(combi+i)))
+                    // printf("comparing %d with %d\n",*(ptr->combi+i),*(combi+i));
+                    if ((*(combi + i) == -1) || (*(ptr->combi + i) == *(combi + i)))
                         match++;
                 }
-                if(match==list->len){  
-                    //printf("element:%d\n",l);              
-                    //printf("removed\n");
-                    if(ptr==list->start){
+                if (match == list->len)
+                {
+                    // printf("element:%d\n",l);
+                    // printf("removed\n");
+                    if (ptr == list->start)
+                    {
                         l++;
-                        list->start=ptr->next;
-                        ptr_old=list->start;     
-                        list->length--;                   
-                        //free(ptr->combi);
-                        //free(ptr);
-                        //ptr=list->start;
+                        list->start = ptr->next;
+                        ptr_old = list->start;
+                        list->length--;
+                        // free(ptr->combi);
+                        // free(ptr);
+                        // ptr=list->start;
                     }
-                    else{
-                        printf("Removed ACT=%d r=%d p1=%d\n",ptr->act,ptr->r,*combi);
+                    else
+                    {
+                        printf("Removed ACT=%d r=%d p1=%d\n", ptr->act, ptr->r, *combi);
                         l++;
-                        ptr_old->next=ptr->next;
-                        ptr=ptr_old;
-                        list->length--;                        
-                        //free(ptr->combi);
-                        //free(ptr);
-                        //ptr=ptr_old;
+                        ptr_old->next = ptr->next;
+                        ptr = ptr_old;
+                        list->length--;
+                        // free(ptr->combi);
+                        // free(ptr);
+                        // ptr=ptr_old;
                     }
                 }
             }
-            ptr_old=ptr;
-            ptr=ptr->next;            
+            ptr_old = ptr;
+            ptr = ptr->next;
+            // printf("in list %d from %d\n",iptr,list->length);
+            iptr++;
+            if (iptr == list->length - 1)
+                break;
         }
-        printf("%d combis removed removing\n",l);
-        
+
+        printf("%d combis removed removing\n", l);
     }
 }
 
-
-void add_satfy_values(comb_list* list,int r,int * combi){
-    if(list->length>0){
-        comb* ptr=list->start;
-        comb* ptr_old=list->start;
-        int l=0;
-        while (ptr->next!=NULL)
-        {   
-            if((ptr->r)==r){
-                int match=0;
+void add_satfy_values(comb_list *list, int r, int *combi)
+{
+    if (list->length > 0)
+    {
+        comb *ptr = list->start;
+        comb *ptr_old = list->start;
+        int l = 0;
+        int iptr = 0;
+        while (ptr->next != NULL)
+        {
+            if ((ptr->r) == r)
+            {
+                int match = 0;
                 for (int i = 0; i < list->len; i++)
                 {
-                    //printf("comparing %d with %d\n",*(ptr->combi+i),*(combi+i));
-                    if((*(combi+i)==-1)||(*(ptr->combi+i)==*(combi+i)))
+                    // printf("comparing %d with %d\n",*(ptr->combi+i),*(combi+i));
+                    if ((*(combi + i) == -1) || (*(ptr->combi + i) == *(combi + i)))
                         match++;
                 }
-                if(match==list->len){
-                    printf("ACT=%d r=%d p1=%d:\n",ptr->act,ptr->r,*(ptr->combi));                    
+                if (match == list->len)
+                {
+                    printf("ACT=%d r=%d p1=%d:\n", ptr->act, ptr->r, *(ptr->combi));
                     for (int sa = 0; sa < list->len; sa++)
                     {
-                        //printf("satfy_%d=%d\n",sa+1,*(combi+sa));
+                        // printf("satfy_%d=%d\n",sa+1,*(combi+sa));
                         //*(ptr->satfy+sa)=*(combi+sa);
-                        int val=*(combi+sa);
-                        *(ptr->satfy+sa)=val;
-                    }  
+                        int val = *(combi + sa);
+                        *(ptr->satfy + sa) = val;
+                    }
                     l++;
                 }
             }
-            ptr_old=ptr;
-            ptr=ptr->next;            
+            ptr_old = ptr;
+            ptr = ptr->next;
+            // printf("in list %d from %d\n",iptr,list->length);
+            iptr++;
+            if (iptr == list->length - 1)
+                break;
         }
-        printf("added satfy for r=%d %d combis \n",r,l);
-        
+        printf("added satfy for r=%d %d combis \n", r, l);
     }
-
 }
-
 
 void free_comb_list(comb_list* list){
     while(list->length>0){
@@ -534,7 +550,7 @@ static void Exa_ManPrintSolution_bdd( Exa_Man_t * p, int fCompl )
         }
         printf( " )\n" );
     }
-    printf("Printing M Variables...\n");
+    /*printf("Printing M Variables...\n");
     int m_size=0;
     for (int i = 1; i <=pow(2,p->nVars)-1; i++)
     {
@@ -551,7 +567,7 @@ static void Exa_ManPrintSolution_bdd( Exa_Man_t * p, int fCompl )
         {
             printf("p_%d_%d has value %d\n",p->nVars+i,j,sat_solver_var_value(p->pSat,p->i_p+(n_p+m_size)*i+j+m_size));
         }
-    }
+    }*/
     printf("Printing overall Truth Table...\n");
     int len=(p->nObjs)*(pow(2,p->nVars));
     int x_it[len];
@@ -776,6 +792,50 @@ static int Exa_ManAddCnf( Exa_Man_t * p, int iMint )
     
     p->iVar += 3*p->nNodes;
     return 1;
+}
+
+int Exa_ManEvalPVariables_bdd(Exa_Man_t * p, int* combi,int * arr_xp){
+    int n_p=pow(2,p->nVars-1)+1;
+    int combi_sol[n_p];
+    for (int i = 0; i < n_p; i++)
+    {
+        combi_sol[i]=0;
+    }
+    
+
+    int m_size=0;
+    for (int i = 1; i <=pow(2,p->nVars)-1; i++)
+    {
+        m_size+=i;
+    }    
+    /*for (int i = 0; i < p->nNodes-1; i++)
+    {
+        for (int j = 0; j < m_size; j++)
+        {
+            printf("m_%d_%d has value %d\n",p->nVars+i,j+1,sat_solver_var_value(p->pSat,p->i_p+(n_p+m_size)*i+j));
+        }
+        for (int j = 0; j < n_p; j++)
+        {
+            printf("p_%d_%d has value %d\n",p->nVars+i,j,sat_solver_var_value(p->pSat,p->i_p+(n_p+m_size)*i+j+m_size));
+        }
+    }*/
+    for (int i = 0; i < p->nNodes-1; i++)
+    {
+        for (int j = 0; j < n_p; j++)
+        {
+            combi_sol[j]+=sat_solver_var_value(p->pSat,p->i_p+(n_p+m_size)*i+j+m_size);
+            //printf("p_%d_%d has value %d\n",p->nVars+i,j+1,sat_solver_var_value(p->pSat,p->i_p+n_p*i+j));
+        }
+    }
+    for (int i = 0; i < n_p-1; i++)
+    {
+        //printf("comparing xp=%d %d with %d\n",i+1,combi_sol[i],*(combi+i));
+        if(*(combi+i)!=combi_sol[i+1])
+            return i;     
+        //else
+        //    *(arr_xp+i)=*(combi+i);   
+    }
+    return -1;   
 }
 
 int Exa_ManEvalPVariables(Exa_Man_t * p, int* combi){
@@ -1336,6 +1396,70 @@ int calc_min_act(int r,int k){
     int ret=(int)(((pow(2,2*k)-pow(2,2*k-1)))*r);
     return ret;
 }
+
+
+/////////////////////////////////////////////////BDD Summed weights
+typedef struct node_ node;
+struct node_
+{
+    node* n0;
+    node* n1;
+    int end;//-1 for 1-End -2 for 0-End
+    int i;
+    int np;
+    int act;    
+};
+typedef struct bdd_ bdd;
+struct bdd_
+{
+    node* start;    
+    int act;    
+};
+
+void calculate_bdd(Exa_Man_t * p,int act){
+    int k=p->nVars;
+    int r=p->nNodes-1;
+    int n_p=pow(2,k-1);
+    int w_p[n_p];
+    for (int i = 0; i < n_p; i++)
+    {
+        w_p[i]=2*(i+1)*(pow(2,k)-(i+1));
+        printf("%d\n",w_p[i]);
+    }
+    printf("Constructing BDD from Summed Weightfunction\n");
+    printf("%d = ",act);    
+    for (int np = n_p-1;np>=0;np--)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            printf("%d*p_%d_%d + ",w_p[np],i,np+1);;
+        }        
+    }
+    printf("\n");
+
+    printf("calc_possibility: %d\n",bdd_calc_end(w_p,n_p,0,64));
+}
+
+int bdd_calc_end(int* w_arr,int len,int ptr_start,int act){
+    int comb=pow(2,len-ptr_start);
+    for (int i = 0; i < comb; i++)
+    {
+        int sum=0;
+        for (int p = ptr_start; p < len; p++)
+        {
+            sum+=*(w_arr+p)*value_of_nthbit(i,p);
+        }
+        printf("SUM:%d\n",sum);
+        if(sum==act)
+            return 1;        
+    }
+    return 0;
+}
+
+
+
+
+
 /*
 void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
 {
@@ -2079,3 +2203,256 @@ void Exa_ManExactPowerSynthesis_cegar2(Bmc_EsPar_t *pPars)
     free_comb_list(list);
     // print_combi_list(list);
 }
+/////////////////////////////////////////////////////////////base bdd 
+void Exa_ManExactPowerSynthesis_base_bdd(Bmc_EsPar_t *pPars)
+{
+    int i, status, iMint = 1;
+    abctime clkTotal = Abc_Clock();
+    Exa_Man_t *p;
+    int fCompl = 0;
+    word pTruth[16];
+    Abc_TtReadHex(pTruth, pPars->pTtStr);
+    assert(pPars->nVars <= 10);
+    p = Exa_ManAlloc(pPars, pTruth);
+    if (pTruth[0] & 1)
+    {
+        fCompl = 1;
+        Abc_TtNot(pTruth, p->nWords);
+    }
+    comb_list *list = (comb_list *)malloc(sizeof(comb_list));
+    list->len = pow(2, p->nVars - 1);
+    list->length = 0;
+    int r = 0;
+    int act = 0;
+    while (1)
+    {
+        //printf("ACT=%d\n",act);
+        if (act >= calc_max_act(r + 1, p->nVars))
+        {
+           
+            r++;
+            pPars->nNodes = r + 1;
+            calculate_comb_array(p->nVars, r, list);
+            printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
+            //print_combi_list(list);
+        }
+        if (list->length > 0)
+        {            
+            if (list->start->act == act)
+            {
+                comb *node = pop_comb(list);
+                printf("###ACT:%d,r:%d CONSUMED COMBINATION:", (node->act), node->r + 1);
+                for (int im = 0; im < list->len; im++)
+                {
+                    printf("%d,", *(node->combi + im));
+                }
+                printf("\n");
+                ////////////////////////////////////////////////////programm sat solver
+                Exa_ManFree(p);
+                pPars->nNodes = node->r + 1;
+                p = Exa_ManAlloc(pPars, pTruth);
+                status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                assert(status);                
+                for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                {
+                    abctime clk = Abc_Clock();
+                    if (!Exa_ManAddCnf(p, iMint))
+                    {
+                        printf("The problem has no solution.\n");
+                        break;
+                    }
+                }
+                printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                Exa_ManAddPClauses_bdd(p);
+                printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                for (int i0 = 0; i0 < list->len; i0++)
+                {
+                    Exa_ManAddCardinality_P_bdd(p, node->combi, i0);
+                }
+                printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                printf("###Solution: %d \n", status);
+                if (status == 1)
+                {
+                    free(node->satfy);
+                    free(node->combi);
+                    free(node);
+                    Exa_ManPrintSolution_bdd(p, fCompl);
+                    Exa_ManFree(p);
+                    Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
+                    break;
+                }
+            free(node->satfy);
+            free(node->combi);
+            free(node);
+            continue;
+            }
+            
+            ////////////////////////////////////////////////////
+            
+        }        
+        act++;
+
+        if (act > 2000)
+            break;
+    }    
+    free_comb_list(list);
+}
+/////////////////////////////////////////////////cegar2 bdd
+void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars)
+{
+    int i, status, iMint = 1;
+    abctime clkTotal = Abc_Clock();
+    Exa_Man_t *p;
+    int fCompl = 0;
+    word pTruth[16];
+    Abc_TtReadHex(pTruth, pPars->pTtStr);
+    assert(pPars->nVars <= 10);
+    p = Exa_ManAlloc(pPars, pTruth);
+    if (pTruth[0] & 1)
+    {
+        fCompl = 1;
+        Abc_TtNot(pTruth, p->nWords);
+    }
+    comb_list *list = (comb_list *)malloc(sizeof(comb_list));
+    list->len = pow(2, p->nVars - 1);
+    list->length = 0;
+    int r = 0;
+    int act = 0;
+    while (1)
+    {
+        if (act >= calc_max_act(r + 1, p->nVars))
+        {
+            r++;
+            //////////////////////////Check if there is a general solution for r
+            Exa_ManFree(p);
+            pPars->nNodes = r + 1;
+            p = Exa_ManAlloc(pPars, pTruth);
+            status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+            assert(status);
+            for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+            {
+                if (!Exa_ManAddCnf(p, iMint))
+                {
+                    printf("The problem has no solution.\n");
+                    break;
+                }
+            }
+            status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+            //////////////////////////
+            if (status == 1)
+            {
+                calculate_comb_array(p->nVars, r, list);
+                printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
+            }
+            else
+                printf("######ACT:%d No general Solution for r=%d\n", act, r + 1);
+        }
+        if (list->length > 0)
+        {
+            if (list->start->act == act)
+            {
+                comb *node = pop_comb(list);
+                printf("###ACT:%d,r:%d CONSUMED COMBINATION:", (node->act), node->r + 1);
+                for (int im = 0; im < list->len; im++)
+                {
+                    printf("%d,", *(node->combi + im));
+                }
+                printf("\n");
+                ////////////////////////////////////////////////////programm sat solver
+                Exa_ManFree(p);
+                pPars->nNodes = node->r + 1;
+                p = Exa_ManAlloc(pPars, pTruth);
+                status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                assert(status);
+                printf("Adding Minterm Clauses\n");
+                for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                {
+                    abctime clk = Abc_Clock();
+                    if (!Exa_ManAddCnf(p, iMint))
+                    {
+                        printf("The problem has no solution.\n");
+                        break;
+                    }
+                }
+                Exa_ManAddPClauses_bdd(p);
+                printf("##Adding Sum Constraints\n");
+                int arr_xp[list->len];
+                for (int ax = 0; ax < list->len; ax++)
+                {
+                    arr_xp[ax] = -1;
+                }
+                int xp = 0;
+
+                for (int i0 = 0; i0 < list->len; i0++)
+                {
+                    printf("#CHECKING p_%d =%d\n", i0 + 1, *(node->satfy + i0));
+                    if (*(node->satfy + i0) != -1)
+                    {
+                        Exa_ManAddCardinality_P_bdd(p, node->combi, i0);
+                        printf("Already tried p_%d -> skipped\n", i0 + 1);
+                        arr_xp[i0] = *(node->combi + i0);
+                        xp = i0 + 1;
+                    }                      
+                }
+                while (xp >= 0)
+                {
+                    printf("#CEGAR Constraining Sum(p_%d) == %d\n", xp + 1, *(node->combi + xp));
+                    Exa_ManAddCardinality_P_bdd(p, node->combi, xp);
+                    arr_xp[xp] = *(node->combi + xp);
+                    status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                    printf("solution: %d \n", status);
+                    if (status == 1)
+                    {
+                        add_satfy_values(list, node->r, arr_xp);
+                        xp = Exa_ManEvalPVariables_bdd(p, node->combi,arr_xp);
+                        if (xp == -1)
+                        {
+                            free(node->satfy);
+                            free(node->combi);
+                            free(node);
+                            Exa_ManPrintSolution_bdd(p, fCompl);
+                            Exa_ManFree(p);
+                            Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        xp = -1;
+                        printf("removing combis with no solution\n");
+                        remove_combis(list, node->r, arr_xp);
+                        // print_combi_list(list);
+                    }
+                }                
+                free(node->satfy);
+                free(node->combi);
+                free(node);
+                ////////////////////////////////////////////////////
+                continue;
+            }
+        }
+        act++;
+        if (act > 2000)
+            break;
+    }
+    free_comb_list(list);
+    // print_combi_list(list);
+}
+////////////////////////////////////////////////BBD For Encoding weighted Sum
+void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
+{
+    int i, status, iMint = 1;
+    abctime clkTotal = Abc_Clock();
+    Exa_Man_t *p;
+    int fCompl = 0;
+    word pTruth[16];
+    Abc_TtReadHex(pTruth, pPars->pTtStr);
+    assert(pPars->nVars <= 10);
+    p = Exa_ManAlloc(pPars, pTruth);
+    calculate_bdd(p,100);
+}
+
+
+
