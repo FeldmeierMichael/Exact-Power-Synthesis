@@ -1416,10 +1416,11 @@ struct bdd_
     node* start;    
     int act;    
 };
-int* new_node(int end,int i,int np, int act)
+int* new_node(int end0,int end1,int i,int np, int act)
 {
     node* n=(node*) malloc(sizeof(node));
-    n->end=end;
+    n->end0=end0;
+    n->end1=end1;
     n->i=i;
     n->np=np;
     n->act=act;
@@ -1449,34 +1450,35 @@ void calculate_bdd(Exa_Man_t * p,int act){
     }
     printf("\n");
     bdd* BDD=(bdd*) malloc(sizeof(bdd));
-    bdd->act=act;
+    BDD->act=act;
     int i_act=act;
-    bdd->start=new_node(0,0,n_p,act);
-    node* i_ptr=bdd->start;
-    node* i_0;
-    node* i_1;
+    BDD->start=new_node(0,0,0,n_p,act);
+    node* i_ptr=BDD->start;
+    calculate_node(i_ptr,w_p,n_p,n_p,0,act);
     
     printf("calc_possibility: %d\n",bdd_calc_end(w_p,n_p,0,292));
 }
 
 
-void calculate_node(node* n,int* w_arr,int len,int ptr_start,int act){
+void calculate_node(node* n,int* w_arr,int n_p,int len,int ptr_start,int act){
     int i_act= n->act;
     ///////////1-node
-    int bdd_calc1=bdd_calc_end(w_p,n_p,len-1,act-i_act)
+    int bdd_calc1=bdd_calc_end(w_arr,n_p,ptr_start,act-i_act);
     if(bdd_calc1==1){
-        
-
-    }
+        node* n1=new_node(0,0,*(w_arr+ptr_start),n_p,act-i_act);
+        calculate_node(n1,w_arr,n_p,len,ptr_start+1,act-i_act);
+        n->n1=n1;
+        }
     else if(bdd_calc1==2)
         n->end1=-2;    
     else
         n->end1=-1;
     /////////////////0-node
-    int bdd_calc0=bdd_calc_end(w_p,n_p,len-1,act)
+    int bdd_calc0=bdd_calc_end(w_arr,n_p,len-1,act);
     if(bdd_calc0==1){
-
-        
+        node* n0=new_node(0,0,*(w_arr+ptr_start),n_p,act-i_act);
+        calculate_node(n0,w_arr,n_p,len,ptr_start+1,act);
+        n->n0=n0;   
     }
     else if(bdd_calc0==2)    
         n->end0=-2;
