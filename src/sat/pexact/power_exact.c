@@ -1404,7 +1404,8 @@ struct node_
 {
     node* n0;
     node* n1;
-    int end;//-1 for 1-End -2 for 0-End
+    int end0;//-1 for 1-End -2 for 0-End
+    int end1;//-1 for 1-End -2 for 0-End
     int i;
     int np;
     int act;    
@@ -1415,6 +1416,16 @@ struct bdd_
     node* start;    
     int act;    
 };
+int* new_node(int end,int i,int np, int act)
+{
+    node* n=(node*) malloc(sizeof(node));
+    n->end=end;
+    n->i=i;
+    n->np=np;
+    n->act=act;
+    return n;
+}
+
 
 void calculate_bdd(Exa_Man_t * p,int act){
     int k=p->nVars;
@@ -1427,33 +1438,75 @@ void calculate_bdd(Exa_Man_t * p,int act){
         printf("%d\n",w_p[i]);
     }
     printf("Constructing BDD from Summed Weightfunction\n");
-    printf("%d = ",act);    
+    printf("%d = ",act);   
     for (int np = n_p-1;np>=0;np--)
     {
         for (int i = 0; i < r; i++)
         {
-            printf("%d*p_%d_%d + ",w_p[np],i,np+1);;
+            printf("%d*p_%d_%d + ",w_p[np],i,np+1);
+            
         }        
     }
     printf("\n");
-
-    printf("calc_possibility: %d\n",bdd_calc_end(w_p,n_p,0,64));
+    bdd* BDD=(bdd*) malloc(sizeof(bdd));
+    bdd->act=act;
+    int i_act=act;
+    bdd->start=new_node(0,0,n_p,act);
+    node* i_ptr=bdd->start;
+    node* i_0;
+    node* i_1;
+    
+    printf("calc_possibility: %d\n",bdd_calc_end(w_p,n_p,0,292));
 }
+
+
+void calculate_node(node* n,int* w_arr,int len,int ptr_start,int act){
+    int i_act= n->act;
+    ///////////1-node
+    int bdd_calc1=bdd_calc_end(w_p,n_p,len-1,act-i_act)
+    if(bdd_calc1==1){
+        
+
+    }
+    else if(bdd_calc1==2)
+        n->end1=-2;    
+    else
+        n->end1=-1;
+    /////////////////0-node
+    int bdd_calc0=bdd_calc_end(w_p,n_p,len-1,act)
+    if(bdd_calc0==1){
+
+        
+    }
+    else if(bdd_calc0==2)    
+        n->end0=-2;
+    else
+        n->end0=-1;
+
+}
+
 
 int bdd_calc_end(int* w_arr,int len,int ptr_start,int act){
     int comb=pow(2,len-ptr_start);
+    int solble=0;
+    
     for (int i = 0; i < comb; i++)
     {
-        int sum=0;
+        int sum=0; 
+        int sum_b=0;           
         for (int p = ptr_start; p < len; p++)
         {
+            sum_b+=value_of_nthbit(i,p);
             sum+=*(w_arr+p)*value_of_nthbit(i,p);
         }
-        printf("SUM:%d\n",sum);
+
+        if(sum==act && sum_b == 1)
+            return 2;   //node hase 1-end  
         if(sum==act)
-            return 1;        
+            solble=1;   //solvable
     }
-    return 0;
+    
+    return solble;
 }
 
 
@@ -2451,7 +2504,7 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
     Abc_TtReadHex(pTruth, pPars->pTtStr);
     assert(pPars->nVars <= 10);
     p = Exa_ManAlloc(pPars, pTruth);
-    calculate_bdd(p,100);
+    calculate_bdd(p,292);
 }
 
 

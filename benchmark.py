@@ -31,8 +31,8 @@ command_base="./abc -c 'twoexact -N 3 -I 4 "
 res=[]
 p_res=[]
 
-os.system('echo "[INFO] Running Benchmark for k=4\n" > '+file_name)
-#os.system('echo "[INFO] Reading NPN Classes from npn.txt\n" >> '+file_name)
+#os.system('echo "[INFO] Running Benchmark for k=4\n" > '+file_name)
+
 
 file=open("npn.txt",'r')
 npn_l=file.read().splitlines()
@@ -56,14 +56,14 @@ for i in f_npn_i:
 #print(f_npn)
 #n_classes=len(f_npn)
 ts=time.time()
-os.system('echo "[INFO] Number of NPN Classes:'+str(len(f_npn))+'\n\n" >> '+file_name)
-os.system('echo "test\n" >> '+file_name)
-os.system('echo "test\n" >> '+file_name)
-os.system('echo "test\n" >> '+file_name)
-os.system('echo "test\n" >> '+file_name)
-os.system('echo "test\n" >> '+file_name)
-os.system('echo "test\n" >> '+file_name)
-os.system('\n" >> '+file_name)
+#os.system('echo "[INFO] Number of NPN Classes:'+str(len(f_npn))+'\n\n" >> '+file_name)
+#os.system('echo "test\n" >> '+file_name)
+#os.system('echo "test\n" >> '+file_name)
+#os.system('echo "test\n" >> '+file_name)
+#os.system('echo "test\n" >> '+file_name)
+#os.system('echo "test\n" >> '+file_name)
+#os.system('echo "test\n" >> '+file_name)
+#os.system('\n" >> '+file_name)
 
 p_r_arr=[]
 p_s_arr=[]
@@ -72,9 +72,11 @@ s_arr=[]
 x=[]
 upd=0
 
-for c_i,f in enumerate(f_npn):
+for c_i,f in enumerate(f_npn[74:]):
     f_int=int(f,2)
+   
     number="0x%0.4X" %f_int
+    print("Synthesising:"+number)
     p_command=p_command_base+number[2:]+"'"
     command=command_base+number[2:]+"'"
     p_result=os.popen(p_command).read()
