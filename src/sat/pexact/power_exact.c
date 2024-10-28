@@ -501,37 +501,39 @@ void optimize_bdd(bdd* BDD){
 }
         
 void optimize_recursive(node* n,node* p,int i){
-    printf("optimizing node %d\n",n->id);
+    //printf("optimizing node %d\n",n->id);
     if(n->end0<0 &&n->end1<0){
-        printf("optimizing node %d End\n",n->id);
+        //printf("optimizing node %d End\n",n->id);
+        
     }
-    else if(n->end0==-1){
-        printf("optimizing node %d Removed\n",n->id);
-        if(i)
+    else if(n->end0==-1 && n->end1==0){
+        //printf("optimizing node %d Removed\n",n->id);
+        if(i==1)
             p->n1=n->n1;
         else
             p->n0=n->n1;
-        optimize_recursive(n->n1,p,1);
+        optimize_recursive(n->n1,p,i);
     }
-    else if(n->end1==-1){
-        printf("optimizing node %d Removed\n",n->id);
-        if(i)
+    else if(n->end1==-1 && n->end0==0){
+        //printf("optimizing node %d Removed\n",n->id);
+        if(i==1)
             p->n1=n->n0;
         else
             p->n0=n->n0;
-        optimize_recursive(n->n0,p,0);
+        optimize_recursive(n->n0,p,i);
     }
-    else if(n->end0==0 &&n->end1==0){
-        printf("optimizing node %d 2 ways\n",n->id);
+    else if(n->end0==0 && n->end1==0){
+        //printf("optimizing node %d 2 ways\n",n->id);
         optimize_recursive(n->n1,n,1);
+        //printf("optimizing node %d %dsecound ways\n",n->id,n->n0->id);
         optimize_recursive(n->n0,n,0);
     }
-    else if(n->end0==0){
-        printf("optimizing node %d n0 ways\n",n->id);
+    else if(n->end0==0 && n->end1==-2){
+        //printf("optimizing node %d n0 ways\n",n->id);
         optimize_recursive(n->n0,n,0);
     }
-    else if(n->end1==0){
-        printf("optimizing node %d n1 ways\n",n->id);
+    else if(n->end1==0 && n->end0==-2){
+        //printf("optimizing node %d n1 ways\n",n->id);
         optimize_recursive(n->n1,n,1);        
     }
 }
@@ -2832,8 +2834,11 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
                 p = Exa_ManAlloc(pPars, pTruth);
                 status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
                 bdd* BDD=calculate_bdd(p,act,node->r);
-                print_bdd(BDD->start);
+                //print_bdd(BDD->start);
                 optimize_bdd(BDD);
+                //print_bdd(BDD->start);
+                //break;
+                //print_bdd(BDD->start);
                 printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 assert(status);                
                 for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
@@ -2854,17 +2859,23 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
                 printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
                 printf("###Solution: %d \n", status);
-                delete_bdd(BDD->start);
-                free(BDD);
+                
+                
+                
                 if (status == 1)
-                {                    
+                {           
+                    print_bdd(BDD->start); 
+                    delete_bdd(BDD->start);  
+                    free(BDD);      
                     free(node->combi);
                     free(node);
                     Exa_ManPrintSolution_bdd(p, fCompl);
                     Exa_ManFree(p);
                     Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
                     break;
-                }            
+                }    
+            delete_bdd(BDD->start);  
+            free(BDD);      
             free(node->combi);
             free(node);
             continue;
