@@ -330,6 +330,7 @@ bdd* calculate_bdd(Exa_Man_t * p,int act,int r){
     int w_arr[n_p*r_n];
     int i_arr[n_p*r_n];
     int n_p_arr[n_p*r_n];
+    int hst[n_p*r_n];
     for (int i = 0; i < n_p; i++)
     {
         w_p[i]=2*(i+1)*(pow(2,k)-(i+1));
@@ -347,6 +348,7 @@ bdd* calculate_bdd(Exa_Man_t * p,int act,int r){
             w_arr[index]=w;
             i_arr[index]=i;
             n_p_arr[index]=np;
+            hst[index]=0;
             index++;
         }        
     }    
@@ -357,26 +359,52 @@ bdd* calculate_bdd(Exa_Man_t * p,int act,int r){
     int i_act=act;
     BDD->start=new_node(0,0,i_arr[0],n_p_arr[0],act,0);
     node* i_ptr=BDD->start;
-    calculate_node(i_ptr,w_arr,i_arr,n_p,index,0,act,1,n_p_arr,r);
+    calculate_node(i_ptr,w_arr,i_arr,n_p,index,0,act,1,n_p_arr,r,hst);
     //print_bdd(BDD->start);
     
     return BDD;
 }
 
 
-int calculate_node(node* n,int* w_arr,int* i_arr,int n_p,int len,int ptr_start,int act,int id,int* n_p_arr,int r){
-    int i_act=w_arr[ptr_start];
+int calculate_node(node* n,int* w_arr,int* i_arr,int n_p,int len,int ptr_start,int act,int id,int* n_p_arr,int r,int* hst){
+    int r_global=len%n_p;
+    int i_current=ptr_start%n_p;
+    int iter=ptr_start;
+    printf("i_current=%d/n",i_current);
+    if(i_current>0){
+        
+        for (int i = ptr_start; i < len; i++)
+        {
+            for (int j = i; j >= 0; j=j-r_global)
+            {
+                if(hst[j]==1){
+                    printf("ptr_start incremented");
+                    ptr_start++;
+                    continue;
+                }
+            }
+            break;
+            
+        }
+    }
     
+    
+    
+    
+    
+    
+    int i_act=w_arr[ptr_start];
     int iid=id;
     //printf("###Calculate Node %d for act=%d i=%d i_act=%d\n",n->id,act,*(i_arr+ptr_start),i_act);
     ///////////1-node
-    int bdd_calc1=bdd_calc_end(w_arr,len,ptr_start+1,act-i_act,r-1,n_p);
+    int bdd_calc1=bdd_calc_end(w_arr,len,ptr_start+1,act-i_act,r-1,n_p,hst);
     //printf("##Node %d bdd_calc1=%d\n",n->id,bdd_calc1);
     if(bdd_calc1==1){
         //printf("#1-Node:\n");
         node* n1=new_node(0,0,*(i_arr+ptr_start+1),*(n_p_arr+ptr_start+1),act-i_act,iid);
         iid++;
-        iid=calculate_node(n1,w_arr,i_arr,n_p,len,ptr_start+1,act-i_act,iid,n_p_arr,r-1);
+        hst[ptr_start]=1;
+        iid=calculate_node(n1,w_arr,i_arr,n_p,len,ptr_start+1,act-i_act,iid,n_p_arr,r-1,hst);
         n->n1=n1;
         }
     else if(bdd_calc1==2)
@@ -385,13 +413,14 @@ int calculate_node(node* n,int* w_arr,int* i_arr,int n_p,int len,int ptr_start,i
         n->end1=-1;
 
     /////////////////0-node
-    int bdd_calc0=bdd_calc_end(w_arr,len,ptr_start+1,act,r,n_p);
+    int bdd_calc0=bdd_calc_end(w_arr,len,ptr_start+1,act,r,n_p,hst);
     //printf("##Node %d bdd_calc0=%d\n",n->id,bdd_calc0);
     if(bdd_calc0==1){
         //printf("#0-Node:\n");        
         node* n0=new_node(0,0,*(i_arr+ptr_start+1),*(n_p_arr+ptr_start+1),act,iid);
         iid++;
-        iid=calculate_node(n0,w_arr,i_arr,*(n_p_arr+ptr_start+1),len,ptr_start+1,act,iid,n_p_arr,r);
+        hst[ptr_start]=0;
+        iid=calculate_node(n0,w_arr,i_arr,*(n_p_arr+ptr_start+1),len,ptr_start+1,act,iid,n_p_arr,r,hst);
         n->n0=n0;   
     }
     else if(bdd_calc0==2)    
@@ -402,7 +431,7 @@ int calculate_node(node* n,int* w_arr,int* i_arr,int n_p,int len,int ptr_start,i
 }
 
 
-int bdd_calc_end(int* w_arr,int len,int ptr_start,int act,int r,int n_p){
+int bdd_calc_end(int* w_arr,int len,int ptr_start,int act,int r,int n_p,int* hst){
     //printf("len=%d,ptr_start=%d act=%d r=%d\n",len,ptr_start,act,r);      
     
     if(act==0 && r==0)
@@ -410,7 +439,6 @@ int bdd_calc_end(int* w_arr,int len,int ptr_start,int act,int r,int n_p){
 
     if(act<0)
         return 0;
-
 
     int w=0;
     int n_len=0;
@@ -506,14 +534,14 @@ void optimize_recursive(node* n,node* p,int i){
         //printf("optimizing node %d End\n",n->id);
         
     }
-    else if(n->end0==-1 && n->end1==0){
+    /*else if(n->end0==-1 && n->end1==0){
         //printf("optimizing node %d Removed\n",n->id);
         if(i==1)
             p->n1=n->n1;
         else
             p->n0=n->n1;
         optimize_recursive(n->n1,p,i);
-    }
+    }*/
     else if(n->end1==-1 && n->end0==0){
         //printf("optimizing node %d Removed\n",n->id);
         if(i==1)
@@ -524,7 +552,7 @@ void optimize_recursive(node* n,node* p,int i){
     }
     else if(n->end0==0 && n->end1==0){
         //printf("optimizing node %d 2 ways\n",n->id);
-        optimize_recursive(n->n1,n,1);
+        optimize_recursive(n->n1,n,1); 
         //printf("optimizing node %d %dsecound ways\n",n->id,n->n0->id);
         optimize_recursive(n->n0,n,0);
     }
