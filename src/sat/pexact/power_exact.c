@@ -367,32 +367,23 @@ bdd* calculate_bdd(Exa_Man_t * p,int act,int r){
 
 
 int calculate_node(node* n,int* w_arr,int* i_arr,int n_p,int len,int ptr_start,int act,int id,int* n_p_arr,int r,int* hst){
-    int r_global=len%n_p;
-    int i_current=ptr_start%n_p;
-    int iter=ptr_start;
-    printf("i_current=%d/n",i_current);
+    /*int i_current=(ptr_start+1)/n_p;   
     if(i_current>0){
         
         for (int i = ptr_start; i < len; i++)
         {
-            for (int j = i; j >= 0; j=j-r_global)
+            for (int j = i; j >= n_p; j=j-n_p)
             {
                 if(hst[j]==1){
-                    printf("ptr_start incremented");
+                    //printf("ptr_start incremented\n");
                     ptr_start++;
                     continue;
                 }
             }
             break;
-            
         }
-    }
-    
-    
-    
-    
-    
-    
+    }*/
+
     int i_act=w_arr[ptr_start];
     int iid=id;
     //printf("###Calculate Node %d for act=%d i=%d i_act=%d\n",n->id,act,*(i_arr+ptr_start),i_act);
@@ -420,7 +411,8 @@ int calculate_node(node* n,int* w_arr,int* i_arr,int n_p,int len,int ptr_start,i
         node* n0=new_node(0,0,*(i_arr+ptr_start+1),*(n_p_arr+ptr_start+1),act,iid);
         iid++;
         hst[ptr_start]=0;
-        iid=calculate_node(n0,w_arr,i_arr,*(n_p_arr+ptr_start+1),len,ptr_start+1,act,iid,n_p_arr,r,hst);
+        //iid=calculate_node(n0,w_arr,i_arr,*(n_p_arr+ptr_start+1),len,ptr_start+1,act,iid,n_p_arr,r,hst);
+        iid=calculate_node(n0,w_arr,i_arr,n_p,len,ptr_start+1,act,iid,n_p_arr,r,hst);
         n->n0=n0;   
     }
     else if(bdd_calc0==2)    
@@ -530,9 +522,30 @@ void optimize_bdd(bdd* BDD){
         
 void optimize_recursive(node* n,node* p,int i){
     //printf("optimizing node %d\n",n->id);
-    if(n->end0<0 &&n->end1<0){
+    if(n->end0==-2 &&n->end1==-2){
         //printf("optimizing node %d End\n",n->id);
         
+    }
+    else if(n->end0==-2 &&n->end1==-1){
+      if(i==1){
+            p->n1=NULL;
+            p->end1=-1;
+        }            
+        else{
+            p->n0=NULL;
+            p->end0=-1;
+        }
+    }
+    else if(n->end1==-1 && n->end0==-1){
+        //printf("optimizing NOde:%d 2 times 0\n",n->id);
+        if(i==1){
+            p->n1=NULL;
+            p->end1=-1;
+        }            
+        else{
+            p->n0=NULL;
+            p->end0=-1;
+        }
     }
     /*else if(n->end0==-1 && n->end1==0){
         //printf("optimizing node %d Removed\n",n->id);
@@ -542,6 +555,10 @@ void optimize_recursive(node* n,node* p,int i){
             p->n0=n->n1;
         optimize_recursive(n->n1,p,i);
     }*/
+    else if(n->end1==0 && n->end0==-1){
+        //printf("optimizing node %d Removed\n",n->id);        
+        optimize_recursive(n->n1,n,1);
+    }
     else if(n->end1==-1 && n->end0==0){
         //printf("optimizing node %d Removed\n",n->id);
         if(i==1)
@@ -553,11 +570,13 @@ void optimize_recursive(node* n,node* p,int i){
     else if(n->end0==0 && n->end1==0){
         //printf("optimizing node %d 2 ways\n",n->id);
         optimize_recursive(n->n1,n,1); 
-        //printf("optimizing node %d %dsecound ways\n",n->id,n->n0->id);
+       // printf("optimizing node %d %dsecound ways\n",n->id,n->n0->id);
         optimize_recursive(n->n0,n,0);
     }
+
+
     else if(n->end0==0 && n->end1==-2){
-        //printf("optimizing node %d n0 ways\n",n->id);
+       // printf("optimizing node %d n0 ways\n",n->id);
         optimize_recursive(n->n0,n,0);
     }
     else if(n->end1==0 && n->end0==-2){
@@ -566,6 +585,63 @@ void optimize_recursive(node* n,node* p,int i){
     }
 }
 
+void optimize_bdd2(bdd* BDD,int k){
+    int n_p=pow(2,k-1);
+    int hst[n_p];
+    for (int i = 0; i < n_p; i++)
+    {
+        hst[i]=0;
+    }
+    
+    if(BDD->start!=NULL){
+        if(BDD->start->end0==0&&BDD->start->end1==0){
+            hst[BDD->start->i]=1;
+            optimize_recursive2(BDD->start->n1,BDD->start,1,hst);
+            hst[BDD->start->i]=0;
+            optimize_recursive2(BDD->start->n0,BDD->start,0,hst);
+        }            
+        if(BDD->start->end0==0)
+            optimize_recursive2(BDD->start->n0,BDD->start,0,hst);
+        if(BDD->start->end1==0){
+            hst[BDD->start->i]=1;
+            optimize_recursive2(BDD->start->n1,BDD->start,1,hst);
+        }
+            
+    }
+}
+
+void optimize_recursive2(node* n,node* p,int i,int *hst){
+    if(hst[n->i]==1){
+        n->n1=NULL;
+        n->end1=-1;
+        if(n->end0==0){
+            hst[n->i]=0;
+            optimize_recursive2(n->n0,n,0,hst);            
+        }
+    }
+    else{
+    if(n->end0<0 && n->end1<0){
+        
+        
+    }   
+    else if(n->end0==0 && n->end1==0){        
+        hst[n->i]=1;
+        optimize_recursive2(n->n1,n,1,hst);
+        hst[n->i]=0;
+        optimize_recursive2(n->n0,n,0,hst);
+    }
+    else if(n->end0==0){
+        hst[n->i]=0;
+        optimize_recursive2(n->n0,n,0,hst); 
+        
+    }
+    else if(n->end1==0){
+        hst[n->i]=1;
+        optimize_recursive2(n->n1,n,1,hst);        
+    } 
+    }    
+    hst[n->i]=0;
+}
 
 
 
@@ -2841,9 +2917,29 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
         if (act >= calc_max_act(r + 1, p->nVars))
         {           
             r++;
+            //////////////////////////Check if there is a general solution for r
+            Exa_ManFree(p);
             pPars->nNodes = r + 1;
-            calculate_comb_array(p->nVars, r, list);
-            printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);           
+            p = Exa_ManAlloc(pPars, pTruth);
+            status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+            assert(status);
+            for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+            {
+                if (!Exa_ManAddCnf(p, iMint))
+                {
+                    printf("The problem has no solution.\n");
+                    break;
+                }
+            }
+            status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+            //////////////////////////
+            if (status == 1)
+            {
+                calculate_comb_array(p->nVars, r, list);
+                printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
+            }
+            else
+                printf("######ACT:%d No general Solution for r=%d\n", act, r + 1);        
         }
         if (list->length > 0)
         {            
@@ -2864,9 +2960,26 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
                 bdd* BDD=calculate_bdd(p,act,node->r);
                 //print_bdd(BDD->start);
                 optimize_bdd(BDD);
+                optimize_bdd2(BDD,p->nVars);               
+                optimize_bdd(BDD);
+                //optimize_bdd(BDD);
                 //print_bdd(BDD->start);
                 //break;
                 //print_bdd(BDD->start);
+
+                while(list->start->act==act && list->start->r+1==p->nNodes){
+                    comb* node1;
+                    node1=pop_comb(list);   
+                    free(node1->combi);
+                    free(node1);                                     
+                    printf("#Skipping ACT:%d,r:%d CONSUMED COMBINATION:",(node->act),node->r+1);
+                    for (int im = 0; im < list->len; im++)
+                    {
+                        printf("%d,",*(node->combi+im));
+                    }
+                    printf("\n");
+                }
+
                 printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 assert(status);                
                 for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
@@ -2887,9 +3000,6 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
                 printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
                 printf("###Solution: %d \n", status);
-                
-                
-                
                 if (status == 1)
                 {           
                     print_bdd(BDD->start); 
