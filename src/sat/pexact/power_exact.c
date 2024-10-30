@@ -1973,7 +1973,7 @@ void convert_base_int(int base,int value,int size,int* results){
     return results;
 }
 
-void calculate_comb_array(int k,int r,comb_list* list){
+void calculate_comb_array(int k,int r,comb_list* list){    
     if(r==0)
         return 0;    
     int size=pow(r+1,pow(2,k-1));    
@@ -2370,7 +2370,9 @@ void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars)
                     }
                 }
                 printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
-                Exa_ManAddPClauses_bdd(p);
+                
+                
+                (p);
                 printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 for (int i0 = 0; i0 < list->len; i0++)
                 {
@@ -3080,8 +3082,8 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
             //////////////////////////
             if (status == 1)
             {
-                calculate_comb_array(p->nVars, r, list);
                 printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
+                calculate_comb_array(p->nVars, r, list);                
             }
             else
                 printf("######ACT:%d No general Solution for r=%d\n", act, r + 1);        
