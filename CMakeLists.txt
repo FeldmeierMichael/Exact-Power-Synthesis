@@ -126,3 +126,4 @@ if(NOT DEFINED ABC_SKIP_TESTS)
     include(GoogleTest)
     add_subdirectory(test)
 endif()
+

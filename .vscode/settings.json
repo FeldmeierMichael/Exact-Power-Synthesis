@@ -7,6 +7,9 @@
         "chrono": "c",
         "algorithm": "c",
         "unordered_map": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "bdd.h": "c",
+        "kernel.h": "c",
+        "fdd.h": "c"
     }
 }

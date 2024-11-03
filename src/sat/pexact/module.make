@@ -1,1 +1,22 @@
+
+SRC +=    src/sat/pexact/buddy-main/src/bdd.h
+SRC +=    src/sat/pexact/buddy-main/src/bddio.c
+SRC +=    src/sat/pexact/buddy-main/src/bddop.c
+SRC +=    src/sat/pexact/buddy-main/src/bddtree.h
+SRC +=    src/sat/pexact/buddy-main/src/bvec.c
+SRC +=    src/sat/pexact/buddy-main/src/bvec.h
+SRC +=    src/sat/pexact/buddy-main/src/cache.c
+SRC +=    src/sat/pexact/buddy-main/src/cache.h
+SRC +=    src/sat/pexact/buddy-main/src/fdd.c
+SRC +=    src/sat/pexact/buddy-main/src/fdd.h
+SRC +=    src/sat/pexact/buddy-main/src/imatrix.c
+SRC +=    src/sat/pexact/buddy-main/src/imatrix.h
+SRC +=    src/sat/pexact/buddy-main/src/config.h
+SRC +=    src/sat/pexact/buddy-main/src/kernel.c
+SRC +=    src/sat/pexact/buddy-main/src/kernel.h
+SRC +=    src/sat/pexact/buddy-main/src/pairs.c
+SRC +=    src/sat/pexact/buddy-main/src/prime.c
+SRC +=    src/sat/pexact/buddy-main/src/prime.h
+SRC +=    src/sat/pexact/buddy-main/src/reorder.c
+SRC +=    src/sat/pexact/buddy-main/src/tree.c
 SRC +=    src/sat/pexact/power_exact.c 

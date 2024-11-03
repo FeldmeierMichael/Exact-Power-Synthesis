@@ -1,0 +1,10 @@
+build/*
+Win32/*
+x64/*
+
+*.dot
+
+# clangd
+.cache/
+
+/.vscode

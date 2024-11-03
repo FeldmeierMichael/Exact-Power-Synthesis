@@ -9,4 +9,6 @@ src/sat/pexact/power_exact.d src/sat/pexact/power_exact.o: src/sat/pexact/power_
  src/misc/util/utilTruth.h src/sat/cnf/cnf.h src/opt/dar/darInt.h \
  src/opt/dar/dar.h src/sat/bsat/satStore.h src/sat/bsat/satSolver.h \
  src/sat/bsat/satVec.h src/sat/bsat/satClause.h \
- src/misc/util/utilDouble.h
+ src/misc/util/utilDouble.h src/sat/pexact/buddy-main/src/bdd.h \
+ src/sat/pexact/buddy-main/src/kernel.h \
+ src/sat/pexact/buddy-main/src/bdd.h

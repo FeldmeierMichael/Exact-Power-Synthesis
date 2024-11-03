@@ -1,0 +1,3 @@
+#!/bin/tcsh -f
+
+./fdd | grep -E -v '^Garbage collection' > result
