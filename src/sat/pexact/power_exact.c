@@ -3419,7 +3419,7 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
         act++;
 
         if (act > 2000)
-            break;
+            break; 
     }    
     free_comb_list(list);
 }
