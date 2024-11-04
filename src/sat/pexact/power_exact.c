@@ -269,11 +269,12 @@ void print_combi_list(comb_list* list){
 }
 /////////////////////////////////////////////////BDD Summed weights BUDDY
 bdd* calculate_bdd_buddy(Exa_Man_t* p,int r,int act){   
-    //printf("calculating bdd using buddy package r=%d act=%d",r,act); 
+    printf("calculating bdd using buddy package r=%d act=%d\n",r,act); 
     int k=p->nVars;    
     int n_p=pow(2,k-1);
     int w_p[n_p];
-    bdd_init(10000,10000);
+    int sats=0;
+    bdd_init(100000,100000);
     bdd_setvarnum(n_p*r);
     bdd_autoreorder(BDD_REORDER_SIFTITE);
     bdd bdd_var[n_p*r];    
@@ -309,12 +310,13 @@ bdd* calculate_bdd_buddy(Exa_Man_t* p,int r,int act){
                 j=n_p;       
         }
         if(sum==act && sum_b==r){
-            //printf("Founc match\n");
+           // printf("Founc match\n");
+            sats++;
             int first_flag_inner=0;
             for (int i = 0; i < n_p; i++)
             {
                 
-                    //printf("n_p=%d\n",i);
+                   // printf("n_p=%d\n",i);
                     if(first_flag_inner==0){
                         first_flag_inner=1;
                         and=bdd_n_outof_r(combi[i],r,i,n_p);
@@ -326,16 +328,19 @@ bdd* calculate_bdd_buddy(Exa_Man_t* p,int r,int act){
             } 
           if(flag_first==0){
             flag_first=1;
-            or=and;
-            break;
+            or=and;           
           }
           else{
             or=bdd_addref(bdd_apply(or,and,bddop_or));
+            
           }                                           
         }
         
     }
-    return or;
+    if(sats==0)
+        return NULL;
+    else
+        return or;
 }
 bdd bdd_n_outof_r(int n,int r,int np,int n_p){
     //printf("bdd_%d_out_of_%d\n",n,r);
@@ -372,6 +377,7 @@ bdd bdd_n_outof_r(int n,int r,int np,int n_p){
             }
             else{
                 o=bdd_addref(bdd_apply(o,and,bddop_or));
+               
             }          
         }
         
@@ -380,7 +386,128 @@ bdd bdd_n_outof_r(int n,int r,int np,int n_p){
     //bdd_printtable(o);     
     return o;
 } 
+void Exa_ManAddCard_clauses_buddy(Exa_Man_t *p,FILE *ofile, BDD r,int size,int act)
+{
+   BddNode *node;
+   int n;
 
+   //fprintf(ofile, "ROOT: %d\n", r);
+   if (r < 2)
+      return;
+
+   bdd_mark(r);   
+   int size_bdd=bddnodesize;
+   int i_node_lookup[size_bdd];
+   int i_node[size];
+   int i_n1[size];
+   int i_n0[size];
+   int i_cont[size];   
+   
+   int index=0;
+   for (n=0 ; n<size_bdd ; n++)
+   {
+      if (LEVEL(n) & MARKON)
+      {        
+        node = &bddnodes[n];
+        LEVELp(node) &= MARKOFF;
+
+        i_node_lookup[n]=index;
+        i_node[index]=index;
+        if(HIGHp(node)>1)
+            i_n1[index]=i_node_lookup[HIGHp(node)];
+        else if(HIGHp(node)==1)
+            i_n1[index]=-1;
+        else if(HIGHp(node)==0)
+            i_n1[index]=-2;
+
+        if(LOWp(node)>1)
+            i_n0[index]=i_node_lookup[LOWp(node)];
+        else if(LOWp(node)==1)
+            i_n0[index]=-1;
+        else if(LOWp(node)==0)
+            i_n0[index]=-2;
+
+        
+        i_cont[index]=LEVELp(node);        
+        index++;
+                
+        /*
+        fprintf(ofile, "[%5d] ", n);
+        
+        fprintf(ofile, "%3d", bddlevel2var[LEVELp(node)]);
+
+        fprintf(ofile, ": %3d", LOWp(node));
+        fprintf(ofile, " %3d", HIGHp(node));
+        fprintf(ofile, "\n");  */      
+      }
+   }
+
+    int n_i = p->nNodes ;
+    int n_p = pow(2, p->nVars - 1) + 1;
+    int m_len = 0;
+    for (int i = 1; i <= pow(2, p->nVars) - 1; i++)
+    {
+        m_len += i;
+    } 
+
+   int lit_const0_raw=p->iVar; 
+   int lit_const0=Abc_Var2Lit(p->iVar,1);
+   p->iVar+=1;
+   sat_solver_setnvars( p->pSat, p->iVar);
+   sat_solver_addclause(p->pSat,&lit_const0,&lit_const0+1);
+
+   int lit_const1_raw=p->iVar;  
+   int lit_const1=Abc_Var2Lit(p->iVar,0);
+   p->iVar+=1;
+   sat_solver_setnvars( p->pSat, p->iVar); 
+   sat_solver_addclause(p->pSat,&lit_const1,&lit_const1+1);
+
+   
+   int base_var=p->iVar;
+   int var;
+   int var_end; 
+    for (int i = 0; i < size; i++)
+    {   
+        //if(act==406)
+            //printf("[%d]-> %d: n0:%d ? n1:%d;\n",i_node[i],i_cont[i],i_n0[i],i_n1[i]);
+        var=p->iVar;
+        p->iVar+=1;
+        sat_solver_setnvars(p->pSat,p->iVar);
+        int n0=i_n0[i];
+        int n1=i_n1[i];
+        int cnt=i_cont[i];
+        int i_n=i_node[i];
+        int np=cnt%(n_p-1);
+        int r=cnt/(n_p-1);
+        int pi=p->i_p+m_len+r*(m_len+n_p)+np+1;
+        if(i==size-1)
+            var_end=var; 
+
+        if(n0==-2 && n1==-2)
+            add_mux_encoding(p,var,pi,lit_const0_raw,lit_const0_raw);
+        else if(n0==-1 && n1== -1)
+            add_mux_encoding(p,var,pi,lit_const1_raw,lit_const1_raw);
+        else if(n0==-1 && n1== -2)
+            add_mux_encoding(p,var,pi,lit_const0_raw,lit_const1_raw);
+        else if(n0==-2 && n1== -1)
+            add_mux_encoding(p,var,pi,lit_const1_raw,lit_const0_raw);
+        else if(n0>=0 && n1>= 0)
+            add_mux_encoding(p,var,pi,base_var+n1,base_var+n0);
+        else if(n0>=0 && n1== -1)
+            add_mux_encoding(p,var,pi,lit_const1_raw,base_var+n0);
+        else if(n0>=0 && n1== -2)
+            add_mux_encoding(p,var,pi,lit_const0_raw,base_var+n0);
+        else if(n1>=0 && n0== -1)
+            add_mux_encoding(p,var,pi,base_var+n1,lit_const1_raw);
+        else if(n1>=0 && n0== -2)
+            add_mux_encoding(p,var,pi,base_var+n1,lit_const0_raw);   
+
+            
+    }
+    int root=Abc_Var2Lit(var,0);
+    sat_solver_addclause(p->pSat,&root,&root+1);
+
+}
 /////////////////////////////////////////////////BDD Summed weights my implementation
 /*
 typedef struct node_ node;
@@ -1716,6 +1843,18 @@ void add_mux_encoding(Exa_Man_t * p,int o,int c, int i1,int i0){
     pLits[1]=Abc_Var2Lit(i0,1);
     pLits[2]=Abc_Var2Lit(o,0);
     sat_solver_addclause( p->pSat, pLits, pLits+3);
+}
+
+void add_node_encoding(Exa_Man_t * p,int o,int c, int i1,int i0){    
+    int pLits[3];    
+    pLits[0]=Abc_Var2Lit(i0,0);
+    pLits[1]=Abc_Var2Lit(c,0);   
+    pLits[1]=Abc_Var2Lit(o,1); 
+    sat_solver_addclause( p->pSat, pLits, pLits+2);
+    pLits[0]=Abc_Var2Lit(i1,0);
+    pLits[1]=Abc_Var2Lit(c,1);
+    pLits[2]=Abc_Var2Lit(o,1);
+    sat_solver_addclause( p->pSat, pLits, pLits+3);    
 }
 
 
@@ -3286,6 +3425,14 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
 }
 */
 ////////////////////////////////////////////////BBD For Encoding weighted Sum with BUDDY bdd package
+void allsatPrintHandler(char* varset, int size) 
+ { 
+   for (int v=0; v<size; ++v) 
+   { 
+      printf("%c",(varset[v] < 0 ? 'X' : (char)('0' + varset[v]))); 
+   } 
+   printf("\n"); 
+ }
 
 void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
 {
@@ -3353,7 +3500,7 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
                 pPars->nNodes = node->r + 1;
                 p = Exa_ManAlloc(pPars, pTruth);
                 status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
-                printf("#Calculating BDD using BUDDY BDD Package");
+                printf("#Calculating BDD using BUDDY BDD Package\n");
                 bdd o=calculate_bdd_buddy(p,node->r,node->act);               
                 
                
@@ -3385,9 +3532,11 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
                 }
                 printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 Exa_ManAddPClauses_bdd(p);
+                if(node->act==406)
+                    bdd_allsat(o,allsatPrintHandler);
                 printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 
-                bdd_fprinttable2(p,stdout,o,bdd_nodecount(o));
+                Exa_ManAddCard_clauses_buddy(p,stdout,o,bdd_nodecount(o),node->act);
                 bdd_done();
                 
                 printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
@@ -3416,132 +3565,237 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
     }    
     free_comb_list(list);
 }
-void allsatPrintHandler(char* varset, int size) 
- { 
-   for (int v=0; v<size; ++v) 
-   { 
-      printf("%c",(varset[v] < 0 ? 'X' : (char)('0' + varset[v]))); 
-   } 
-   printf("\n"); 
- }
 
 
-
-void bdd_fprinttable2(Exa_Man_t *p,FILE *ofile, BDD r,int size)
+void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars)
 {
-   BddNode *node;
-   int n;
-
-   fprintf(ofile, "ROOT: %d\n", r);
-   if (r < 2)
-      return;
-
-   bdd_mark(r);   
-   int size_bdd=bddnodesize;
-   int i_node_lookup[size_bdd];
-   int i_node[size];
-   int i_n1[size];
-   int i_n0[size];
-   int i_cont[size];   
-   
-   int index=0;
-   for (n=0 ; n<size_bdd ; n++)
-   {
-      if (LEVEL(n) & MARKON)
-      {        
-        node = &bddnodes[n];
-        LEVELp(node) &= MARKOFF;
-
-        i_node_lookup[n]=index;
-        i_node[index]=index;
-        if(HIGHp(node)>1)
-            i_n1[index]=i_node_lookup[HIGHp(node)];
-        else if(HIGHp(node)==1)
-            i_n1[index]=-1;
-        else if(HIGHp(node)==0)
-            i_n1[index]=-2;
-
-        if(LOWp(node)>1)
-            i_n0[index]=i_node_lookup[LOWp(node)];
-        else if(LOWp(node)==1)
-            i_n0[index]=-1;
-        else if(LOWp(node)==0)
-            i_n0[index]=-2;;
-
-        
-        i_cont[index]=LEVELp(node);        
-        index++;
-                
-
-        /*fprintf(ofile, "[%5d] ", n);
-        
-        fprintf(ofile, "%3d", bddlevel2var[LEVELp(node)]);
-
-        fprintf(ofile, ": %3d", LOWp(node));
-        fprintf(ofile, " %3d", HIGHp(node));
-        fprintf(ofile, "\n");*/        
-      }
-   }
-
-    int n_i = p->nNodes ;
-    int n_p = pow(2, p->nVars - 1) + 1;
-    int m_len = 0;
-    for (int i = 1; i <= pow(2, p->nVars) - 1; i++)
+    int i, status, iMint = 1;
+    abctime clkTotal = Abc_Clock();
+    Exa_Man_t *p;
+    int fCompl = 0;
+    word pTruth[16];
+    Abc_TtReadHex(pTruth, pPars->pTtStr);
+    assert(pPars->nVars <= 10);
+    p = Exa_ManAlloc(pPars, pTruth);
+    if (pTruth[0] & 1)
     {
-        m_len += i;
-    } 
-
-   int lit_const0_raw=p->iVar; 
-   int lit_const0=Abc_Var2Lit(p->iVar,1);
-   p->iVar+=1;
-   sat_solver_setnvars( p->pSat, p->iVar);
-   sat_solver_addclause(p->pSat,&lit_const0,&lit_const0+1);
-
-   int lit_const1_raw=p->iVar;  
-   int lit_const1=Abc_Var2Lit(p->iVar,0);
-   p->iVar+=1;
-   sat_solver_setnvars( p->pSat, p->iVar); 
-   sat_solver_addclause(p->pSat,&lit_const1,&lit_const1+1);
-
-   
-   int base_var=p->iVar;
-   int var; 
-    for (int i = 0; i < size; i++)
-    {
-        //printf("[%d]-> %d: n0:%d ? n1:%d;\n",i_node[i],i_cont[i],i_n0[i],i_n1[i]);
-        var=p->iVar;
-        p->iVar+=1;
-        sat_solver_setnvars(p->pSat,p->iVar);
-        int n0=i_n0[i];
-        int n1=i_n1[i];
-        int cnt=i_cont[i];
-        int i_n=i_node[i];
-        int np=cnt%(n_p-1);
-        int r=cnt/(n_p-1);
-        int pi=p->i_p+m_len+r*(m_len+n_p)+np+1;
-        if(n0==-2 && n1==-2)
-            add_mux_encoding(p,var,pi,lit_const0,lit_const0);
-        else if(n0==-1 && n1== -1)
-            add_mux_encoding(p,var,pi,lit_const1,lit_const1);
-        else if(n0==-1 && n1== -2)
-            add_mux_encoding(p,var,pi,lit_const0,lit_const1);
-        else if(n0==-2 && n1== -1)
-            add_mux_encoding(p,var,pi,lit_const1,lit_const0);
-        else if(n0>=0 && n1>= 0)
-            add_mux_encoding(p,var,pi,base_var+n1,base_var+n0);
-        else if(n0>=0 && n1== -1)
-            add_mux_encoding(p,var,pi,lit_const1,base_var+n0);
-        else if(n0>=0 && n1== -2)
-            add_mux_encoding(p,var,pi,lit_const0,base_var+n0);
-        else if(n1>=0 && n0== -1)
-            add_mux_encoding(p,var,pi,base_var+n1,lit_const1);
-        else if(n1>=0 && n0== -2)
-            add_mux_encoding(p,var,pi,base_var+n1,lit_const0);        
+        fCompl = 1;
+        Abc_TtNot(pTruth, p->nWords);
     }
-    int root=Abc_Var2Lit2(var,0);
-    sat_solver_addclause(p->pSat,&root,&root+1);
+    comb_list *list = (comb_list *)malloc(sizeof(comb_list));
+    list->len = pow(2, p->nVars - 1);
+    list->length = 0;
+    int r = 0;
+    int act = 0;
+    int r_min=0;
+    while (1)
+    {
 
+        if(act>350){
+                    //printf("ACT=%d\n",act);
+                    if (act >= calc_max_act(r + 1, p->nVars))
+                    {           
+                        r++;
+                        //////////////////////////Check if there is a general solution for r
+                        Exa_ManFree(p);
+                        pPars->nNodes = r + 1;
+                        p = Exa_ManAlloc(pPars, pTruth);
+                        status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                        assert(status);
+                        for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                        {
+                            if (!Exa_ManAddCnf(p, iMint))
+                            {
+                                printf("The problem has no solution.\n");
+                                break;
+                            }
+                        }
+                        status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                        //////////////////////////
+                        if (status == 1)
+                        {
+                            printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);                
+                                           
+                        }
+                        else
+                            printf("######ACT:%d No general Solution for r=%d\n", act, r + 1);        
+                    }
+                    if(r_min>0){           
+                    for(int rn=r_min;rn<=r;rn++){   
+                                        
+                            printf("###ACT:%d,r:%d \n",act,rn + 1);
+                            ////////////////////////////////////////////////////programm sat solver                
+                            Exa_ManFree(p);
+                            pPars->nNodes =rn + 1;
+                            p = Exa_ManAlloc(pPars, pTruth);
+                            status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                            printf("#Calculating BDD using BUDDY BDD Package\n");
+                            bdd o=calculate_bdd_buddy(p,rn,act);
+                            if(o==NULL){
+                                printf("Skipped no bdd solution\n");
+                                bdd_done();
+                                continue;                    
+                            }
+                                
+                            //printf("BDD size:%d\n",bdd_nodecount(o));
+
+                            printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            assert(status);                
+                            for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                            {
+                                abctime clk = Abc_Clock();
+                                if (!Exa_ManAddCnf(p, iMint))
+                                {
+                                    printf("The problem has no solution.\n");
+                                    break;
+                                }
+                            }
+                            printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            Exa_ManAddPClauses_bdd(p);                
+                            printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            
+                            Exa_ManAddCard_clauses_buddy(p,stdout,o,bdd_nodecount(o),act);
+                            bdd_done();
+                            
+                            printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                            printf("###Solution: %d \n", status);
+                            if (status == 1)
+                            {
+                                Exa_ManPrintSolution_bdd(p, fCompl);
+                                Exa_ManFree(p);
+                                Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
+                                break;
+                            }    
+                    }     
+                    }    
+                        ////////////////////////////////////////////////////
+                            
+                    act=act+1;
+                    if(act%2==1)
+                        act++;
+
+                    if (act > 2000)
+                        break;
+        }
+        else{
+                //printf("ACT=%d\n",act);
+            if (act >= calc_max_act(r + 1, p->nVars))
+            {           
+                r++;
+                //////////////////////////Check if there is a general solution for r
+                Exa_ManFree(p);
+                pPars->nNodes = r + 1;
+                p = Exa_ManAlloc(pPars, pTruth);
+                status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                assert(status);
+                for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                {
+                    if (!Exa_ManAddCnf(p, iMint))
+                    {
+                        printf("The problem has no solution.\n");
+                        break;
+                    }
+                }
+                status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                //////////////////////////
+                if (status == 1)
+                {
+                    printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
+                    calculate_comb_array(p->nVars, r, list);                
+                    if(r_min==0)
+                        r_min=r;
+                }
+                else
+                    printf("######ACT:%d No general Solution for r=%d\n", act, r + 1);        
+            }
+            if (list->length > 0)
+            {            
+                if (list->start->act == act)
+                {
+                    comb *node = pop_comb(list);                
+                    printf("###ACT:%d,r:%d CONSUMED COMBINATION:", (node->act), node->r + 1);
+                    for (int im = 0; im < list->len; im++)
+                    {
+                        printf("%d,", *(node->combi + im));
+                    }
+                    printf("\n");                
+                    ////////////////////////////////////////////////////programm sat solver                
+                    Exa_ManFree(p);
+                    pPars->nNodes = node->r + 1;
+                    p = Exa_ManAlloc(pPars, pTruth);
+                    status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                    printf("#Calculating BDD using BUDDY BDD Package\n");
+                    bdd o=calculate_bdd_buddy(p,node->r,node->act);               
+                    
+                
+                    //printf("BDD size:%d\n",bdd_nodecount(o));
+
+                    while(list->start->act==act && list->start->r+1==p->nNodes){
+                        comb* node1;
+                        node1=pop_comb(list);   
+                        free(node1->combi);
+                        free(node1);                                     
+                        printf("#Skipping ACT:%d,r:%d CONSUMED COMBINATION:",(node->act),node->r+1);
+                        for (int im = 0; im < list->len; im++)
+                        {
+                            printf("%d,",*(node->combi+im));
+                        }
+                        printf("\n");
+                    }
+
+                    printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                    assert(status);                
+                    for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                    {
+                        abctime clk = Abc_Clock();
+                        if (!Exa_ManAddCnf(p, iMint))
+                        {
+                            printf("The problem has no solution.\n");
+                            break;
+                        }
+                    }
+                    printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                    Exa_ManAddPClauses_bdd(p);
+                    if(node->act==406)
+                        bdd_allsat(o,allsatPrintHandler);
+                    printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                    
+                    Exa_ManAddCard_clauses_buddy(p,stdout,o,bdd_nodecount(o),node->act);
+                    bdd_done();
+                    
+                    printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                    status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                    printf("###Solution: %d \n", status);
+                    if (status == 1)
+                    {           
+                        free(node->combi);
+                        free(node);
+                        Exa_ManPrintSolution_bdd(p, fCompl);
+                        Exa_ManFree(p);
+                        Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
+                        break;
+                    }    
+                
+                free(node->combi);
+                free(node);
+                continue;
+                }
+                ////////////////////////////////////////////////////
+            }        
+            act++;
+
+            if (act > 2000)
+                break;
+        }
+
+
+    }
+      free_comb_list(list);  
+    
 }
+
+
 
 
 /*
