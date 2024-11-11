@@ -10,6 +10,7 @@
         "cmath": "c",
         "bdd.h": "c",
         "kernel.h": "c",
-        "fdd.h": "c"
+        "fdd.h": "c",
+        "random": "c"
     }
 }
