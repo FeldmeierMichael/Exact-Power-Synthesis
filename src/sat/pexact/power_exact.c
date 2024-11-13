@@ -26,6 +26,7 @@
 #include "math.h"
 #include "buddy-main/src/bdd.h"
 #include "buddy-main/src/kernel.h"
+#include "libperm/perm.h"
 
 
 
@@ -2375,9 +2376,227 @@ int calc_min_act(int r,int k){
 
 
 
+static inline void Exchange(int* data, int a, int b) {
+  int temp = data[a];
+  data[a]=data[b];
+  data[b]=temp;
+}
+
+//generates all permutations of initially sorted array `a` with `n` elements
+//returns 0 when no more permutations exist
+int genPermutation(int a[], int n) 
+{
+  int l,j;
+  for (j = --n; j > 0 && a[j-1] >= a[j]; --j) { ; }
+  if (j == 0) return 0; 
+  for (l = n; a[j-1] >= a[l]; --l) { ; }
+  Exchange(a, j-1, l);
+  while (j < n) { Exchange(a, j++ ,n--); }
+  return 1;
+}
 
 
 
+void calculate_comb_array_optimized(int k, int r, comb_list *list)
+{
+    if (r == 0)
+        return 0;
+    int np = pow(2, k - 1);
+    int array_single[np];
+    for (int i = 0; i < np; i++)
+    {
+        array_single[i] = 2 * (i + 1) * (pow(2, k) - (i + 1));
+        // printf("for i=%d:%d\n",i,array_single[i]);
+    }
+    int array_comb[np];
+    for (int i = 0; i < np - 1; i++)
+    {
+        array_comb[i] = 0;
+        
+    }
+
+    array_comb[np - 1] = r;
+    int base_ptr = np - 2;
+    int change_ptr = np - 2;
+    while (change_ptr > 0 | base_ptr > 0)
+    {
+        /////////////////////////////////Calulate Permuations
+        int arr_temp[np];
+        for (int i = 0; i < np; i++)
+        {
+            arr_temp[i]=array_comb[i];
+        }        
+        int res=genPermutation(arr_temp,np);
+        while(res!=0){     
+            int sum_act=0;         
+            for (int i = 0; i < np; i++)
+            {
+                //printf("%d;",arr_temp[i]);
+                sum_act+=array_single[i]*arr_temp[i];
+            }
+            //printf("\n");
+             add_combi(sum_act,r,arr_temp,list);
+            res=genPermutation(arr_temp,np);           
+        }
+        
+        /////////////////////////////////
+
+        int s=0;
+        for (int i = 0; i < np; i++)
+        {
+            if(array_comb[i]==1)
+                s++;
+        }
+        if(s==r)
+            break;
+
+
+
+        /*printf("##combi:");
+        for (int i = 0; i < np; i++)
+        {
+            printf("%d;", array_comb[i]);
+        }
+        printf("\n");*/
+        int el0 = array_comb[change_ptr];
+        int el1 = array_comb[change_ptr + 1];
+        int next_value_change = 0;
+        int last_it = 0;
+        for (int i = 0; i < np - 1; i++)
+        {
+            if (i == change_ptr)
+            {
+                next_value_change += array_comb[change_ptr] + 1;
+                last_it = array_comb[change_ptr] + 1;
+            }
+            else if (i > change_ptr && (array_comb[i] < array_comb[change_ptr] + 1))
+            {
+                next_value_change += array_comb[change_ptr] + 1;
+                last_it = array_comb[change_ptr] + 1;
+            }
+            else
+            {
+                next_value_change += array_comb[i];
+                last_it = array_comb[change_ptr];
+            }
+        }
+        next_value_change += last_it;
+
+        int next_value_base = (el0 + 1) * (np - base_ptr);
+        // printf("change:%d;base:%d\n",next_value_change,next_value_base);
+        // printf("c_ptr:%d;b_ptr:%d\n",change_ptr,base_ptr);
+        if ((next_value_base > r) && change_ptr == base_ptr)
+        {
+            int f = 1;
+            while (f)
+            {
+                base_ptr--;
+                change_ptr = np - 2;
+                int new_val = array_comb[base_ptr] + 1;
+                if ((new_val * (np - base_ptr)) <= r)
+                {
+                    for (int i = base_ptr; i < np - 1; i++)
+                    {
+                        array_comb[i] = new_val;
+                    }
+                    array_comb[np - 1] = r - (new_val * (np - base_ptr - 1));
+                    f = 0;
+                }
+            }
+        }
+        else if (next_value_change > r)
+        {
+            int f = 1;
+            while (f)
+            {
+                change_ptr--;
+                if (change_ptr > base_ptr)
+                {
+                    int new_val = array_comb[change_ptr] + 1;
+                    if ((array_comb[base_ptr] * (change_ptr - base_ptr) + new_val * (np - change_ptr)) <= r)
+                    {
+                        for (int i = change_ptr; i < np - 1; i++)
+                        {
+                            array_comb[i] = new_val;
+                        }
+                        int r_los = 0;
+                        for (int i = base_ptr; i < np - 1; i++)
+                        {
+                            r_los += array_comb[i];
+                        }
+                        array_comb[np - 1] = r - r_los;
+                        f = 0;
+
+                        for (int i = change_ptr + 1; i < np; i++)
+                        {
+                            if (array_comb[i] > array_comb[change_ptr] + 1)
+                                change_ptr = np - 2;
+                        }
+                    }
+                }
+                else
+                {
+                    int new_val = (array_comb[base_ptr] + 1) * (np - base_ptr);
+                    int new_val2 = (array_comb[base_ptr] + 1);
+                    if (new_val <= r)
+                    {
+                        for (int i = base_ptr; i < np - 1; i++)
+                        {
+                            array_comb[i] = new_val2;
+                        }
+                        change_ptr = np - 2;
+                        array_comb[np - 1] = r - (new_val2 * (np - base_ptr - 1));
+                    }
+                    else if (base_ptr > 0)
+                    {
+                        base_ptr--;
+                        change_ptr = np - 2;
+                        int new_val = array_comb[base_ptr] + 1;
+                        if ((new_val * (np - base_ptr)) <= r)
+                        {
+                            for (int i = base_ptr; i < np - 1; i++)
+                            {
+                                array_comb[i] = new_val;
+                            }
+                            array_comb[np - 1] = r - (new_val * (np - base_ptr - 1));
+                            f = 0;
+                        }
+                    }
+                    else
+                        break;
+                    f = 0;
+                }
+            }
+        }
+        else
+        {
+            el0 = array_comb[change_ptr] + 1;
+            array_comb[change_ptr]++;
+            int los = 0;
+            for (int i = 0; i < np - 1; i++)
+            {
+
+                if (i >= change_ptr + 1)
+                {
+                    int el = array_comb[i];
+                    if (el < el0)
+                        array_comb[i] = el0;
+                }
+                los += array_comb[i];
+            }
+            array_comb[np - 1] = r - los;
+            for (int i = change_ptr + 1; i < np; i++)
+            {
+                if (array_comb[i] > array_comb[change_ptr] + 1)
+                    change_ptr = np - 2;
+            }
+            // change_ptr=np-2;
+            // array_comb[change_ptr+1]--;
+        }
+       
+        
+    }
+}
 
 /*
 void Exa_ManExactPowerSynthesis2( Bmc_EsPar_t * pPars )
@@ -3785,8 +4004,8 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars)
 
 
 
-/*
-void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
+
+void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars)
 {
     int i, status, iMint = 1;
     abctime clkTotal = Abc_Clock();
@@ -3795,14 +4014,7 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
     word pTruth[16];
     Abc_TtReadHex(pTruth, pPars->pTtStr);
     assert(pPars->nVars <= 10);
-    p = Exa_ManAlloc(pPars, pTruth);
-    bdd o=calculate_bdd_buddy(p,p->nNodes-1,388);
-    
-    printf("BDD first node0:%d   %d\n",bddnodes->low,bddnodes->high);
-    printf("BDD first node1:%d   %d\n",(bddnodes+1)->low,(bddnodes+1)->high);    
-    
-    bdd_fprinttable2(p,stdout,o,bdd_nodecount(o));
-    printf("BDD size:%d\n",bdd_nodecount(o));
+    calculate_comb_array_optimized(4,8,NULL);;
     
 }
-*/
+

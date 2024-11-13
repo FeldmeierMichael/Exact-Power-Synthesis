@@ -9804,6 +9804,7 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
     extern void Exa_ManExactPowerSynthesis_cegar2_bdd( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactPowerSynthesis_sw( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactPowerSynthesis_sw_free( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_exp( Bmc_EsPar_t * pPars );
     
     extern void Exa_ManExactSynthesis4( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis5( Bmc_EsPar_t * pPars );
@@ -9965,6 +9966,8 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
             Exa_ManExactPowerSynthesis_sw(pPars);
         else if(f_opts==7)
             Exa_ManExactPowerSynthesis_sw_free(pPars);
+        else if(f_opts==8)
+            Exa_ManExactPowerSynthesis_exp(pPars);
 
     return 0;
 

@@ -19,4 +19,7 @@ SRC +=    src/sat/pexact/buddy-main/src/prime.c
 SRC +=    src/sat/pexact/buddy-main/src/prime.h
 SRC +=    src/sat/pexact/buddy-main/src/reorder.c
 SRC +=    src/sat/pexact/buddy-main/src/tree.c
+SRC +=    src/sat/pexact/libperm/perm.h
+SRC +=    src/sat/pexact/libperm/perm.c 
+SRC +=    src/sat/pexact/power_exact.c 
 SRC +=    src/sat/pexact/power_exact.c 
