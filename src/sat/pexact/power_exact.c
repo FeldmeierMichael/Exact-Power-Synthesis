@@ -337,34 +337,34 @@ void print_bdd2(node* n){
     }
 }
 
-void print_bdd2_mermaid(node* n){
+void print_bdd2_mermaid(node* n,FILE *fptr){
     if(n!=NULL){
             n->marker=0; 
             //printf("#######################\n");
-            printf("%d --",n->id);
+            fprintf(fptr,"        %d --",n->id);
             if(n->end1==-1)
-                printf("1 i=%d np=%d--> const0\n",n->i,n->np);
+                fprintf(fptr,"1 i=%d np=%d--> 0_%d\n",n->i,n->np,n->id);
             else if(n->end1==-2)
-                printf("1 i=%d np=%d--> const1\n",n->i,n->np);  
+                fprintf(fptr,"1 i=%d np=%d--> 1_%d\n",n->i,n->np,n->id);  
             else 
-                printf("1 i=%d np=%d--> %d\n",n->i,n->np,n->n1->id);
+                fprintf(fptr,"1 i=%d np=%d--> %d\n",n->i,n->np,n->n1->id);
 
-            printf("%d --",n->id);
+            fprintf(fptr,"        %d --",n->id);
             if(n->end0==-1)
-                printf("0 i=%d np=%d --> const0\n",n->i,n->np);
+                fprintf(fptr,"0 i=%d np=%d --> 0_%d\n",n->i,n->np,n->id);
             else if(n->end0==-2)
-                printf("0 i=%d np=%d--> const1\n",n->i,n->np);    
+                fprintf(fptr,"0 i=%d np=%d--> 1_%d\n",n->i,n->np,n->id);    
             else                 
-                printf("0 i=%d np=%d--> %d\n",n->i,n->np,n->n0->id);   
+                fprintf(fptr,"0 i=%d np=%d--> %d\n",n->i,n->np,n->n0->id);   
             //printf("\n");
             //printf("#######################\n");
             if(n->end1==0)
                 if(n->n1->marker==1)
-                    print_bdd2_mermaid(n->n1);
+                    print_bdd2_mermaid(n->n1,fptr);
 
             if(n->end0==0)
                 if(n->n0->marker==1)
-                    print_bdd2_mermaid(n->n0);
+                    print_bdd2_mermaid(n->n0,fptr);
     }
 }
 
@@ -4301,15 +4301,33 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
                             printf("###Solution: %d \n", status); 
                             mark_nodes(o->start);
-                            if(act==78)
-                                print_bdd2_mermaid(o->start);
+                            if(act==78){
+                                FILE *fptr;
+                                    fptr=fopen("comp_debug.md","w");
+                                    if(fptr==NULL)
+                                        printf("Fail to open file\n");
+                                    fprintf(fptr,"```mermaid\n");
+                                    fprintf(fptr,"    graph TD\n");
+                                    
+                                    print_bdd2_mermaid(o->start,fptr);
+                                    fclose(fptr);
+                            }
+                                
                             if(flag)
                                 r_nsat[rn]=status;                           
                             if (status == 1)
                             {                               
                                 if(step==1){
+                                    /*FILE *fptr;
+                                    fptr=fopen("comp.md","w");
+                                    if(fptr==NULL)
+                                        printf("Fail to open file\n");
+                                    fprintf(fptr,"```mermaid\n");
+                                    fprintf(fptr,"    graph TD\n");
                                     
-                                    //print_bdd2_mermaid(o->start);
+                                    print_bdd2_mermaid(o->start,fptr);
+                                    fclose(fptr);*/
+                                    
                                     Exa_ManPrintSolution_bdd(p, fCompl);
                                     Exa_ManFree(p);
                                     Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
