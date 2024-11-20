@@ -353,9 +353,9 @@ void print_bdd2_mermaid(node* n){
             if(n->end0==-1)
                 printf("0 i=%d np=%d --> const0\n",n->i,n->np);
             else if(n->end0==-2)
-                printf("1 i=%d np=%d--> const1\n",n->i,n->np);    
+                printf("0 i=%d np=%d--> const1\n",n->i,n->np);    
             else                 
-                printf("1 i=%d np=%d--> %d\n",n->i,n->np,n->n0->id);   
+                printf("0 i=%d np=%d--> %d\n",n->i,n->np,n->n0->id);   
             //printf("\n");
             //printf("#######################\n");
             if(n->end1==0)
