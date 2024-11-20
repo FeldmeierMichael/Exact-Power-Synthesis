@@ -4272,7 +4272,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             mark_nodes(o->start);
                             printf("BDD size before optimization:%d\n",get_len_bdd2(o->start));
                             //optimize_bdd2(o);
-                            //optimize_bdd2_2(o,p->nVars);
+                            optimize_bdd2_2(o,p->nVars);
                             //optimize_bdd2(o);                         
                                                
                             //print_bdd2(o->start);
@@ -4301,15 +4301,15 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
                             printf("###Solution: %d \n", status); 
                             mark_nodes(o->start);
-                            //if(act==78)
-                            //    print_bdd2(o->start);
+                            if(act==78)
+                                print_bdd2_mermaid(o->start);
                             if(flag)
                                 r_nsat[rn]=status;                           
                             if (status == 1)
                             {                               
                                 if(step==1){
                                     
-                                    print_bdd2_mermaid(o->start);
+                                    //print_bdd2_mermaid(o->start);
                                     Exa_ManPrintSolution_bdd(p, fCompl);
                                     Exa_ManFree(p);
                                     Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
