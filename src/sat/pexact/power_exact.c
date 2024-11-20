@@ -1065,7 +1065,6 @@ bdd2* calculate_bdd_buddy(Exa_Man_t* p,int r,int act){
     //////////////////////////////////////////////
     return BDD;
 }
-/////////////////////////////////////////////////////////////////////////////BDD creating for smaller than Pseudo CC's
 bdd2* calculate_bdd_buddy_smaller_than(Exa_Man_t* p,int r,int act){   
     //printf("calculating bdd using buddy package r=%d act=%d\n",r,act); 
     int k=p->nVars;    
@@ -1107,7 +1106,7 @@ bdd2* calculate_bdd_buddy_smaller_than(Exa_Man_t* p,int r,int act){
             if(sum_b>r)
                 j=n_p;       
         }
-        if(sum<=act && sum_b==r){
+        if(sum<=act  && sum_b==r){
            // printf("Founc match\n");
             sats++;
             int first_flag_inner=0;
@@ -1138,6 +1137,7 @@ bdd2* calculate_bdd_buddy_smaller_than(Exa_Man_t* p,int r,int act){
         return NULL;
     
     //////////////////////////////////optimizing only one i must be stisfied
+    printf("nodes before optimization: %d\n",bdd_nodecount(or));
     bdd unique;
     for (int i = 0; i < r; i++)
     {
@@ -1149,12 +1149,236 @@ bdd2* calculate_bdd_buddy_smaller_than(Exa_Man_t* p,int r,int act){
             else
                 unique=bdd_addref(bdd_or(unique,bdd_buildcube(pow(2,j),n_p,bdd_var+n_p*i)));  
                                   
-        }
-        //bdd_allsat(unique,allsatPrintHandler);
+        }       
         or=bdd_addref(bdd_and(or,unique));
     }
+    printf("nodes after optimization: %d\n",bdd_nodecount(or));
+
+    printf("Amount of Sats for less then BDD:%lf\n",bdd_satcount(or));
+
+    /////////////////////////////////////optimizing redundant nodes 
+    /*bdd imp;
+    for (int i = 0; i < r; i++)
+    {        
+        for (int j = 0;j < n_p; j++)///smaller than 1
+        {            
+            
+            int flag=0;
+            for (int t = 0; t < n_p; t++)
+            {   
+                if(t!=j){
+                    if(flag==0){
+                        flag=1;
+                        imp=bdd_addref(bdd_not(bdd_var[i*n_p+t]));
+                    }
+                    else{
+                        imp=bdd_addref(bdd_and(imp,bdd_not(bdd_var[i*n_p+t])));
+                    }
+                }                
+            }
+            unique=bdd_addref(bdd_imp(bdd_var[i*n_p+j],imp));
+                                  
+        }       
+        or=bdd_addref(bdd_and(or,unique));
+    }
+    printf("nodes after optimization: %d\n",bdd_nodecount(or));
+    */
     
-    //bdd_allsat(unique,allsatPrintHandler);
+    //////////////////////////////////////////////convert to bdd2
+    bdd2* BDD=(bdd2*) malloc(sizeof(bdd2));
+    BDD->act=act;
+    int size=bdd_nodecount(or);
+    bdd_mark(or);
+    BddNode *nodebdd;   
+    int size_bdd=bddnodesize;    
+    int i_node_lookup[size_bdd];
+    node* nodes[size_bdd];
+    int i_node[size];
+    int i_n1[size];
+    int i_n0[size];
+    int i_cont[size];  
+    
+    int index=0;
+
+    
+    if(size==0){
+        //printf("empty BBD\n");
+        return NULL;
+    }
+    for (int n=0 ; n<size_bdd ; n++)
+    {
+      if (LEVEL(n) & MARKON)
+      {     
+        nodebdd = &bddnodes[n];
+        LEVELp(nodebdd) &= MARKOFF;
+
+        i_node_lookup[n]=index;
+        i_node[index]=index;
+        if(HIGHp(nodebdd)>1)            
+            i_n1[index]=i_node_lookup[HIGHp(nodebdd)];
+        else if(HIGHp(nodebdd)==1)
+            i_n1[index]=-2;
+        else if(HIGHp(nodebdd)==0)
+            i_n1[index]=-1;
+
+        if(LOWp(nodebdd)>1)
+            i_n0[index]=i_node_lookup[LOWp(nodebdd)];
+        else if(LOWp(nodebdd)==1)
+            i_n0[index]=-2;
+        else if(LOWp(nodebdd)==0)
+            i_n0[index]=-1;        
+        
+        i_cont[index]=LEVELp(nodebdd);  
+
+        int cnt=i_cont[index];
+        int i_n=i_node[index];
+        int np=cnt%(n_p);
+        int r=cnt/(n_p);  
+
+        int i0,i1=0;
+        if(i_n0[index]>=0)
+            i0=0;
+        else 
+            i0=i_n0[index];
+        
+        if(i_n1[index]>=0)
+            i1=0;
+        else 
+            i1=i_n1[index];
+
+        nodes[index]=new_node(i0,i1,r,np,0,index);
+        if(i_n0[index]>=0)
+           nodes[index]->n0=nodes[i_n0[index]]; 
+        if(i_n1[index]>=0)
+           nodes[index]->n1=nodes[i_n1[index]]; 
+        index++;
+      }
+   }   
+    BDD->start=nodes[index-1];
+    //////////////////////////////////////////////
+    bdd_delref(or);
+    return BDD;
+}
+/////////////////////////////////////////////////////////////////////////////BDD creating for smaller than Pseudo CC's
+bdd2* calculate_bdd_buddy_smaller_than_min(Exa_Man_t* p,int r,int act,int act_min){   
+    printf("calculating bdd using buddy package r=%d act=%d act_min=%d\n",r,act,act_min); 
+    int k=p->nVars;    
+    int n_p=pow(2,k-1);
+    int w_p[n_p];
+    int sats=0;
+    bdd_init(200000,200000);
+    bdd_setvarnum(n_p*r);
+    bdd_autoreorder(BDD_REORDER_SIFTITE);
+    bdd bdd_var[n_p*r];    
+    //printf("bdd vars initializing\n");
+    for (int i = 0; i < n_p*r; i++)
+    {
+       bdd_var[i]=bdd_ithvar(i);
+    }
+    
+    bdd and;
+    bdd or;
+    int flag_first=0;
+    
+    for (int i = 0; i < n_p; i++)
+    {
+        w_p[i]=2*(i+1)*(pow(2,k)-(i+1));        
+    }   
+    int combs=pow(r+1,n_p);
+    //printf("Searching satisfied Combinations:%d\n",combs);
+    for (int c = 0;c<combs;c++)
+    {
+        int sat=0;
+        int sum=0;
+        int sum_b=0;
+        int combi[n_p];        
+        convert_base_int(r+1,c,n_p,combi);
+        for (int j = 0; j < n_p; j++)
+        {           
+            sum_b=sum_b+combi[j];
+            int mul=combi[j];
+            sum=sum+(w_p[j]*mul);     
+            if(sum_b>r)
+                j=n_p;       
+        }
+        if(sum<=act && sum>=act_min && sum_b==r){
+           // printf("Founc match\n");
+            sats++;
+            int first_flag_inner=0;
+            for (int i = 0; i < n_p; i++)
+            {
+                
+                   // printf("n_p=%d\n",i);
+                    if(first_flag_inner==0){
+                        first_flag_inner=1;
+                        and=bdd_addref(bdd_n_outof_r(combi[i],r,i,n_p));
+                    }
+                    else{
+                        and=bdd_addref(bdd_apply(and,bdd_n_outof_r(combi[i],r,i,n_p),bddop_and));
+                    }
+                
+            } 
+          if(flag_first==0){
+            flag_first=1;
+            or=bdd_addref(and);           
+          }
+          else{
+            or=bdd_addref(bdd_apply(or,and,bddop_or));
+            //bdd_delref(and);            
+          }                                           
+        }        
+    }
+    if(sats==0)
+        return NULL;
+    
+    //////////////////////////////////optimizing only one i must be stisfied
+    printf("nodes before optimization: %d\n",bdd_nodecount(or));
+    bdd unique;
+    for (int i = 0; i < r; i++)
+    {
+        
+        for (int j = 0;j < n_p; j++)///smaller than 1
+        {
+            if(j==0)
+                unique=bdd_buildcube(pow(2,j),n_p,bdd_var+n_p*i);
+            else
+                unique=bdd_addref(bdd_or(unique,bdd_buildcube(pow(2,j),n_p,bdd_var+n_p*i)));  
+                                  
+        }       
+        or=bdd_addref(bdd_and(or,unique));
+    }
+    printf("nodes after optimization: %d\n",bdd_nodecount(or));
+
+    printf("Amount of Sats for less then BDD:%lf\n",bdd_satcount(or));
+
+    /////////////////////////////////////optimizing redundant nodes 
+    /*bdd imp;
+    for (int i = 0; i < r; i++)
+    {        
+        for (int j = 0;j < n_p; j++)///smaller than 1
+        {            
+            
+            int flag=0;
+            for (int t = 0; t < n_p; t++)
+            {   
+                if(t!=j){
+                    if(flag==0){
+                        flag=1;
+                        imp=bdd_addref(bdd_not(bdd_var[i*n_p+t]));
+                    }
+                    else{
+                        imp=bdd_addref(bdd_and(imp,bdd_not(bdd_var[i*n_p+t])));
+                    }
+                }                
+            }
+            unique=bdd_addref(bdd_imp(bdd_var[i*n_p+j],imp));
+                                  
+        }       
+        or=bdd_addref(bdd_and(or,unique));
+    }
+    printf("nodes after optimization: %d\n",bdd_nodecount(or));
+    */
+    
     //////////////////////////////////////////////convert to bdd2
     bdd2* BDD=(bdd2*) malloc(sizeof(bdd2));
     BDD->act=act;
@@ -1656,6 +1880,44 @@ static void Exa_ManPrintSolution( Exa_Man_t * p, int fCompl )
     printf("Switching Activity=%d\n",sum_act);
     printf("Number of Gates: r=%d\n",p->nNodes);
    
+}
+
+
+
+int  Exa_ManGetAct( Exa_Man_t * p, int fCompl ){
+    int len=(p->nObjs)*(pow(2,p->nVars));
+    int x_it[len];
+    int xi_base= p->nNodes*(2*p->nVars+p->nNodes-1)-p->nNodes+3*p->nNodes;
+    for(int i=p->nVars;i<p->nVars+p->nNodes-1;i++)
+    {
+        int index=i*(pow(2,p->nVars));
+        x_it[index]=0;
+        for (int t = 1; t < pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            x_it[index] = sat_solver_var_value(p->pSat ,xi_base + 3*(i-p->nVars+1)+(t-1)*(3*p->nNodes));
+           
+        }
+        
+    }
+    int sum_act=0;
+    for (int i = p->nVars; i < p->nObjs-1; i++)
+    {
+        int sum_0=0;
+        int sum_1=0;
+        int min_sum=0;
+        for (int t = 0; t <  pow(2,p->nVars); t++)
+        {
+            int index=i*(pow(2,p->nVars))+t;
+            if(x_it[index]==1)
+                sum_1++;
+            else
+                sum_0++;                
+        }
+        min_sum=sum_1<=sum_0? sum_1: sum_0;
+        sum_act+= 2*min_sum*(pow(2,p->nVars)-min_sum);
+    }
+    return sum_act;
 }
 
 static void Exa_ManPrintSolution_bdd( Exa_Man_t * p, int fCompl )
@@ -4020,8 +4282,8 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
                 mark_nodes(o->start);
                 printf("BDD size before optimization:%d\n",get_len_bdd2(o->start));
                 optimize_bdd2(o);
-                //optimize_bdd2_2(o,p->nVars);
-                //optimize_bdd2(o);
+                optimize_bdd2_2(o,p->nVars);
+                optimize_bdd2(o);
                 
                 if(o==NULL){
                     bdd_done();
@@ -4251,10 +4513,10 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
     while (1)
     {        
                     
-                    if(act<calc_max_act(r, p->nVars)){
+                    if(r>0 && act<calc_max_act(r, p->nVars)){
                         r--;
                         printf("######ACT:%d -> R= %d removed\n", act, r + 1);
-                        
+                        continue;                        
                     }
                     if (act >= calc_max_act(r + 1, p->nVars))
                     {           
@@ -4288,8 +4550,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                     
                     if(r_min>0){           
                     for(int rn=r_min;rn<=r;rn++){   
-                            if(r_nsat[rn]!=1)
-                                continue;            
+                                   
                             printf("###ACT:%d,r:%d \n",act,rn + 1);
                             ////////////////////////////////////////////////////programm sat solver                
                             Exa_ManFree(p);
@@ -4297,11 +4558,10 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             p = Exa_ManAlloc(pPars, pTruth);
                             status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
                             printf("#Calculating BDD using BUDDY BDD Package\n");
-                            bdd2* o=calculate_bdd_buddy_smaller_than(p,rn,act);  
-                            if(o==NULL){
+                            bdd2* o=calculate_bdd_buddy_smaller_than_min(p,rn,act,act-step+1);  
+                            if(o==NULL){                                
                                 bdd_done();
-                                continue;
-                                
+                                continue;                                
                             }
                             mark_nodes(o->start);
                             printf("BDD size before optimization:%d\n",get_len_bdd2(o->start));
@@ -4329,12 +4589,14 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                             
                             Exa_ManAddCardinality_P_sw(p,NULL,o);
-                            bdd_done();
                             
-                            printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            
+                            printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));                           
+                            bdd_done();
                             status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
                             printf("###Solution: %d \n", status); 
-                            mark_nodes(o->start);
+                            
+                            //mark_nodes(o->start);
                             /*if(act==78){
                                 FILE *fptr;
                                     fptr=fopen("comp_debug.md","w");
@@ -4347,10 +4609,61 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                                     fclose(fptr);
                             }*/
                                 
-                            if(flag)
-                                r_nsat[rn]=status;                           
+                                                    
                             if (status == 1)
-                            {                               
+                            {               
+                                /////////////////////////////////////Check for threshold   
+                                for (int r_th = rn; r_th <= r; r_th++)
+                                {
+                                    int empty=0;                 
+                                    int act_new=Exa_ManGetAct(p,fCompl);
+                                    printf("###CHecking for threshold: ACT:%d,r:%d \n",act_new,r_th + 1);
+                                    Exa_Man_t *p1;
+                                    pPars->nNodes =r_th + 1;
+                                    p1 = Exa_ManAlloc(pPars, pTruth);
+                                    status = Exa_ManAddCnfStart(p1, pPars->fOnlyAnd);
+                                    printf("#Calculating BDD using BUDDY BDD Package\n");
+                                    bdd2* o=calculate_bdd_buddy_smaller_than_min(p1,r_th,act_new-1,act-step+1);  
+                                    if(o==NULL){                                
+                                        bdd_done();
+                                        status=0;
+                                        empty=1;                               
+                                    }
+                                    if(!empty){
+                                        printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));
+                                        assert(status);                
+                                        for (iMint = 1; iMint < pow(2, p1->nVars); iMint++)
+                                        {
+                                            abctime clk = Abc_Clock();
+                                            if (!Exa_ManAddCnf(p1, iMint))
+                                            {
+                                                printf("The problem has no solution.\n");
+                                                break;
+                                            }
+                                        }
+                                        printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));
+                                        Exa_ManAddPClauses_bdd(p1);                
+                                        printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));
+                                        
+                                        Exa_ManAddCardinality_P_sw(p1,NULL,o);
+                                        
+                                        
+                                        printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));                           
+                                        bdd_done();
+                                        status = sat_solver_solve(p1->pSat, NULL, NULL, 0, 0, 0, 0);
+                                        printf("status:%d\n",status);
+                                    }
+                                    if((status!=1||empty) && r_th==r){
+                                        step=1;
+                                        r_th=r+1; 
+                                    }
+                                    else if(status==1){
+                                       r_th=r; 
+                                       //act=act-step;
+                                    }
+                                    
+                                }        
+                                ////////////////////////////////////
                                 if(step==1){
                                     FILE *fptr;
                                     fptr=fopen("comp.md","w");
@@ -4366,25 +4679,38 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                                     Exa_ManFree(p);
                                     Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
                                     break;
-                                }
-                                flag=1;
-                               
+                                }                               
+                                act=act-step;
+
+                                if(step==100)
+                                    step=50;
+                                else if(step==50)
+                                    step=26;
+                                else if(step=26)
+                                    step=14;
+                                else if(step=14)
+                                    step=8;
+                                else if(step=8)
+                                    step=4;
+                                else if(step=4)
+                                    step=2;                                
+                                
+
+                                act=act+step;
+                                rn=r_min-1; 
+                                continue;     
                             }    
                     }
-                    if(flag==1){
-                        flag=0;
-                        act=act-step;
-                        step=step/10; 
-                        continue;                       
-                    }     
+                    
+                                          
+                         
                     }    
                         ////////////////////////////////////////////////////
                             
                     act=act+step;
                     
 
-                    if (act > 2000)
-                        break;
+                    
         
         
             if (act > 2000)
