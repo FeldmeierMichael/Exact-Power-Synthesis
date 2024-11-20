@@ -898,6 +898,16 @@ int Exa_ManAddBDD_PCCs(Exa_Man_t *p,node* n,int lit0_const,int lit1_const,int m_
     return lit_base;    
 }
 /////////////////////////////////////////////////BDD Summed weights BUDDY
+
+void allsatPrintHandler(char* varset, int size) 
+ { 
+   for (int v=0; v<size; ++v) 
+   { 
+      printf("%c",(varset[v] < 0 ? 'X' : (char)('0' + varset[v]))); 
+   } 
+   printf("\n"); 
+ }
+
 bdd2* calculate_bdd_buddy(Exa_Man_t* p,int r,int act){   
     //printf("calculating bdd using buddy package r=%d act=%d\n",r,act); 
     int k=p->nVars;    
@@ -968,6 +978,19 @@ bdd2* calculate_bdd_buddy(Exa_Man_t* p,int r,int act){
     if(sats==0)
         return NULL;
     
+    //////////////////////////////////optimizing only one i must be stisfied
+    /*for (int i = 0; i < r; i++)
+    {
+        bdd unique;
+        for (int j = i;j < r*n_p; j=j+n_p)
+        {
+            if(j==i)
+                unique=bdd_var[j];
+            else
+                unique=bdd_addref(bdd_unique(unique,bdd_var[j]));        
+        }
+        or=bdd_addref(bdd_and(or,unique));
+    }    */
     //////////////////////////////////////////////convert to bdd2
     bdd2* BDD=(bdd2*) malloc(sizeof(bdd2));
     BDD->act=act;
@@ -1114,6 +1137,24 @@ bdd2* calculate_bdd_buddy_smaller_than(Exa_Man_t* p,int r,int act){
     if(sats==0)
         return NULL;
     
+    //////////////////////////////////optimizing only one i must be stisfied
+    bdd unique;
+    for (int i = 0; i < r; i++)
+    {
+        
+        for (int j = 0;j < n_p; j++)///smaller than 1
+        {
+            if(j==0)
+                unique=bdd_buildcube(pow(2,j),n_p,bdd_var+n_p*i);
+            else
+                unique=bdd_addref(bdd_or(unique,bdd_buildcube(pow(2,j),n_p,bdd_var+n_p*i)));  
+                                  
+        }
+        //bdd_allsat(unique,allsatPrintHandler);
+        or=bdd_addref(bdd_and(or,unique));
+    }
+    
+    //bdd_allsat(unique,allsatPrintHandler);
     //////////////////////////////////////////////convert to bdd2
     bdd2* BDD=(bdd2*) malloc(sizeof(bdd2));
     BDD->act=act;
@@ -3906,14 +3947,7 @@ void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
 }
 */
 ////////////////////////////////////////////////BBD For Encoding weighted Sum with BUDDY bdd package
-void allsatPrintHandler(char* varset, int size) 
- { 
-   for (int v=0; v<size; ++v) 
-   { 
-      printf("%c",(varset[v] < 0 ? 'X' : (char)('0' + varset[v]))); 
-   } 
-   printf("\n"); 
- }
+
 
 void Exa_ManExactPowerSynthesis_sw(Bmc_EsPar_t *pPars)
 {
@@ -4272,7 +4306,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             mark_nodes(o->start);
                             printf("BDD size before optimization:%d\n",get_len_bdd2(o->start));
                             //optimize_bdd2(o);
-                            optimize_bdd2_2(o,p->nVars);
+                            //optimize_bdd2_2(o,p->nVars);
                             //optimize_bdd2(o);                         
                                                
                             //print_bdd2(o->start);
@@ -4301,7 +4335,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
                             printf("###Solution: %d \n", status); 
                             mark_nodes(o->start);
-                            if(act==78){
+                            /*if(act==78){
                                 FILE *fptr;
                                     fptr=fopen("comp_debug.md","w");
                                     if(fptr==NULL)
@@ -4311,14 +4345,14 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                                     
                                     print_bdd2_mermaid(o->start,fptr);
                                     fclose(fptr);
-                            }
+                            }*/
                                 
                             if(flag)
                                 r_nsat[rn]=status;                           
                             if (status == 1)
                             {                               
                                 if(step==1){
-                                    /*FILE *fptr;
+                                    FILE *fptr;
                                     fptr=fopen("comp.md","w");
                                     if(fptr==NULL)
                                         printf("Fail to open file\n");
@@ -4326,7 +4360,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                                     fprintf(fptr,"    graph TD\n");
                                     
                                     print_bdd2_mermaid(o->start,fptr);
-                                    fclose(fptr);*/
+                                    fclose(fptr);
                                     
                                     Exa_ManPrintSolution_bdd(p, fCompl);
                                     Exa_ManFree(p);
