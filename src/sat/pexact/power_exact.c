@@ -337,6 +337,37 @@ void print_bdd2(node* n){
     }
 }
 
+void print_bdd2_mermaid(node* n){
+    if(n!=NULL){
+            n->marker=0; 
+            //printf("#######################\n");
+            printf("%d --",n->id);
+            if(n->end1==-1)
+                printf("1 --> const0\n");
+            else if(n->end1==-2)
+                printf("1 --> const1\n");  
+            else 
+                printf("1 --> %d\n",n->n1->id);
+
+            printf("%d --",n->id);
+            if(n->end0==-1)
+                printf("0 --> const0\n");
+            else if(n->end0==-2)
+                printf("1 --> const1\n");    
+            else                 
+                printf("1 --> %d\n",n->n0->id);   
+            //printf("\n");
+            //printf("#######################\n");
+            if(n->end1==0)
+                if(n->n1->marker==1)
+                    print_bdd2_mermaid(n->n1);
+
+            if(n->end0==0)
+                if(n->n0->marker==1)
+                    print_bdd2_mermaid(n->n0);
+    }
+}
+
 void mark_nodes(node* n){
     if(n!=NULL){ 
             n->marker=1;
@@ -4278,7 +4309,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars)
                             {                               
                                 if(step==1){
                                     
-                                    print_bdd2(o->start);
+                                    print_bdd2_mermaid(o->start);
                                     Exa_ManPrintSolution_bdd(p, fCompl);
                                     Exa_ManFree(p);
                                     Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
