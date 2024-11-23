@@ -6,16 +6,18 @@
 
 [INFO] Synthesising NPN Class=3 TruthTable:0x0006 pexact:208 r=4 exact:224 r=3 time=0.07min 
 
+[INFO] Synthesising NPN Class=4 TruthTable:0x0007 pexact:182 r=4 exact:192 r=3 time=0.09min 
+
 ```mermaid
 xychart-beta
     title "Comparison powertwoexact twoexact"
-    x-axis [0, 1, 3, 6]
+    x-axis [0, 1, 3, 6, 7]
     y-axis "Switching Activity" 0-->312
-    line [182, 152, 182, 208]
-    line [192, 152, 312, 224]
-    line [181.0, 181.0, 181.0, 181.0]
-    line [220.0, 220.0, 220.0, 220.0]
-    bar [80, 60, 80, 80]
-    bar [80, 60, 80, 60]
+    line [182, 152, 182, 208, 182]
+    line [192, 152, 312, 224, 192]
+    line [181.2, 181.2, 181.2, 181.2, 181.2]
+    line [214.4, 214.4, 214.4, 214.4, 214.4]
+    bar [80, 60, 80, 80, 80]
+    bar [80, 60, 80, 60, 60]
 ```
 
