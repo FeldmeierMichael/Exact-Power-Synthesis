@@ -1,15 +1,15 @@
-[INFO] Synthesising NPN Class=0 TruthTable:0x01BF pexact:392 r=6 exact:400 r=5 time=19.63min 
+[INFO] Synthesising NPN Class=0 TruthTable:0x0000 pexact:96 r=4 exact:192 r=4 time=0.0min 
 
 ```mermaid
 xychart-beta
     title "Comparison powertwoexact twoexact"
-    x-axis [447]
-    y-axis "Switching Activity" 0-->400
-    line [392]
-    line [400]
-    line [392.0]
-    line [400.0]
-    bar [120]
-    bar [100]
+    x-axis [0]
+    y-axis "Switching Activity" 0-->192
+    line [96]
+    line [192]
+    line [96.0]
+    line [192.0]
+    bar [80]
+    bar [80]
 ```
 
