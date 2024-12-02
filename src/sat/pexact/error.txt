@@ -1,0 +1,100 @@
+#Added Base Constraints -> 353 Clauses
+#Added Minterm Constraints -> 2383 Clauses
+#Added P Constraints -> 4913 Clauses
+#Added P Card. Constraints -> 8020 Clauses
+###Solution: -1 
+###ACT:613,r:7 
+#Calculating BDD using BUDDY BDD Package
+calculating bdd using buddy package r=6 act=521 act_min=514
+Garbage collection #1: 600011 nodes / 0 free / 0.0s / 0.0s total
+Stepsize:8 Satcount:8772.000000 nodecounnt:2115
+#Added Base Constraints -> 485 Clauses
+#Added Minterm Constraints -> 3070 Clauses
+#Added P Constraints -> 6106 Clauses
+#Added P Card. Constraints -> 13151 Clauses
+###Solution: -1 
+###ACT:613,r:8 
+#Calculating BDD using BUDDY BDD Package
+calculating bdd using buddy package r=7 act=521 act_min=514
+Garbage collection #1: 600011 nodes / 0 free / 0.0s / 0.0s total
+Garbage collection #2: 650011 nodes / 0 free / 0.0s / 0.0s total
+Garbage collection #3: 700001 nodes / 420 free / 0.0s / 0.0s total
+Stepsize:8 Satcount:24962.000000 nodecounnt:2834
+#Added Base Constraints -> 646 Clauses
+#Added Minterm Constraints -> 3846 Clauses
+#Added P Constraints -> 7388 Clauses
+#Added P Card. Constraints -> 16843 Clauses
+###Solution: 1 
+Realization of given 4-input function using 8 two-input gates complementary=0:
+11 = 4'b0010( 09 10 )
+10 = 4'b0110( 08 09 )
+09 = 4'b0100( d 07 )
+08 = 4'b0110( c 07 )
+07 = 4'b0010( 04 06 )
+06 = 4'b0110( d 05 )
+05 = 4'b0110( a c )
+04 = 4'b0110( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0110011001100110
+i=5:0101101001011010
+i=6:0101101010100101
+i=7:0001100010000001
+i=8:0001011110001110
+i=9:0000000001111110
+i=10:0001011111110000
+i=11:0001011110000000
+
+Switching Activity=856
+Number of Gates: r=8
+###CHecking for threshold: ACT:856,r:8 
+#Calculating BDD using BUDDY BDD Package
+calculating bdd using buddy package r=7 act=855 act_min=514
+Garbage collection #1: 600011 nodes / 0 free / 0.0s / 0.0s total
+Garbage collection #2: 650011 nodes / 0 free / 0.0s / 0.0s total
+Garbage collection #3: 700001 nodes / 0 free / 0.0s / 0.0s total
+Garbage collection #4: 749993 nodes / 0 free / 0.0s / 0.0s total
+Garbage collection #5: 799993 nodes / 0 free / 0.0s / 0.1s total
+Garbage collection #6: 849991 nodes / 0 free / 0.0s / 0.1s total
+Garbage collection #7: 899981 nodes / 0 free / 0.0s / 0.1s total
+Garbage collection #8: 949979 nodes / 0 free / 0.0s / 0.1s total
+Garbage collection #9: 999979 nodes / 0 free / 0.0s / 0.1s total
+Garbage collection #10: 1049977 nodes / 0 free / 0.0s / 0.1s total
+Garbage collection #11: 1099961 nodes / 0 free / 0.0s / 0.2s total
+Garbage collection #12: 1149943 nodes / 0 free / 0.0s / 0.2s total
+Garbage collection #13: 1199929 nodes / 0 free / 0.0s / 0.2s total
+Garbage collection #14: 1249921 nodes / 0 free / 0.0s / 0.2s total
+Garbage collection #15: 1299919 nodes / 0 free / 0.0s / 0.3s total
+Garbage collection #16: 1349917 nodes / 0 free / 0.0s / 0.3s total
+Garbage collection #17: 1399913 nodes / 0 free / 0.0s / 0.3s total
+Garbage collection #18: 1449911 nodes / 0 free / 0.1s / 0.4s total
+Garbage collection #19: 1499891 nodes / 0 free / 0.1s / 0.4s total
+Garbage collection #20: 1549883 nodes / 0 free / 0.0s / 0.5s total
+Garbage collection #21: 1599883 nodes / 0 free / 0.1s / 0.6s total
+Garbage collection #22: 1649863 nodes / 0 free / 0.0s / 0.6s total
+Garbage collection #23: 1699853 nodes / 0 free / 0.1s / 0.6s total
+Garbage collection #24: 1749851 nodes / 0 free / 0.0s / 0.7s total
+Garbage collection #25: 1799849 nodes / 0 free / 0.0s / 0.7s total
+Garbage collection #26: 1849849 nodes / 0 free / 0.0s / 0.8s total
+Garbage collection #27: 1899847 nodes / 0 free / 0.0s / 0.8s total
+Garbage collection #28: 1949839 nodes / 0 free / 0.0s / 0.9s total
+Garbage collection #29: 1999819 nodes / 0 free / 0.0s / 0.9s total
+Garbage collection #30: 2049797 nodes / 0 free / 0.1s / 1.0s total
+Garbage collection #31: 2099771 nodes / 0 free / 0.1s / 1.0s total
+Garbage collection #32: 2149727 nodes / 0 free / 0.1s / 1.1s total
+Garbage collection #33: 2199719 nodes / 0 free / 0.1s / 1.1s total
+Garbage collection #34: 2249719 nodes / 0 free / 0.1s / 1.2s total
+Garbage collection #35: 2299711 nodes / 0 free / 0.1s / 1.2s total
+Garbage collection #36: 2349709 nodes / 0 free / 0.1s / 1.3s total
+Garbage collection #37: 2399699 nodes / 0 free / 0.1s / 1.4s total
+Garbage collection #38: 2449693 nodes / 0 free / 0.1s / 1.4s total
+Garbage collection #39: 2499689 nodes / 0 free / 0.1s / 1.5s total
+Garbage collection #40: 2549683 nodes / 0 free / 0.1s / 1.6s total
+Garbage collection #41: 2599679 nodes / 179 free / 0.1s / 1.6s total
+#Added Base Constraints -> 646 Clauses
+#Added Minterm Constraints -> 3846 Clauses
+#Added P Constraints -> 7388 Clauses
+Segmentation fault (core dumped)

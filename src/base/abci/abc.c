@@ -9805,7 +9805,10 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
     extern void Exa_ManExactPowerSynthesis_sw( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactPowerSynthesis_sw_free( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactPowerSynthesis_sw_free_smaller_than( Bmc_EsPar_t * pPars );
-    
+    extern void Exa_ManExactPowerSynthesis_sw_free_smaller_than_variable( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_sw_free_smaller_than_variable_restrictions( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_sw_free_smaller_than_CEGAR( Bmc_EsPar_t * pPars );
+    extern void Exa_ManExactPowerSynthesis_sw_free_smaller_than_CEGAR2( Bmc_EsPar_t * pPars );
     
     extern void Exa_ManExactSynthesis4( Bmc_EsPar_t * pPars );
     extern void Exa_ManExactSynthesis5( Bmc_EsPar_t * pPars );
@@ -9969,8 +9972,16 @@ int Abc_CommandPowerExact( Abc_Frame_t * pAbc, int argc, char ** argv )
             Exa_ManExactPowerSynthesis_sw_free(pPars);
         else if(f_opts==8)
             Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars);
-        //else if(f_opts==8)
-        //    Exa_ManExactPowerSynthesis_exp(pPars);
+        else if(f_opts==9)
+            Exa_ManExactPowerSynthesis_sw_free_smaller_than_variable(pPars);
+        else if(f_opts==10)
+            Exa_ManExactPowerSynthesis_sw_free_smaller_than_variable_restrictions(pPars);
+        else if(f_opts==11)
+            Exa_ManExactPowerSynthesis_sw_free_smaller_than_CEGAR(pPars);
+        else if(f_opts==12)
+            Exa_ManExactPowerSynthesis_sw_free_smaller_than_CEGAR2(pPars);
+        else if(f_opts==13)
+            Exa_ManExactPowerSynthesis_exp(pPars);
 
     return 0;
 

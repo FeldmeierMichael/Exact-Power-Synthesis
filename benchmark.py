@@ -3,7 +3,7 @@ import re
 import matplotlib.pyplot as plt
 import time
 
-file_name='benchmark_opt.md'
+file_name='benchmark_opt_500_2.md'
 
 def print_mermaid(x,p_val,val,p_r,r):
     p_avg=sum(p_val)/len(p_val)
@@ -25,7 +25,7 @@ def print_mermaid(x,p_val,val,p_r,r):
     os.system('echo "\`\`\`\n" >> '+file_name)
     
 
-p_command_base="./abc -c 'powertwoexact -N 3 -I 4 "
+p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 9 "
 command_base="./abc -c 'twoexact -N 3 -I 4 "
 
 res=[]
@@ -72,14 +72,15 @@ s_arr=[]
 x=[]
 upd=0
 
-for c_i,f in enumerate(f_npn[74:]):
+for c_i,f in enumerate(f_npn):
     f_int=int(f,2)
    
     number="0x%0.4X" %f_int
     print("Synthesising:"+number)
     p_command=p_command_base+number[2:]+"'"
+    print(p_command)
     command=command_base+number[2:]+"'"
-    p_result=os.popen(p_command).read()
+    
     result=os.popen(command).read()
 
     os.system("sed -i '' -e '$ d' "+ file_name)
@@ -101,41 +102,75 @@ for c_i,f in enumerate(f_npn[74:]):
     #os.system("head -n -1 benchmark.md > temp.txt")
     #os.system("mv temp.txt benchmark.md")
     
-    p_res=re.search('Switching Activity=([0-9]+)',p_result)
-    res=re.search('Switching Activity=([0-9]+)',result)    
-
-    p_res_g=re.search('Number of Gates: r=([0-9]+)',p_result)
+    res=re.search('Switching Activity=([0-9]+)',result) 
     res_g=re.search('Number of Gates: r=([0-9]+)',result) 
-    timest=round((time.time()-ts)/60,2)
 
-    print('Synthesising NPN Class='+str(c_i)+' TruthTable:' +number+' pexact:'+str(p_res[1])+' exact:'+str(res[1]))
-    os.system('echo \"'+'[INFO] Synthesising NPN Class='+str(c_i)+' TruthTable:'+number+' pexact:'+str(p_res[1])+' r='+str(p_res_g[1])+' exact:'+str(res[1])+' r='+str(res_g[1])+' time='+str(timest)+'min \n" >> '+file_name)
-    
-    
-    
+    if(int(res[1])>=500): 
 
-
-    p_r_arr.append(int(p_res_g[1]))
-    p_s_arr.append(int(p_res[1]))
-    r_arr.append(int(res_g[1]))
-    s_arr.append(int(res[1]))
-    x.append(f_int)
-    
-    avg_ps=sum(p_s_arr)/len(p_s_arr)
-    avg_pr=sum(p_r_arr)/len(p_r_arr)
-    avg_s=sum(s_arr)/len(s_arr)
-    avg_r=sum(r_arr)/len(r_arr)
-
-
-    print_mermaid(x,p_s_arr,s_arr,p_r_arr,r_arr)
-    #os.system('echo " avg_p_s='+str(round(avg_ps,2))+' avg_s='+str(round(avg_s,2))+' avg_pr='+str(round(avg_pr,2))+' avg_r='+str(round(avg_r,2))+'\n" >> '+file_name)
-    
+        p_result=os.popen(p_command).read()
+        p_res=re.search('Switching Activity=([0-9]+)',p_result)
     
 
+        p_res_g=re.search('Number of Gates: r=([0-9]+)',p_result)
+        
+        timest=round((time.time()-ts)/60,2)
 
-    os.system('git add '+file_name)    
-    os.system('git commit -m \"'+number+"\"")
-    os.system('git push')
+        print('Synthesising NPN Class='+str(c_i)+' TruthTable:' +number+' pexact:'+str(p_res[1])+' exact:'+str(res[1]))
+        os.system('echo \"'+'[INFO] Synthesising NPN Class='+str(c_i)+' TruthTable:'+number+' pexact:'+str(p_res[1])+' r='+str(p_res_g[1])+' exact:'+str(res[1])+' r='+str(res_g[1])+' time='+str(timest)+'min \n" >> '+file_name)
+        
+        p_r_arr.append(int(p_res_g[1]))
+        p_s_arr.append(int(p_res[1]))
+        r_arr.append(int(res_g[1]))
+        s_arr.append(int(res[1]))
+        x.append(f_int)
+        avg_ps=sum(p_s_arr)/len(p_s_arr)
+        avg_pr=sum(p_r_arr)/len(p_r_arr)
+        avg_s=sum(s_arr)/len(s_arr)
+        avg_r=sum(r_arr)/len(r_arr)
+
+
+        print_mermaid(x,p_s_arr,s_arr,p_r_arr,r_arr)
+        #os.system('echo " avg_p_s='+str(round(avg_ps,2))+' avg_s='+str(round(avg_s,2))+' avg_pr='+str(round(avg_pr,2))+' avg_r='+str(round(avg_r,2))+'\n" >> '+file_name)
+        
+        
+
+
+        os.system('git add '+file_name)    
+        os.system('git commit -m \"'+number+"\"")
+        os.system('git push')
+        
+    """else:
+        #p_result=os.popen(p_command).read()
+        p_res=res
+    
+
+        p_res_g=res_g
+        
+        timest=round((time.time()-ts)/60,2)
+
+        print('Synthesising NPN Class='+str(c_i)+' TruthTable:' +number+' pexact:'+str(p_res[1])+' exact:'+str(res[1]))
+        os.system('echo \"'+'[INFO] (Skipped>500)  Synthesising NPN Class='+str(c_i)+' TruthTable:'+number+' pexact:'+str(p_res[1])+' r='+str(p_res_g[1])+' exact:'+str(res[1])+' r='+str(res_g[1])+' time='+str(timest)+'min \n" >> '+file_name)
+        
+        p_r_arr.append(int(p_res_g[1]))
+        p_s_arr.append(int(p_res[1]))
+        r_arr.append(int(res_g[1]))
+        s_arr.append(int(res[1]))
+        x.append(f_int)
+    
+    
+        avg_ps=sum(p_s_arr)/len(p_s_arr)
+        avg_pr=sum(p_r_arr)/len(p_r_arr)
+        avg_s=sum(s_arr)/len(s_arr)
+        avg_r=sum(r_arr)/len(r_arr)
+
+
+        print_mermaid(x,p_s_arr,s_arr,p_r_arr,r_arr)
+        #os.system('echo " avg_p_s='+str(round(avg_ps,2))+' avg_s='+str(round(avg_s,2))+' avg_pr='+str(round(avg_pr,2))+' avg_r='+str(round(avg_r,2))+'\n" >> '+file_name)
+    """    
+        
+
+
+        
 
    
     
