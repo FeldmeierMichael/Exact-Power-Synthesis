@@ -1807,11 +1807,11 @@ bdd2* calculate_bdd_buddy_smaller_than_min_no_conversion_restrictions_CEGAR2(int
     //calc_restrictions(pPars,r+1,restric);
 
     bdd_init(1500000,700000);
-    bdd_setvarnum(n_p*r);
+    bdd_setvarnum(n_p*(xp+1));
     bdd_autoreorder(BDD_REORDER_SIFTITE);
-    bdd bdd_var[n_p*r];    
+    bdd bdd_var[n_p*(xp+1)];    
     //printf("bdd vars initializing\n");
-    for (int i = 0; i < n_p*r; i++)
+    for (int i = 0; i < n_p*(xp+1); i++)
     {
        bdd_var[i]=bdd_ithvar(i);
     }
@@ -1853,19 +1853,21 @@ bdd2* calculate_bdd_buddy_smaller_than_min_no_conversion_restrictions_CEGAR2(int
            // printf("Founc match\n");
             sats++;
             int first_flag_inner=0;
+            int count=xp+1;
             for (int i = 0; i < n_p; i++)
             {
-                    if(combi[i]!=0){
+                    //if(combi[i]!=0){
                    // printf("n_p=%d\n",i);
                         if(first_flag_inner==0){
                             first_flag_inner=1;
-                            and=bdd_addref(bdd_n_outof_r_opt(combi[i],r,i,n_p));
+                            and=bdd_addref(bdd_n_outof_r_CEGAR2(combi[i],r,i,n_p,xp));
                             
                         }
                         else{
-                            and=bdd_addref(bdd_apply(and,bdd_n_outof_r_opt(combi[i],r,i,n_p),bddop_and));
+                            and=bdd_addref(bdd_apply(and,bdd_n_outof_r_CEGAR2(combi[i],r,i,n_p,xp),bddop_and));
                         }
-                    }
+                    //}
+               
             } 
           if(flag_first==0){
             flag_first=1;
@@ -1884,8 +1886,8 @@ bdd2* calculate_bdd_buddy_smaller_than_min_no_conversion_restrictions_CEGAR2(int
     bdd_delref(and);
     //////////////////////////////////optimizing only one i must be stisfied
     //printf("nodes before optimization: %d\n",bdd_nodecount(or));
-    bdd unique;
-    for (int i = 0; i < r; i++)
+    /*bdd unique;
+    for (int i = 0; i < xp+1; i++)
     {
         
         for (int j = 0;j < n_p; j++)///smaller than 1
@@ -1898,7 +1900,7 @@ bdd2* calculate_bdd_buddy_smaller_than_min_no_conversion_restrictions_CEGAR2(int
         }       
         or=bdd_addref(bdd_and(or,unique));
     }   
-    bdd_delref(unique);
+    bdd_delref(unique);*/
     return or;
 }
 /////////////////////////////////////////////////////////////////////////////BDD creating for smaller than Pseudo CC's
@@ -1974,6 +1976,51 @@ bdd bdd_n_outof_r(int n,int r,int np,int n_p){
             for (int n_r = 1; n_r < r; n_r++)
             {      
                 and=comb[n_r]==0 ? bdd_addref(bdd_and(bdd_not(bdd_ithvar((n_r)*n_p+np)),and)): bdd_addref(bdd_and(bdd_ithvar((n_r)*n_p+np),and));                      
+                //if(comb[n_r]==1){
+                //    set[index++]=(n_r)*n_p+np;
+                //}                    
+            }
+            
+            //printf("AND BDD:\n"); 
+            //bdd_printtable(and); 
+            if(first_flag==0){
+                first_flag=1;
+                o=bdd_addref(and);
+            }
+            else{
+                o=bdd_addref(bdd_apply(o,and,bddop_or));
+                //bdd_delref(and);
+            }          
+        }
+        
+    }
+    //printf("OR BDD:\n"); 
+    //bdd_printtable(o);     
+    return o;
+} 
+bdd bdd_n_outof_r_CEGAR2(int n,int r,int np,int n_p,int xp){
+    printf("bdd_%d_out_of_%d for np:%d\n",n,r,np);
+    int comb[r];
+    int n_combs=pow(2,r);
+    bdd o;
+    bdd and;
+    int first_flag=0;
+    for (int i = 0; i < n_combs; i++)
+    {
+        convert_base_int(2,i,r,comb);
+        int sum=0;
+        for (int n_r = 0; n_r < r; n_r++)
+        {            
+            sum+=comb[n_r];
+        }        
+        if(sum==n){
+            int index=0;
+            int set[sum];
+            and=comb[0]==0 ? bdd_not(bdd_ithvar(np)):bdd_ithvar(np);
+            for (int n_r = 1; n_r < xp+1; n_r++)
+            {       //printf("Combi rn:%d\n",n_r);
+                    and=comb[n_r]==0 ? bdd_addref(bdd_and(bdd_not(bdd_ithvar((n_r)*n_p+np)),and)): bdd_addref(bdd_and(bdd_ithvar((n_r)*n_p+np),and));    
+                                  
                 //if(comb[n_r]==1){
                 //    set[index++]=(n_r)*n_p+np;
                 //}                    
@@ -2130,7 +2177,138 @@ void Exa_ManAddCard_clauses_buddy(Exa_Man_t *p,FILE *ofile, BDD r,int size,int a
 }
 
 
+void Exa_ManAddCard_clauses_buddy_CEGAR2(Exa_Man_t *p,FILE *ofile, BDD r,int size,int act,int xp)
+{
+   BddNode *node;
+   int n;
 
+   //fprintf(ofile, "ROOT: %d\n", r);
+   if (r < 2)
+      return;
+
+   bdd_mark(r);   
+   int size_bdd=bddnodesize;
+   int i_node_lookup[size_bdd];
+   int i_node[size];
+   int i_n1[size];
+   int i_n0[size];
+   int i_cont[size];   
+   
+   int index=0;
+   for (n=0 ; n<size_bdd ; n++)
+   {
+      if (LEVEL(n) & MARKON)
+      {        
+        node = &bddnodes[n];
+        LEVELp(node) &= MARKOFF;
+
+        i_node_lookup[n]=index;
+        i_node[index]=index;
+        if(HIGHp(node)>1)
+            i_n1[index]=i_node_lookup[HIGHp(node)];
+        else if(HIGHp(node)==1)
+            i_n1[index]=-1;
+        else if(HIGHp(node)==0)
+            i_n1[index]=-2;
+
+        if(LOWp(node)>1)
+            i_n0[index]=i_node_lookup[LOWp(node)];
+        else if(LOWp(node)==1)
+            i_n0[index]=-1;
+        else if(LOWp(node)==0)
+            i_n0[index]=-2;
+
+        
+        i_cont[index]=LEVELp(node);        
+        index++;
+                
+        /*
+        fprintf(ofile, "[%5d] ", n);
+        
+        fprintf(ofile, "%3d", bddlevel2var[LEVELp(node)]);
+
+        fprintf(ofile, ": %3d", LOWp(node));
+        fprintf(ofile, " %3d", HIGHp(node));
+        fprintf(ofile, "\n");       
+        */ 
+      }
+   }
+
+    int n_i = xp ;
+    int n_p = pow(2, p->nVars - 1) + 1;
+    int m_len = 0;
+    for (int i = 1; i <= pow(2, p->nVars) - 1; i++)
+    {
+        m_len += i;
+    } 
+
+   int lit_const0_raw=p->iVar; 
+   int lit_const0=Abc_Var2Lit(p->iVar,1);
+   p->iVar+=1;
+   sat_solver_setnvars( p->pSat, p->iVar);
+   sat_solver_addclause(p->pSat,&lit_const0,&lit_const0+1);
+
+   int lit_const1_raw=p->iVar;  
+   int lit_const1=Abc_Var2Lit(p->iVar,0);
+   p->iVar+=1;
+   sat_solver_setnvars( p->pSat, p->iVar); 
+   sat_solver_addclause(p->pSat,&lit_const1,&lit_const1+1);
+
+   
+   int base_var=p->iVar;
+   int var;
+   int var_end; 
+    for (int i = 0; i < size; i++)
+    {   
+        //if(act==406)
+        
+        var=p->iVar;
+        p->iVar+=1;
+        sat_solver_setnvars(p->pSat,p->iVar);
+        int n0=i_n0[i];
+        int n1=i_n1[i];
+        int cnt=i_cont[i];
+        int i_n=i_node[i];
+        //int np=(cnt)%(n_p-1);
+        //int r=(cnt)/(n_p-1);
+        int r=0;
+        int r_val=0;
+        while(r_val+(n_p-1)<=cnt){
+            r_val=r_val+(n_p-1);
+            r++;
+        }
+        int np=cnt-r_val;
+        
+        //p->pSat,p->i_p+(n_p+m_size)*i+j+m_size
+        int pi=p->i_p+m_len+r*(m_len+n_p)+np+1;
+        //printf("[%d]->(%d i=%d np=%d): n0:%d ? n1:%d;\n",i_node[i],cnt,r,np+1,i_n0[i],i_n1[i]);
+        if(i==size-1)
+            var_end=var; 
+
+        if(n0==-2 && n1==-2)
+            add_mux_encoding(p,var,pi,lit_const0_raw,lit_const0_raw);
+        else if(n0==-1 && n1== -1)
+            add_mux_encoding(p,var,pi,lit_const1_raw,lit_const1_raw);
+        else if(n0==-1 && n1== -2)
+            add_mux_encoding(p,var,pi,lit_const0_raw,lit_const1_raw);
+        else if(n0==-2 && n1== -1)
+            add_mux_encoding(p,var,pi,lit_const1_raw,lit_const0_raw);
+        else if(n0>=0 && n1>= 0)
+            add_mux_encoding(p,var,pi,base_var+n1,base_var+n0);
+        else if(n0>=0 && n1== -1)
+            add_mux_encoding(p,var,pi,lit_const1_raw,base_var+n0);
+        else if(n0>=0 && n1== -2)
+            add_mux_encoding(p,var,pi,lit_const0_raw,base_var+n0);
+        else if(n1>=0 && n0== -1)
+            add_mux_encoding(p,var,pi,base_var+n1,lit_const1_raw);
+        else if(n1>=0 && n0== -2)
+            add_mux_encoding(p,var,pi,base_var+n1,lit_const0_raw);   
+
+            
+    }
+    int root=Abc_Var2Lit(var,0);
+    sat_solver_addclause(p->pSat,&root,&root+1);
+}
 /**Function*************************************************************
 
   Synopsis    []
@@ -2910,6 +3088,7 @@ void Exa_ManAddPClauses_bdd_CEGAR(Exa_Man_t * p,int xp){
     
     //printf("Creating %d new Variables for bdd EQ Encoding\n",m_size);    
     for(int i=p->nVars+1;i<p->nVars+1+xp+1;i++){
+        printf("Adding P Constraints for %d\n",i);
         int m_start=p->iVar;
         p->iVar+=m_size;
         sat_solver_setnvars( p->pSat, p->iVar);
@@ -6300,15 +6479,14 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than_CEGAR2(Bmc_EsPar_t *pPars)
                             printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                                                                                    
                                             
-                            printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                           
                                  
                             printf("#CEGAR xp:%d\n",rc);
                             int restric[n_p*(rn)];
                             calc_restrictions(pPars,rn+1,restric);
-                            bdd* o=calculate_bdd_buddy_smaller_than_min_no_conversion_restrictions(restric,p,rn,act,act-step+1);  
-                            
-                            
-
+                            bdd* o=calculate_bdd_buddy_smaller_than_min_no_conversion_restrictions_CEGAR2(restric,p,rn,act,act-step+1,rc);
+                            //bdd* o=calculate_bdd_buddy_smaller_than_min_no_conversion_restrictions(restric,p,rn,act,act-step+1);
+                            bdd_allsat(o,allsatPrintHandler);
                             if(o==NULL){   
                                 printf("EMPTY BDD\n");                             
                                 bdd_done();
@@ -6319,7 +6497,8 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than_CEGAR2(Bmc_EsPar_t *pPars)
                             }
                             else{
                             Exa_ManAddPClauses_bdd_CEGAR(p,rc);
-                            Exa_ManAddCard_clauses_buddy(p,stdout,o,bdd_nodecount(o),0);
+                            printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            Exa_ManAddCard_clauses_buddy_CEGAR2(p,stdout,o,bdd_nodecount(o),0,rc);
                             printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                             bdd_done();
                             status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
@@ -6438,12 +6617,238 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than_CEGAR2(Bmc_EsPar_t *pPars)
 
 
     }
+}  
+
+//////////////////////////////////////////////////////////////////////////Accelerated search with smaller than bdd's
+void Exa_ManExactPowerSynthesis_sw_free_smaller_than_r_down(Bmc_EsPar_t *pPars)
+{
+    int i, status, iMint = 1;
+    abctime clkTotal = Abc_Clock();
+    Exa_Man_t *p;
+    int fCompl = 0;
+    word pTruth[16];
+    Abc_TtReadHex(pTruth, pPars->pTtStr);
+    assert(pPars->nVars <= 10);
+    p = Exa_ManAlloc(pPars, pTruth);
+    if (pTruth[0] & 1)
+    {
+        fCompl = 1;
+        Abc_TtNot(pTruth, p->nWords);
+    }
+    comb_list *list = (comb_list *)malloc(sizeof(comb_list));
+    list->len = pow(2, p->nVars - 1);
+    list->length = 0;
+    int r = 0;
+    int act = 0;
+    int r_min=0;
+    int step=100;
+    int r_nsat[20];
+    int n_p=pow(2,pPars->nVars-1);
+    for (int rin = 0; rin < 20; rin++)
+    {
+        r_nsat[rin]=1;
+    }
     
-    
-    
+    int flag=0;
+    int solution=0;
+    while (!solution)
+    {        
+                    
+                    if(r>0 && act<calc_max_act(r, p->nVars)){
+                        r--;
+                        printf("######ACT:%d -> R= %d removed\n", act, r + 1);
+                        continue;                        
+                    }
+                    if (act >= calc_max_act(r + 1, p->nVars))
+                    {           
+                        r++;
+                        //////////////////////////Check if there is a general solution for r
+                        Exa_ManFree(p);
+                        pPars->nNodes = r + 1;
+                        p = Exa_ManAlloc(pPars, pTruth);
+                        status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                        assert(status);
+                        for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                        {
+                            if (!Exa_ManAddCnf(p, iMint))
+                            {
+                                printf("The problem has no solution.\n");
+                                break;
+                            }
+                        }
+                        status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                        //////////////////////////
+                        if (status == 1)
+                        {
+                            printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);                
+                            if(r_min==0)
+                                r_min=r;                
+                        }
+                        else
+                            printf("######ACT:%d No general Solution for r=%d\n", act, r + 1); 
+                        continue;       
+                    }
+                    
+                    if(r_min>0){           
+                    for(int rn=r;rn>=r_min;rn--){   
+                                   
+                            printf("###ACT:%d,r:%d \n",act,rn + 1);
+                            ////////////////////////////////////////////////////programm sat solver                
+                            Exa_ManFree(p);
+                            pPars->nNodes =rn + 1;
+                            p = Exa_ManAlloc(pPars, pTruth);
+                            status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
+                            printf("#Calculating BDD using BUDDY BDD Package\n");
+                            //int restric[n_p*(rn)];
+                            //calc_restrictions(pPars,rn+1,restric);
+                            bdd* o=calculate_bdd_buddy_smaller_than_min_no_conversion(p,rn,act,act-step+1);  
+                            if(o==NULL){                                
+                                bdd_done();
+                                continue;                                
+                            }
+                            
+
+                            printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            assert(status);                
+                            for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
+                            {
+                                abctime clk = Abc_Clock();
+                                if (!Exa_ManAddCnf(p, iMint))
+                                {
+                                    printf("The problem has no solution.\n");
+                                    break;
+                                }
+                            }
+                            printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            Exa_ManAddPClauses_bdd(p);                
+                            printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                            
+                            Exa_ManAddCard_clauses_buddy(p,stdout,o,bdd_nodecount(o),0);
+                            
+                            
+                            printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));                           
+                            bdd_done();
+                            status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
+                            printf("###Solution: %d \n", status); 
+                            
+                                                            
+                                                    
+                            if (status == 1)
+                            {               
+                                /////////////////////////////////////Check for threshold   
+                                for (int r_th = r_min; r_th <= r; r_th++)
+                                {
+                                    int empty=0;                 
+                                    int act_new=Exa_ManGetAct(p,fCompl);
+                                    printf("###Checking for threshold: ACT:%d,r:%d \n",act_new,r_th + 1);
+                                    Exa_Man_t *p1;
+                                    pPars->nNodes =r_th + 1;
+                                    p1 = Exa_ManAlloc(pPars, pTruth);
+                                    status = Exa_ManAddCnfStart(p1, pPars->fOnlyAnd);
+                                    printf("#Calculating BDD using BUDDY BDD Package\n");
+                                    //int restric[n_p*(r_th)];
+                                    //calc_restrictions(pPars,r_th+1,restric);
+                                    bdd* o=calculate_bdd_buddy_smaller_than_min_no_conversion(p1,r_th,act_new-1,act-step+1);  
+                                    if(o==NULL){                                
+                                        bdd_done();
+                                        status=0;
+                                        empty=1;                               
+                                    }
+                                    if(!empty){
+                                        printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));
+                                        assert(status);                
+                                        for (iMint = 1; iMint < pow(2, p1->nVars); iMint++)
+                                        {
+                                            abctime clk = Abc_Clock();
+                                            if (!Exa_ManAddCnf(p1, iMint))
+                                            {
+                                                printf("The problem has no solution.\n");
+                                                break;
+                                            }
+                                        }
+                                        printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));
+                                        Exa_ManAddPClauses_bdd(p1);                
+                                        printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));
+                                        
+                                        Exa_ManAddCard_clauses_buddy(p1,stdout,o,bdd_nodecount(o),0);
+                                        
+                                        
+                                        printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p1->pSat));                           
+                                        bdd_done();
+                                        status = sat_solver_solve(p1->pSat, NULL, NULL, 0, 0, 0, 0);
+                                        printf("status:%d\n",status);
+                                    }
+                                    if((status!=1||empty) && r_th==r){
+                                        step=1;
+                                        r_th=r+1; 
+                                    }
+                                    else if(status==1){
+                                       r_th=r; 
+                                       //act=act-step;
+                                    }
+                                    
+                                }        
+                                ////////////////////////////////////
+                                if(step==1){
+                                    /*FILE *fptr;
+                                    fptr=fopen("comp.md","w");
+                                    if(fptr==NULL)
+                                        printf("Fail to open file\n");
+                                    fprintf(fptr,"```mermaid\n");
+                                    fprintf(fptr,"    graph TD\n");
+                                    
+                                    print_bdd2_mermaid(o->start,fptr);
+                                    fclose(fptr);*/
+                                    
+                                    Exa_ManPrintSolution_bdd(p, fCompl);
+                                    Exa_ManFree(p);
+                                    Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
+                                    solution=1;
+                                    break;
+                                }                               
+                                act=act-step;
+
+                                if(step==100)
+                                    step=50;
+                                else if(step==50)
+                                    step=26;
+                                else if(step=26)
+                                    step=14;
+                                else if(step=14)
+                                    step=8;
+                                else if(step=8)
+                                    step=4;
+                                else if(step=4)
+                                    step=2;                                
+                                
+
+                                act=act+step;
+                                rn=r+1; 
+                                continue;     
+                            }
+                            else
+                                break;    
+                    }              
+                                          
+                         
+                    }    
+                        ////////////////////////////////////////////////////
+                            
+                    act=act+step;
+                    
+
+                    
+        
+        
+            if (act > 2000)
+                break;
+        
+
+
+    }
        
     
-}  
+}
 
 /*void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars)
 {
