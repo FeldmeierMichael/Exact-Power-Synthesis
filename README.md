@@ -3,7 +3,7 @@
 Exact synthesis algorithm to calculate network with minimized switching activity. Based on ABC
 
 
-4-Input Benchmark 150/222
+4-Input Benchmark 168/222
 
 [INFO] Synthesising NPN Class=0 TruthTable:0x0000 pexact:182 r=4 exact:192 r=4 time=0.07min
 
@@ -189,7 +189,7 @@ Exact synthesis algorithm to calculate network with minimized switching activity
 
 [INFO] Synthesising NPN Class=91 TruthTable:0x035F pexact:312 r=4 exact:312 r=4 time=241.31min
 
-[INFO] (Skipped>500) Synthesising NPN Class=92 TruthTable:0x0368
+[INFO] Synthesising NPN Class=10 TruthTable:0x0368 pexact:534 exact:600
 
 [INFO] Synthesising NPN Class=93 TruthTable:0x0369 pexact:416 r=5 exact:440 r=5 time=243.36min
 
@@ -199,7 +199,7 @@ Exact synthesis algorithm to calculate network with minimized switching activity
 
 [INFO] Synthesising NPN Class=96 TruthTable:0x036C pexact:432 r=5 exact:448 r=5 time=255.19min
 
-[INFO] (Skipped>500) Synthesising NPN Class=97 TruthTable:0x036D
+[INFO] Synthesising NPN Class=15 TruthTable:0x036D pexact:518 exact:550
 
 [INFO] Synthesising NPN Class=98 TruthTable:0x036E pexact:448 r=5 exact:448 r=5 time=260.1min
 
@@ -207,7 +207,7 @@ Exact synthesis algorithm to calculate network with minimized switching activity
 
 [INFO] Synthesising NPN Class=100 TruthTable:0x037C pexact:374 r=5 exact:374 r=5 time=262.59min
 
-[INFO] (Skipped>500) Synthesising NPN Class=101 TruthTable:0x037D 
+[INFO] Synthesising NPN Class=19 TruthTable:0x037D pexact:480 exact:568 
 
 [INFO] Synthesising NPN Class=102 TruthTable:0x037E pexact:440 r=5 exact:448 r=5 time=265.46min
 
@@ -233,11 +233,11 @@ Exact synthesis algorithm to calculate network with minimized switching activity
 
 [INFO] Synthesising NPN Class=113 TruthTable:0x03D7 pexact:422 r=5 exact:440 r=5 time=290.13min
 
-[INFO] (Skipped>500) Synthesising NPN Class=114 TruthTable:0x03D8 
+[INFO] Synthesising NPN Class=32 TruthTable:0x03D8 pexact:534 exact:576 
 
 [INFO] Synthesising NPN Class=115 TruthTable:0x03D9 pexact:446 r=5 exact:446 r=5 time=295.38min
 
-[INFO] (Skipped>500) Synthesising NPN Class=116 TruthTable:0x03DB 
+[INFO] Synthesising NPN Class=34 TruthTable:0x03DB pexact:496 exact:544 
 
 [INFO] Synthesising NPN Class=117 TruthTable:0x03DC pexact:326 r=4 exact:326 r=4 time=295.73min
 
@@ -249,7 +249,7 @@ Exact synthesis algorithm to calculate network with minimized switching activity
 
 [INFO] Synthesising NPN Class=121 TruthTable:0x0660 pexact:256 r=3 exact:256 r=3 time=296.78min
 
-[INFO] (Skipped>500) Synthesising NPN Class=122 TruthTable:0x0661 
+[INFO] Synthesising NPN Class=40 TruthTable:0x0661 pexact:534 exact:568 
 
 [INFO] Synthesising NPN Class=123 TruthTable:0x0670 pexact:454 r=6 exact:472 r=5 time=306.68min
 
@@ -257,7 +257,7 @@ Exact synthesis algorithm to calculate network with minimized switching activity
 
 [INFO] Synthesising NPN Class=125 TruthTable:0x0666 pexact:224 r=3 exact:224 r=3 time=310.01min
 
-[INFO] (Skipped>500) Synthesising NPN Class=126 TruthTable:0x0667 
+[INFO] Synthesising NPN Class=44 TruthTable:0x0667 pexact:496 exact:544 
 
 [INFO] Synthesising NPN Class=127 TruthTable:0x69BE pexact:440 r=5 exact:480 r=5 time=313.12min
 
