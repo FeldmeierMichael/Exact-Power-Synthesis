@@ -3,7 +3,7 @@
 Exact synthesis algorithm to calculate network with minimized switching activity. Based on ABC
 
 
-4-Input Benchmark 167/222
+4-Input Benchmark 169/222
 
 [INFO] Synthesising NPN Class=0 TruthTable:0x0000 pexact:182 r=4 exact:192 r=4 time=0.07min
 
@@ -271,9 +271,9 @@ Exact synthesis algorithm to calculate network with minimized switching activity
 
 [INFO] Synthesising NPN Class=132 TruthTable:0x0676 pexact:432 r=5 exact:440 r=5 time=326.15min
 
-[INFO] (Skipped>500) Synthesising NPN Class=133 TruthTable:0x0678 
+[INFO] Synthesising NPN Class=3 TruthTable:0x0678 pexact:560 exact:576
 
-[INFO] (Skipped>500) Synthesising NPN Class=134 TruthTable:0x16EB 
+[INFO] Synthesising NPN Class=4 TruthTable:0x16EB pexact:502 exact:582 
 
 [INFO] (Skipped>500) Synthesising NPN Class=135 TruthTable:0x067A 
 
