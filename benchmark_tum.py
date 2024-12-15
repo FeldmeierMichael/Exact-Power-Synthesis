@@ -1,6 +1,5 @@
 import os
 import re
-import matplotlib.pyplot as plt
 import time
 
 file_name='benchmark_tum.md'
@@ -25,7 +24,7 @@ def print_mermaid(x,p_val,val,p_r,r):
     os.system('echo "\`\`\`\n" >> '+file_name)
     
 
-p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 9 "
+p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 7 "
 command_base="./abc -c 'twoexact -N 3 -I 4 "
 
 res=[]
@@ -78,11 +77,12 @@ for c_i,f in enumerate(f_npn[::-1]):
     number="0x%0.4X" %f_int
     print("Synthesising:"+number)
     p_command=p_command_base+number[2:]+"'"
-    print(p_command)
+    #print(p_command)
     command=command_base+number[2:]+"'"
     
     result=os.popen(command).read()
 
+    """os.system("sed -i '' -e '$ d' "+ file_name)
     os.system("sed -i '' -e '$ d' "+ file_name)
     os.system("sed -i '' -e '$ d' "+ file_name)
     os.system("sed -i '' -e '$ d' "+ file_name)
@@ -95,8 +95,7 @@ for c_i,f in enumerate(f_npn[::-1]):
     os.system("sed -i '' -e '$ d' "+ file_name)
     os.system("sed -i '' -e '$ d' "+ file_name)
     os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-
+   """
     
     #os.system("mv temp.txt benchmark.md")
     #os.system("head -n -1 benchmark.md > temp.txt")
@@ -107,6 +106,7 @@ for c_i,f in enumerate(f_npn[::-1]):
 
     if(int(res[1])>=500): 
 
+        print(p_command)
         p_result=os.popen(p_command).read()
         p_res=re.search('Switching Activity=([0-9]+)',p_result)
     
@@ -138,7 +138,9 @@ for c_i,f in enumerate(f_npn[::-1]):
         os.system('git add '+file_name)    
         os.system('git commit -m \"'+number+"\"")
         os.system('git push')
-        
+       
+    else:
+        print("->Skipped<500")
     """else:
         #p_result=os.popen(p_command).read()
         p_res=res
