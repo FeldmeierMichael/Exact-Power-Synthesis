@@ -3,7 +3,7 @@ import re
 import matplotlib.pyplot as plt
 import time
 
-file_name='benchmark_opt_500_2.md'
+file_name='benchmark_tum.md'
 
 def print_mermaid(x,p_val,val,p_r,r):
     p_avg=sum(p_val)/len(p_val)
