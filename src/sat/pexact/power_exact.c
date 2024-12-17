@@ -5243,7 +5243,8 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars)
     int act = 0;
     int r_min=0;
     int n_p=pow(2,pPars->nVars-1);
-    while (1)
+    int solution=0;
+    while (!solution)
     {        
                     //printf("ACT=%d\n",act);
                     if (act >= calc_max_act(r + 1, p->nVars))
@@ -5327,9 +5328,11 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars)
                             if (status == 1)
                             {
                                 Exa_ManPrintSolution_bdd(p, fCompl);
-                                Exa_ManFree(p);
+                                //Exa_ManFree(p);
                                 Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
+                                solution=1;
                                 break;
+                                
                             }    
                     }     
                     }    
@@ -5349,7 +5352,7 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars)
 
 
     }
-      free_comb_list(list);  
+      //free_comb_list(list);  
     
 }
 //////////////////////////////////////////////////////////////////////////Accelerated search with smaller than bdd's
