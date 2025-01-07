@@ -30,7 +30,7 @@ def print_mermaid(x,p_val,val,p_r,r):
     os.system('echo "\`\`\`\n" >> '+file_name)
     
 
-p_command_base="timeout 10 ./abc -c 'powertwoexact -N 3 -I 4 -F 7 "
+p_command_base="timeout 86400 ./abc -c 'powertwoexact -N 3 -I 4 -F 7 "
 command_base="./abc -c 'twoexact -N 3 -I 4 "
 
 res=[]
