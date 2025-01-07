@@ -1,9 +1,9 @@
 import os
 import re
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import time
 
-file_name='benchmark_opt_500_2.md'
+file_name='benchmark_opt_500_8.md'
 
 def print_mermaid(x,p_val,val,p_r,r):
     p_avg=sum(p_val)/len(p_val)
@@ -25,7 +25,7 @@ def print_mermaid(x,p_val,val,p_r,r):
     os.system('echo "\`\`\`\n" >> '+file_name)
     
 
-p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 9 "
+p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 7 "
 command_base="./abc -c 'twoexact -N 3 -I 4 "
 
 res=[]
@@ -72,7 +72,7 @@ s_arr=[]
 x=[]
 upd=0
 
-for c_i,f in enumerate(f_npn):
+for c_i,f in enumerate(f_npn[185:]):
     f_int=int(f,2)
    
     number="0x%0.4X" %f_int
@@ -83,19 +83,21 @@ for c_i,f in enumerate(f_npn):
     
     result=os.popen(command).read()
 
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
-    os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
+    #os.system("sed -i '' -e '$ d' "+ file_name)
 
     
     #os.system("mv temp.txt benchmark.md")
@@ -129,15 +131,15 @@ for c_i,f in enumerate(f_npn):
         avg_r=sum(r_arr)/len(r_arr)
 
 
-        print_mermaid(x,p_s_arr,s_arr,p_r_arr,r_arr)
+      #  print_mermaid(x,p_s_arr,s_arr,p_r_arr,r_arr)
         #os.system('echo " avg_p_s='+str(round(avg_ps,2))+' avg_s='+str(round(avg_s,2))+' avg_pr='+str(round(avg_pr,2))+' avg_r='+str(round(avg_r,2))+'\n" >> '+file_name)
         
         
 
 
-        os.system('git add '+file_name)    
-        os.system('git commit -m \"'+number+"\"")
-        os.system('git push')
+     #   os.system('git add '+file_name)    
+     #   os.system('git commit -m \"'+number+"\"")
+     #   os.system('git push')
         
     """else:
         #p_result=os.popen(p_command).read()
