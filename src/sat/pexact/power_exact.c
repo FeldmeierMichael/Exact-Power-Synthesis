@@ -5415,8 +5415,13 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars)
                                 Exa_ManPrintSolution_bdd(p, fCompl);
                                 //Exa_ManFree(p);
                                 Abc_PrintTime(1, "Total runtime", Abc_Clock() - clkTotal);
+<<<<<<< HEAD
 				solution=1;;
+=======
+                                solution=1;
+>>>>>>> 4c47788946e6eec6dfe422b84097327c6151fb2c
                                 break;
+                                
                             }    
                     }     
                     }    
@@ -5436,7 +5441,11 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars)
 
 
     }
+<<<<<<< HEAD
      // free_comb_list(list);  
+=======
+      //free_comb_list(list);  
+>>>>>>> 4c47788946e6eec6dfe422b84097327c6151fb2c
     
 }
 //////////////////////////////////////////////////////////////////////////Accelerated search with smaller than bdd's
