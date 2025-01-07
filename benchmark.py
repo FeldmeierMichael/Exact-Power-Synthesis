@@ -1,6 +1,5 @@
 import os
 import re
-#import matplotlib.pyplot as plt
 import time
 import subprocess, datetime, signal
 
