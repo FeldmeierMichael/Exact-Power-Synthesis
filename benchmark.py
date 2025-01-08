@@ -4,7 +4,7 @@ import time
 import subprocess, datetime, signal
 
 
-file_name='benchmark_opt_500_9.md'
+file_name='benchmark_opt_500_10.md'
 
 
 
@@ -76,7 +76,7 @@ s_arr=[]
 x=[]
 upd=0
 
-for c_i,f in enumerate(f_npn[188:]):
+for c_i,f in enumerate(f_npn[189:]):
     f_int=int(f,2)
    
     number="0x%0.4X" %f_int
