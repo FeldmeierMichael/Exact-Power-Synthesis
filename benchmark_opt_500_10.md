@@ -10,3 +10,5 @@
 
 [INFO] (Skipped > 24h) Synthesising NPN Class=6 TruthTable:0x1697 exact:600 r=6
 
+[INFO] (Skipped > 24h) Synthesising NPN Class=7 TruthTable:0x3DDA exact:696 r=7
+
