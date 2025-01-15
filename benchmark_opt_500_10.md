@@ -16,3 +16,5 @@
 
 [INFO] (Skipped > 24h) Synthesising NPN Class=10 TruthTable:0x169B exact:696 r=7
 
+[INFO] Synthesising NPN Class=12 TruthTable:0x699B pexact:500 r=6 exact:504 r=6 time=8986.63min 
+
