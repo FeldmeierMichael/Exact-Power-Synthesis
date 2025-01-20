@@ -11,6 +11,7 @@
         "bdd.h": "c",
         "kernel.h": "c",
         "fdd.h": "c",
-        "random": "c"
+        "random": "c",
+        "cstdlib": "c"
     }
 }
