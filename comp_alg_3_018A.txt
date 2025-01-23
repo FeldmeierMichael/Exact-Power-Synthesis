@@ -1,0 +1,1278 @@
+ABC command line: "powertwoexact -N 3 -I 4 -F 14 018A".
+
+###################################################1.free list algorithm optimized bdd
+Pstate:3
+ACT=0 runtime: =     0.00 sec
+ACT=2 runtime: =     0.00 sec
+ACT=4 runtime: =     0.00 sec
+ACT=6 runtime: =     0.00 sec
+ACT=8 runtime: =     0.00 sec
+ACT=10 runtime: =     0.00 sec
+ACT=12 runtime: =     0.00 sec
+ACT=14 runtime: =     0.00 sec
+ACT=16 runtime: =     0.00 sec
+ACT=18 runtime: =     0.00 sec
+ACT=20 runtime: =     0.00 sec
+ACT=22 runtime: =     0.00 sec
+ACT=24 runtime: =     0.00 sec
+ACT=26 runtime: =     0.00 sec
+ACT=28 runtime: =     0.00 sec
+ACT=30 runtime: =     0.00 sec
+ACT=32 runtime: =     0.00 sec
+ACT=34 runtime: =     0.00 sec
+ACT=36 runtime: =     0.00 sec
+ACT=38 runtime: =     0.00 sec
+ACT=40 runtime: =     0.00 sec
+ACT=42 runtime: =     0.00 sec
+ACT=44 runtime: =     0.00 sec
+ACT=46 runtime: =     0.00 sec
+ACT=48 runtime: =     0.00 sec
+ACT=50 runtime: =     0.00 sec
+ACT=52 runtime: =     0.00 sec
+ACT=54 runtime: =     0.00 sec
+ACT=56 runtime: =     0.00 sec
+ACT=58 runtime: =     0.00 sec
+ACT=60 runtime: =     0.00 sec
+ACT=62 runtime: =     0.00 sec
+ACT=64 runtime: =     0.00 sec
+ACT=66 runtime: =     0.00 sec
+ACT=68 runtime: =     0.00 sec
+ACT=70 runtime: =     0.00 sec
+ACT=72 runtime: =     0.00 sec
+ACT=74 runtime: =     0.00 sec
+ACT=76 runtime: =     0.00 sec
+ACT=78 runtime: =     0.00 sec
+ACT=80 runtime: =     0.00 sec
+ACT=82 runtime: =     0.00 sec
+ACT=84 runtime: =     0.00 sec
+ACT=86 runtime: =     0.00 sec
+ACT=88 runtime: =     0.00 sec
+ACT=90 runtime: =     0.00 sec
+ACT=92 runtime: =     0.00 sec
+ACT=94 runtime: =     0.00 sec
+ACT=96 runtime: =     0.00 sec
+ACT=98 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=102 runtime: =     0.00 sec
+ACT=104 runtime: =     0.00 sec
+ACT=106 runtime: =     0.00 sec
+ACT=108 runtime: =     0.00 sec
+ACT=110 runtime: =     0.00 sec
+ACT=112 runtime: =     0.00 sec
+ACT=114 runtime: =     0.00 sec
+ACT=116 runtime: =     0.00 sec
+ACT=118 runtime: =     0.00 sec
+ACT=120 runtime: =     0.00 sec
+ACT=122 runtime: =     0.00 sec
+ACT=124 runtime: =     0.00 sec
+ACT=126 runtime: =     0.00 sec
+ACT=128 runtime: =     0.00 sec
+ACT=130 runtime: =     0.00 sec
+ACT=132 runtime: =     0.00 sec
+ACT=134 runtime: =     0.00 sec
+ACT=136 runtime: =     0.00 sec
+ACT=138 runtime: =     0.00 sec
+ACT=140 runtime: =     0.00 sec
+ACT=142 runtime: =     0.00 sec
+ACT=144 runtime: =     0.00 sec
+ACT=146 runtime: =     0.00 sec
+ACT=148 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=152 runtime: =     0.00 sec
+ACT=154 runtime: =     0.00 sec
+ACT=156 runtime: =     0.00 sec
+ACT=158 runtime: =     0.00 sec
+ACT=160 runtime: =     0.00 sec
+ACT=162 runtime: =     0.00 sec
+ACT=164 runtime: =     0.00 sec
+ACT=166 runtime: =     0.00 sec
+ACT=168 runtime: =     0.00 sec
+ACT=170 runtime: =     0.00 sec
+ACT=172 runtime: =     0.00 sec
+ACT=174 runtime: =     0.00 sec
+ACT=176 runtime: =     0.00 sec
+ACT=178 runtime: =     0.00 sec
+ACT=180 runtime: =     0.00 sec
+ACT=182 runtime: =     0.00 sec
+ACT=184 runtime: =     0.01 sec
+ACT=186 runtime: =     0.01 sec
+ACT=188 runtime: =     0.01 sec
+ACT=190 runtime: =     0.01 sec
+ACT=192 runtime: =     0.01 sec
+ACT=194 runtime: =     0.01 sec
+ACT=196 runtime: =     0.01 sec
+ACT=198 runtime: =     0.01 sec
+ACT=200 runtime: =     0.01 sec
+ACT=202 runtime: =     0.01 sec
+ACT=204 runtime: =     0.01 sec
+ACT=206 runtime: =     0.01 sec
+ACT=208 runtime: =     0.01 sec
+ACT=210 runtime: =     0.01 sec
+ACT=212 runtime: =     0.01 sec
+#r=4,nodecount=104
+ACT=214 runtime: =     0.08 sec
+ACT=216 runtime: =     0.12 sec
+ACT=218 runtime: =     0.16 sec
+ACT=220 runtime: =     0.19 sec
+ACT=222 runtime: =     0.23 sec
+ACT=224 runtime: =     0.26 sec
+ACT=226 runtime: =     0.30 sec
+ACT=228 runtime: =     0.33 sec
+ACT=230 runtime: =     0.37 sec
+ACT=232 runtime: =     0.40 sec
+ACT=234 runtime: =     0.44 sec
+ACT=236 runtime: =     0.47 sec
+ACT=238 runtime: =     0.50 sec
+#r=4,nodecount=103
+ACT=240 runtime: =     0.62 sec
+ACT=242 runtime: =     0.66 sec
+#r=5,nodecount=143
+ACT=244 runtime: =     0.77 sec
+#r=4,nodecount=124
+ACT=246 runtime: =     0.86 sec
+ACT=248 runtime: =     0.95 sec
+ACT=250 runtime: =     1.03 sec
+ACT=252 runtime: =     1.11 sec
+#r=4,nodecount=76
+ACT=254 runtime: =     1.44 sec
+ACT=256 runtime: =     1.52 sec
+ACT=258 runtime: =     1.60 sec
+ACT=260 runtime: =     1.69 sec
+#r=4,nodecount=143
+ACT=262 runtime: =     1.90 sec
+ACT=264 runtime: =     1.98 sec
+#r=4,nodecount=62
+ACT=266 runtime: =     2.17 sec
+ACT=268 runtime: =     2.25 sec
+#r=5,nodecount=162
+ACT=270 runtime: =     2.39 sec
+#r=4,nodecount=123
+ACT=272 runtime: =     2.51 sec
+#r=6,nodecount=182
+ACT=274 runtime: =     2.73 sec
+#r=5,nodecount=171
+ACT=276 runtime: =     2.90 sec
+#r=4,nodecount=116
+ACT=278 runtime: =     3.18 sec
+#r=4,nodecount=105
+ACT=280 runtime: =     3.56 sec
+ACT=282 runtime: =     3.73 sec
+#r=5,nodecount=106
+ACT=284 runtime: =     3.93 sec
+#r=4,nodecount=126
+ACT=286 runtime: =     4.29 sec
+#r=4,nodecount=99
+ACT=288 runtime: =     4.52 sec
+ACT=290 runtime: =     4.69 sec
+#r=5,nodecount=224
+ACT=292 runtime: =     5.08 sec
+#r=4,nodecount=254
+ACT=294 runtime: =     5.47 sec
+#r=5,nodecount=141
+ACT=296 runtime: =     5.72 sec
+#r=4,nodecount=74
+ACT=298 runtime: =     5.90 sec
+#r=6,nodecount=221
+ACT=300 runtime: =     6.12 sec
+#r=4,nodecount=104
+#r=5,nodecount=194
+ACT=302 runtime: =     6.49 sec
+#r=4,nodecount=159
+#r=7,nodecount=221
+ACT=304 runtime: =     7.02 sec
+#r=4,nodecount=72
+#r=6,nodecount=218
+ACT=306 runtime: =     7.61 sec
+#r=5,nodecount=161
+ACT=308 runtime: =     8.05 sec
+#r=4,nodecount=295
+#r=5,nodecount=166
+ACT=310 runtime: =     8.84 sec
+#r=4,nodecount=173
+ACT=312 runtime: =     9.42 sec
+#r=6,nodecount=136
+ACT=314 runtime: =     9.82 sec
+#r=5,nodecount=175
+ACT=316 runtime: =    10.35 sec
+#r=4,nodecount=92
+#r=5,nodecount=221
+ACT=318 runtime: =    11.02 sec
+#r=4,nodecount=214
+ACT=320 runtime: =    11.56 sec
+#r=5,nodecount=80
+#r=6,nodecount=305
+ACT=322 runtime: =    12.28 sec
+#r=5,nodecount=397
+ACT=324 runtime: =    12.96 sec
+#r=4,nodecount=300
+#r=6,nodecount=220
+ACT=326 runtime: =    13.92 sec
+#r=4,nodecount=99
+#r=5,nodecount=169
+ACT=328 runtime: =    14.52 sec
+#r=4,nodecount=110
+#r=7,nodecount=280
+ACT=330 runtime: =    15.03 sec
+#r=5,nodecount=166
+#r=6,nodecount=265
+ACT=332 runtime: =    15.60 sec
+#r=4,nodecount=210
+#r=5,nodecount=250
+#r=8,nodecount=260
+ACT=334 runtime: =    16.89 sec
+#r=4,nodecount=258
+#r=5,nodecount=164
+#r=7,nodecount=265
+ACT=336 runtime: =    19.95 sec
+#r=4,nodecount=120
+#r=6,nodecount=206
+ACT=338 runtime: =    21.06 sec
+#r=5,nodecount=461
+#r=6,nodecount=227
+ACT=340 runtime: =    22.48 sec
+#r=4,nodecount=300
+#r=5,nodecount=272
+ACT=342 runtime: =    26.81 sec
+#r=4,nodecount=211
+#r=5,nodecount=136
+#r=7,nodecount=166
+ACT=344 runtime: =    28.11 sec
+#r=4,nodecount=62
+#r=6,nodecount=224
+ACT=346 runtime: =    29.29 sec
+#r=5,nodecount=130
+#r=6,nodecount=343
+ACT=348 runtime: =    30.71 sec
+#r=4,nodecount=144
+#r=5,nodecount=429
+ACT=350 runtime: =    34.74 sec
+#r=4,nodecount=311
+#r=6,nodecount=179
+#r=7,nodecount=386
+ACT=352 runtime: =    36.78 sec
+#r=5,nodecount=96
+#r=6,nodecount=540
+ACT=354 runtime: =    38.16 sec
+#r=5,nodecount=472
+#r=7,nodecount=299
+ACT=356 runtime: =    39.73 sec
+#r=4,nodecount=362
+#r=5,nodecount=224
+#r=6,nodecount=264
+ACT=358 runtime: =    41.52 sec
+#r=4,nodecount=201
+#r=5,nodecount=247
+#r=8,nodecount=339
+ACT=360 runtime: =    43.30 sec
+#r=4,nodecount=122
+#r=5,nodecount=100
+#r=6,nodecount=228
+#r=7,nodecount=336
+ACT=362 runtime: =    45.08 sec
+#r=5,nodecount=333
+#r=6,nodecount=341
+#r=9,nodecount=299
+ACT=364 runtime: =    47.72 sec
+#r=4,nodecount=220
+#r=5,nodecount=514
+#r=6,nodecount=256
+#r=8,nodecount=312
+ACT=366 runtime: =    51.99 sec
+#r=4,nodecount=259
+#r=5,nodecount=269
+#r=7,nodecount=251
+ACT=368 runtime: =    54.51 sec
+#r=4,nodecount=166
+#r=6,nodecount=627
+#r=7,nodecount=288
+ACT=370 runtime: =    57.76 sec
+#r=5,nodecount=547
+#r=6,nodecount=371
+ACT=372 runtime: =    60.15 sec
+#r=4,nodecount=357
+#r=5,nodecount=336
+#r=6,nodecount=299
+#r=8,nodecount=196
+ACT=374 runtime: =    63.10 sec
+#r=4,nodecount=252
+#r=5,nodecount=322
+#r=7,nodecount=273
+ACT=376 runtime: =    68.11 sec
+#r=4,nodecount=118
+#r=6,nodecount=256
+#r=7,nodecount=465
+ACT=378 runtime: =    72.53 sec
+#r=5,nodecount=248
+#r=6,nodecount=644
+ACT=380 runtime: =    77.39 sec
+#r=4,nodecount=253
+#r=5,nodecount=607
+#r=7,nodecount=278
+#r=8,nodecount=467
+ACT=382 runtime: =    88.61 sec
+#r=4,nodecount=321
+#r=5,nodecount=156
+#r=6,nodecount=215
+#r=7,nodecount=683
+ACT=384 runtime: =    92.53 sec
+#r=4,nodecount=32
+#r=5,nodecount=152
+#r=6,nodecount=644
+#r=8,nodecount=378
+ACT=386 runtime: =    95.78 sec
+#r=5,nodecount=638
+#r=6,nodecount=349
+#r=7,nodecount=359
+ACT=388 runtime: =   102.96 sec
+#r=4,nodecount=370
+#r=5,nodecount=448
+#r=6,nodecount=384
+#r=9,nodecount=398
+ACT=390 runtime: =   111.98 sec
+#r=4,nodecount=266
+#r=5,nodecount=381
+#r=6,nodecount=223
+#r=7,nodecount=290
+#r=8,nodecount=407
+ACT=392 runtime: =   118.41 sec
+#r=4,nodecount=110
+#r=5,nodecount=166
+#r=6,nodecount=456
+#r=7,nodecount=432
+#r=10,nodecount=338
+ACT=394 runtime: =   124.26 sec
+#r=5,nodecount=351
+#r=6,nodecount=778
+#r=7,nodecount=348
+#r=9,nodecount=359
+ACT=396 runtime: =   133.15 sec
+#r=4,nodecount=222
+#r=5,nodecount=640
+#r=6,nodecount=418
+#r=8,nodecount=296
+ACT=398 runtime: =   144.19 sec
+#r=4,nodecount=327
+#r=5,nodecount=378
+#r=6,nodecount=173
+#r=7,nodecount=793
+#r=8,nodecount=349
+ACT=400 runtime: =   158.86 sec
+#r=4,nodecount=166
+#r=5,nodecount=100
+#r=6,nodecount=794
+#r=7,nodecount=470
+ACT=402 runtime: =   166.28 sec
+#r=5,nodecount=688
+#r=6,nodecount=461
+#r=7,nodecount=462
+#r=9,nodecount=226
+ACT=404 runtime: =   175.44 sec
+#r=4,nodecount=403
+#r=5,nodecount=510
+#r=6,nodecount=609
+#r=8,nodecount=322
+ACT=406 runtime: =   197.83 sec
+#r=4,nodecount=258
+#r=5,nodecount=501
+#r=7,nodecount=394
+#r=8,nodecount=587
+ACT=408 runtime: =   214.23 sec
+#r=4,nodecount=156
+#r=6,nodecount=457
+#r=7,nodecount=859
+ACT=410 runtime: =   223.86 sec
+#r=5,nodecount=457
+#r=6,nodecount=903
+#r=8,nodecount=377
+#r=9,nodecount=548
+ACT=412 runtime: =   239.00 sec
+#r=4,nodecount=258
+#r=5,nodecount=758
+#r=6,nodecount=344
+#r=7,nodecount=334
+#r=8,nodecount=826
+ACT=414 runtime: =   255.15 sec
+#r=4,nodecount=318
+#r=5,nodecount=353
+#r=6,nodecount=335
+#r=7,nodecount=816
+#r=9,nodecount=457
+ACT=416 runtime: =   272.14 sec
+#r=4,nodecount=68
+#r=5,nodecount=170
+#r=6,nodecount=976
+Realization of given 4-input function using 7 two-input gates complementary=0:
+10 = 4'b0110( 08 09 )
+09 = 4'b1000( b 05 )
+08 = 4'b0110( 06 07 )
+07 = 4'b0100( d 04 )
+06 = 4'b0100( a 04 )
+05 = 4'b0100( a d )
+04 = 4'b1110( b c )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0011111100111111
+i=5:0101010100000000
+i=6:0100000001000000
+i=7:0000000011000000
+i=8:0100000010000000
+i=9:0001000100000000
+i=10:0101000110000000
+
+Switching Activity=416
+Number of Gates: r=7
+Total runtime =   272.79 sec
+###################################################2.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=75 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.01 sec
+ACT=225 runtime: =     0.01 sec
+ACT=300 runtime: =     0.08 sec
+ACT=300 runtime: =     0.08 sec
+ACT=300 runtime: =     0.11 sec
+ACT=375 runtime: =     0.80 sec
+ACT=375 runtime: =     0.81 sec
+ACT=375 runtime: =     0.81 sec
+ACT=375 runtime: =     0.82 sec
+ACT=450 runtime: =    18.29 sec
+ACT=450 runtime: =    18.29 sec
+ACT=450 runtime: =    18.29 sec
+ACT=432 runtime: =    18.33 sec
+ACT=449 runtime: =    85.82 sec
+ACT=440 runtime: =    85.87 sec
+ACT=416 runtime: =    99.54 sec
+ACT=416 runtime: =   111.81 sec
+Realization of given 4-input function using 7 two-input gates complementary=0:
+10 = 4'b0110( 07 09 )
+09 = 4'b0010( d 08 )
+08 = 4'b1000( a b )
+07 = 4'b0110( 05 06 )
+06 = 4'b0100( d 04 )
+05 = 4'b0100( a 04 )
+04 = 4'b1110( b c )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0011111100111111
+i=5:0100000001000000
+i=6:0000000011000000
+i=7:0100000010000000
+i=8:0001000100010001
+i=9:0001000100000000
+i=10:0101000110000000
+
+Switching Activity=416
+Number of Gates: r=7
+Total runtime =   111.81 sec
+###################################################3.free stepsize algorithm non optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=1 runtime: =     0.00 sec
+ACT=2 runtime: =     0.00 sec
+ACT=3 runtime: =     0.00 sec
+ACT=4 runtime: =     0.00 sec
+ACT=5 runtime: =     0.00 sec
+ACT=6 runtime: =     0.00 sec
+ACT=7 runtime: =     0.00 sec
+ACT=8 runtime: =     0.00 sec
+ACT=9 runtime: =     0.00 sec
+ACT=10 runtime: =     0.00 sec
+ACT=11 runtime: =     0.00 sec
+ACT=12 runtime: =     0.00 sec
+ACT=13 runtime: =     0.00 sec
+ACT=14 runtime: =     0.00 sec
+ACT=15 runtime: =     0.00 sec
+ACT=16 runtime: =     0.00 sec
+ACT=17 runtime: =     0.00 sec
+ACT=18 runtime: =     0.00 sec
+ACT=19 runtime: =     0.00 sec
+ACT=20 runtime: =     0.00 sec
+ACT=21 runtime: =     0.00 sec
+ACT=22 runtime: =     0.00 sec
+ACT=23 runtime: =     0.00 sec
+ACT=24 runtime: =     0.00 sec
+ACT=25 runtime: =     0.00 sec
+ACT=26 runtime: =     0.00 sec
+ACT=27 runtime: =     0.00 sec
+ACT=28 runtime: =     0.00 sec
+ACT=29 runtime: =     0.00 sec
+ACT=30 runtime: =     0.00 sec
+ACT=31 runtime: =     0.00 sec
+ACT=32 runtime: =     0.00 sec
+ACT=33 runtime: =     0.00 sec
+ACT=34 runtime: =     0.00 sec
+ACT=35 runtime: =     0.00 sec
+ACT=36 runtime: =     0.00 sec
+ACT=37 runtime: =     0.00 sec
+ACT=38 runtime: =     0.00 sec
+ACT=39 runtime: =     0.00 sec
+ACT=40 runtime: =     0.00 sec
+ACT=41 runtime: =     0.00 sec
+ACT=42 runtime: =     0.00 sec
+ACT=43 runtime: =     0.00 sec
+ACT=44 runtime: =     0.00 sec
+ACT=45 runtime: =     0.00 sec
+ACT=46 runtime: =     0.00 sec
+ACT=47 runtime: =     0.00 sec
+ACT=48 runtime: =     0.00 sec
+ACT=49 runtime: =     0.00 sec
+ACT=50 runtime: =     0.00 sec
+ACT=51 runtime: =     0.00 sec
+ACT=52 runtime: =     0.00 sec
+ACT=53 runtime: =     0.00 sec
+ACT=54 runtime: =     0.00 sec
+ACT=55 runtime: =     0.00 sec
+ACT=56 runtime: =     0.00 sec
+ACT=57 runtime: =     0.00 sec
+ACT=58 runtime: =     0.00 sec
+ACT=59 runtime: =     0.00 sec
+ACT=60 runtime: =     0.00 sec
+ACT=61 runtime: =     0.00 sec
+ACT=62 runtime: =     0.00 sec
+ACT=63 runtime: =     0.00 sec
+ACT=64 runtime: =     0.00 sec
+ACT=65 runtime: =     0.00 sec
+ACT=66 runtime: =     0.00 sec
+ACT=67 runtime: =     0.00 sec
+ACT=68 runtime: =     0.00 sec
+ACT=69 runtime: =     0.00 sec
+ACT=70 runtime: =     0.00 sec
+ACT=71 runtime: =     0.00 sec
+ACT=72 runtime: =     0.00 sec
+ACT=73 runtime: =     0.00 sec
+ACT=74 runtime: =     0.00 sec
+ACT=75 runtime: =     0.00 sec
+ACT=76 runtime: =     0.00 sec
+ACT=77 runtime: =     0.00 sec
+ACT=78 runtime: =     0.00 sec
+ACT=79 runtime: =     0.00 sec
+ACT=80 runtime: =     0.00 sec
+ACT=81 runtime: =     0.00 sec
+ACT=82 runtime: =     0.00 sec
+ACT=83 runtime: =     0.00 sec
+ACT=84 runtime: =     0.00 sec
+ACT=85 runtime: =     0.00 sec
+ACT=86 runtime: =     0.00 sec
+ACT=87 runtime: =     0.00 sec
+ACT=88 runtime: =     0.00 sec
+ACT=89 runtime: =     0.00 sec
+ACT=90 runtime: =     0.00 sec
+ACT=91 runtime: =     0.00 sec
+ACT=92 runtime: =     0.00 sec
+ACT=93 runtime: =     0.00 sec
+ACT=94 runtime: =     0.00 sec
+ACT=95 runtime: =     0.00 sec
+ACT=96 runtime: =     0.00 sec
+ACT=97 runtime: =     0.00 sec
+ACT=98 runtime: =     0.00 sec
+ACT=99 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=101 runtime: =     0.00 sec
+ACT=102 runtime: =     0.00 sec
+ACT=103 runtime: =     0.00 sec
+ACT=104 runtime: =     0.00 sec
+ACT=105 runtime: =     0.00 sec
+ACT=106 runtime: =     0.00 sec
+ACT=107 runtime: =     0.00 sec
+ACT=108 runtime: =     0.00 sec
+ACT=109 runtime: =     0.00 sec
+ACT=110 runtime: =     0.00 sec
+ACT=111 runtime: =     0.00 sec
+ACT=112 runtime: =     0.00 sec
+ACT=113 runtime: =     0.00 sec
+ACT=114 runtime: =     0.00 sec
+ACT=115 runtime: =     0.00 sec
+ACT=116 runtime: =     0.00 sec
+ACT=117 runtime: =     0.00 sec
+ACT=118 runtime: =     0.00 sec
+ACT=119 runtime: =     0.00 sec
+ACT=120 runtime: =     0.00 sec
+ACT=121 runtime: =     0.00 sec
+ACT=122 runtime: =     0.00 sec
+ACT=123 runtime: =     0.00 sec
+ACT=124 runtime: =     0.00 sec
+ACT=125 runtime: =     0.00 sec
+ACT=126 runtime: =     0.00 sec
+ACT=127 runtime: =     0.00 sec
+ACT=128 runtime: =     0.00 sec
+ACT=129 runtime: =     0.00 sec
+ACT=130 runtime: =     0.00 sec
+ACT=131 runtime: =     0.00 sec
+ACT=132 runtime: =     0.00 sec
+ACT=133 runtime: =     0.00 sec
+ACT=134 runtime: =     0.00 sec
+ACT=135 runtime: =     0.00 sec
+ACT=136 runtime: =     0.00 sec
+ACT=137 runtime: =     0.00 sec
+ACT=138 runtime: =     0.00 sec
+ACT=139 runtime: =     0.00 sec
+ACT=140 runtime: =     0.00 sec
+ACT=141 runtime: =     0.00 sec
+ACT=142 runtime: =     0.00 sec
+ACT=143 runtime: =     0.00 sec
+ACT=144 runtime: =     0.00 sec
+ACT=145 runtime: =     0.00 sec
+ACT=146 runtime: =     0.00 sec
+ACT=147 runtime: =     0.00 sec
+ACT=148 runtime: =     0.00 sec
+ACT=149 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=151 runtime: =     0.00 sec
+ACT=152 runtime: =     0.00 sec
+ACT=152 runtime: =     0.00 sec
+ACT=153 runtime: =     0.00 sec
+ACT=154 runtime: =     0.00 sec
+ACT=155 runtime: =     0.00 sec
+ACT=156 runtime: =     0.00 sec
+ACT=157 runtime: =     0.00 sec
+ACT=158 runtime: =     0.00 sec
+ACT=159 runtime: =     0.00 sec
+ACT=160 runtime: =     0.00 sec
+ACT=161 runtime: =     0.00 sec
+ACT=162 runtime: =     0.00 sec
+ACT=163 runtime: =     0.00 sec
+ACT=164 runtime: =     0.00 sec
+ACT=165 runtime: =     0.00 sec
+ACT=166 runtime: =     0.00 sec
+ACT=167 runtime: =     0.00 sec
+ACT=168 runtime: =     0.00 sec
+ACT=169 runtime: =     0.00 sec
+ACT=170 runtime: =     0.00 sec
+ACT=171 runtime: =     0.00 sec
+ACT=172 runtime: =     0.00 sec
+ACT=173 runtime: =     0.00 sec
+ACT=174 runtime: =     0.00 sec
+ACT=175 runtime: =     0.00 sec
+ACT=176 runtime: =     0.00 sec
+ACT=177 runtime: =     0.00 sec
+ACT=178 runtime: =     0.00 sec
+ACT=179 runtime: =     0.00 sec
+ACT=180 runtime: =     0.00 sec
+ACT=181 runtime: =     0.00 sec
+ACT=182 runtime: =     0.00 sec
+ACT=182 runtime: =     0.01 sec
+ACT=183 runtime: =     0.01 sec
+ACT=184 runtime: =     0.01 sec
+ACT=184 runtime: =     0.01 sec
+ACT=185 runtime: =     0.01 sec
+ACT=186 runtime: =     0.01 sec
+ACT=187 runtime: =     0.01 sec
+ACT=188 runtime: =     0.01 sec
+ACT=189 runtime: =     0.01 sec
+ACT=190 runtime: =     0.01 sec
+ACT=191 runtime: =     0.01 sec
+ACT=192 runtime: =     0.01 sec
+ACT=192 runtime: =     0.01 sec
+ACT=193 runtime: =     0.01 sec
+ACT=194 runtime: =     0.01 sec
+ACT=195 runtime: =     0.01 sec
+ACT=196 runtime: =     0.01 sec
+ACT=197 runtime: =     0.01 sec
+ACT=198 runtime: =     0.01 sec
+ACT=199 runtime: =     0.01 sec
+ACT=200 runtime: =     0.01 sec
+ACT=201 runtime: =     0.01 sec
+ACT=202 runtime: =     0.01 sec
+ACT=203 runtime: =     0.01 sec
+ACT=204 runtime: =     0.01 sec
+ACT=205 runtime: =     0.01 sec
+ACT=206 runtime: =     0.01 sec
+ACT=207 runtime: =     0.01 sec
+ACT=208 runtime: =     0.01 sec
+ACT=208 runtime: =     0.02 sec
+ACT=209 runtime: =     0.02 sec
+ACT=210 runtime: =     0.02 sec
+ACT=211 runtime: =     0.02 sec
+ACT=212 runtime: =     0.02 sec
+ACT=212 runtime: =     0.07 sec
+ACT=213 runtime: =     0.07 sec
+ACT=214 runtime: =     0.07 sec
+ACT=214 runtime: =     0.09 sec
+ACT=215 runtime: =     0.09 sec
+ACT=216 runtime: =     0.09 sec
+ACT=216 runtime: =     0.09 sec
+ACT=217 runtime: =     0.09 sec
+ACT=218 runtime: =     0.09 sec
+ACT=219 runtime: =     0.09 sec
+ACT=220 runtime: =     0.09 sec
+ACT=221 runtime: =     0.09 sec
+ACT=222 runtime: =     0.09 sec
+ACT=222 runtime: =     0.09 sec
+ACT=223 runtime: =     0.09 sec
+ACT=224 runtime: =     0.09 sec
+ACT=224 runtime: =     0.09 sec
+ACT=225 runtime: =     0.09 sec
+ACT=226 runtime: =     0.09 sec
+ACT=227 runtime: =     0.09 sec
+ACT=228 runtime: =     0.09 sec
+ACT=229 runtime: =     0.09 sec
+ACT=230 runtime: =     0.09 sec
+ACT=230 runtime: =     0.10 sec
+ACT=231 runtime: =     0.10 sec
+ACT=232 runtime: =     0.10 sec
+ACT=233 runtime: =     0.10 sec
+ACT=234 runtime: =     0.10 sec
+ACT=235 runtime: =     0.10 sec
+ACT=236 runtime: =     0.10 sec
+ACT=237 runtime: =     0.10 sec
+ACT=238 runtime: =     0.10 sec
+ACT=238 runtime: =     0.12 sec
+ACT=239 runtime: =     0.12 sec
+ACT=240 runtime: =     0.12 sec
+ACT=240 runtime: =     0.13 sec
+ACT=241 runtime: =     0.13 sec
+ACT=242 runtime: =     0.13 sec
+ACT=242 runtime: =     0.15 sec
+ACT=243 runtime: =     0.15 sec
+ACT=244 runtime: =     0.15 sec
+ACT=244 runtime: =     0.18 sec
+ACT=245 runtime: =     0.18 sec
+ACT=246 runtime: =     0.18 sec
+ACT=246 runtime: =     0.19 sec
+ACT=247 runtime: =     0.19 sec
+ACT=248 runtime: =     0.19 sec
+ACT=248 runtime: =     0.19 sec
+ACT=248 runtime: =     0.19 sec
+ACT=249 runtime: =     0.19 sec
+ACT=250 runtime: =     0.19 sec
+ACT=251 runtime: =     0.19 sec
+ACT=252 runtime: =     0.19 sec
+ACT=252 runtime: =     0.32 sec
+ACT=253 runtime: =     0.32 sec
+ACT=254 runtime: =     0.32 sec
+ACT=254 runtime: =     0.33 sec
+ACT=255 runtime: =     0.33 sec
+ACT=256 runtime: =     0.33 sec
+ACT=256 runtime: =     0.33 sec
+ACT=257 runtime: =     0.33 sec
+ACT=258 runtime: =     0.33 sec
+ACT=259 runtime: =     0.33 sec
+ACT=260 runtime: =     0.33 sec
+ACT=260 runtime: =     0.40 sec
+ACT=261 runtime: =     0.40 sec
+ACT=262 runtime: =     0.40 sec
+ACT=262 runtime: =     0.40 sec
+ACT=262 runtime: =     0.42 sec
+ACT=263 runtime: =     0.42 sec
+ACT=264 runtime: =     0.42 sec
+ACT=264 runtime: =     0.49 sec
+ACT=265 runtime: =     0.49 sec
+ACT=266 runtime: =     0.49 sec
+ACT=267 runtime: =     0.49 sec
+ACT=268 runtime: =     0.49 sec
+ACT=268 runtime: =     0.51 sec
+ACT=269 runtime: =     0.51 sec
+ACT=270 runtime: =     0.51 sec
+ACT=270 runtime: =     0.52 sec
+ACT=270 runtime: =     0.62 sec
+ACT=271 runtime: =     0.62 sec
+ACT=272 runtime: =     0.62 sec
+ACT=272 runtime: =     0.69 sec
+ACT=272 runtime: =     0.71 sec
+ACT=273 runtime: =     0.71 sec
+ACT=274 runtime: =     0.71 sec
+ACT=274 runtime: =     0.74 sec
+ACT=275 runtime: =     0.74 sec
+ACT=276 runtime: =     0.74 sec
+ACT=276 runtime: =     0.89 sec
+ACT=277 runtime: =     0.89 sec
+ACT=278 runtime: =     0.89 sec
+ACT=278 runtime: =     0.89 sec
+ACT=278 runtime: =     0.91 sec
+ACT=278 runtime: =     1.04 sec
+ACT=279 runtime: =     1.04 sec
+ACT=280 runtime: =     1.04 sec
+ACT=280 runtime: =     1.04 sec
+ACT=281 runtime: =     1.04 sec
+ACT=282 runtime: =     1.04 sec
+ACT=282 runtime: =     1.07 sec
+ACT=283 runtime: =     1.07 sec
+ACT=284 runtime: =     1.07 sec
+ACT=284 runtime: =     1.16 sec
+ACT=285 runtime: =     1.16 sec
+ACT=286 runtime: =     1.16 sec
+ACT=286 runtime: =     1.17 sec
+ACT=286 runtime: =     1.26 sec
+ACT=287 runtime: =     1.26 sec
+ACT=288 runtime: =     1.26 sec
+ACT=288 runtime: =     1.27 sec
+ACT=289 runtime: =     1.27 sec
+ACT=290 runtime: =     1.27 sec
+ACT=290 runtime: =     1.42 sec
+ACT=291 runtime: =     1.42 sec
+ACT=292 runtime: =     1.42 sec
+ACT=292 runtime: =     1.49 sec
+ACT=292 runtime: =     1.50 sec
+ACT=293 runtime: =     1.50 sec
+ACT=294 runtime: =     1.50 sec
+ACT=294 runtime: =     1.50 sec
+ACT=294 runtime: =     1.51 sec
+ACT=294 runtime: =     1.63 sec
+ACT=295 runtime: =     1.63 sec
+ACT=296 runtime: =     1.63 sec
+ACT=296 runtime: =     1.64 sec
+ACT=297 runtime: =     1.64 sec
+ACT=298 runtime: =     1.64 sec
+ACT=298 runtime: =     1.67 sec
+ACT=299 runtime: =     1.67 sec
+ACT=300 runtime: =     1.67 sec
+ACT=300 runtime: =     1.81 sec
+ACT=300 runtime: =     1.88 sec
+ACT=301 runtime: =     1.88 sec
+ACT=302 runtime: =     1.88 sec
+ACT=302 runtime: =     2.08 sec
+ACT=302 runtime: =     2.09 sec
+ACT=302 runtime: =     2.20 sec
+ACT=302 runtime: =     2.22 sec
+ACT=303 runtime: =     2.22 sec
+ACT=304 runtime: =     2.22 sec
+ACT=304 runtime: =     2.24 sec
+ACT=304 runtime: =     2.36 sec
+ACT=304 runtime: =     2.36 sec
+ACT=305 runtime: =     2.36 sec
+ACT=306 runtime: =     2.36 sec
+ACT=306 runtime: =     2.42 sec
+ACT=307 runtime: =     2.42 sec
+ACT=308 runtime: =     2.42 sec
+ACT=308 runtime: =     2.47 sec
+ACT=308 runtime: =     2.54 sec
+ACT=308 runtime: =     2.64 sec
+ACT=308 runtime: =     2.81 sec
+ACT=309 runtime: =     2.81 sec
+ACT=310 runtime: =     2.81 sec
+ACT=310 runtime: =     2.82 sec
+ACT=310 runtime: =     3.02 sec
+ACT=311 runtime: =     3.02 sec
+ACT=312 runtime: =     3.02 sec
+ACT=312 runtime: =     3.03 sec
+ACT=312 runtime: =     3.03 sec
+ACT=312 runtime: =     3.08 sec
+ACT=313 runtime: =     3.08 sec
+ACT=314 runtime: =     3.08 sec
+ACT=314 runtime: =     3.11 sec
+ACT=315 runtime: =     3.11 sec
+ACT=316 runtime: =     3.11 sec
+ACT=316 runtime: =     3.13 sec
+ACT=316 runtime: =     3.30 sec
+ACT=317 runtime: =     3.30 sec
+ACT=318 runtime: =     3.30 sec
+ACT=318 runtime: =     3.31 sec
+ACT=318 runtime: =     3.32 sec
+ACT=318 runtime: =     3.39 sec
+ACT=318 runtime: =     3.52 sec
+ACT=319 runtime: =     3.52 sec
+ACT=320 runtime: =     3.52 sec
+ACT=320 runtime: =     3.53 sec
+ACT=320 runtime: =     3.60 sec
+ACT=320 runtime: =     3.82 sec
+ACT=321 runtime: =     3.82 sec
+ACT=322 runtime: =     3.82 sec
+ACT=322 runtime: =     4.04 sec
+ACT=322 runtime: =     4.05 sec
+ACT=323 runtime: =     4.05 sec
+ACT=324 runtime: =     4.05 sec
+ACT=324 runtime: =     4.19 sec
+ACT=324 runtime: =     4.19 sec
+ACT=324 runtime: =     4.41 sec
+ACT=325 runtime: =     4.41 sec
+ACT=326 runtime: =     4.41 sec
+ACT=326 runtime: =     4.42 sec
+ACT=326 runtime: =     4.43 sec
+ACT=326 runtime: =     4.57 sec
+ACT=326 runtime: =     4.57 sec
+ACT=327 runtime: =     4.57 sec
+ACT=328 runtime: =     4.57 sec
+ACT=328 runtime: =     4.71 sec
+ACT=328 runtime: =     4.77 sec
+ACT=329 runtime: =     4.77 sec
+ACT=330 runtime: =     4.77 sec
+ACT=330 runtime: =     4.98 sec
+ACT=330 runtime: =     5.09 sec
+ACT=331 runtime: =     5.09 sec
+ACT=332 runtime: =     5.09 sec
+ACT=332 runtime: =     5.84 sec
+ACT=332 runtime: =     6.01 sec
+ACT=332 runtime: =     6.13 sec
+ACT=332 runtime: =     6.17 sec
+ACT=333 runtime: =     6.17 sec
+ACT=334 runtime: =     6.17 sec
+ACT=334 runtime: =     6.17 sec
+ACT=334 runtime: =     6.18 sec
+ACT=334 runtime: =     6.19 sec
+ACT=334 runtime: =     6.28 sec
+ACT=334 runtime: =     6.79 sec
+ACT=334 runtime: =     7.01 sec
+ACT=335 runtime: =     7.01 sec
+ACT=336 runtime: =     7.01 sec
+ACT=336 runtime: =     7.01 sec
+ACT=336 runtime: =     7.17 sec
+ACT=336 runtime: =     7.25 sec
+ACT=337 runtime: =     7.25 sec
+ACT=338 runtime: =     7.25 sec
+ACT=338 runtime: =     7.42 sec
+ACT=338 runtime: =     7.43 sec
+ACT=338 runtime: =     7.55 sec
+ACT=338 runtime: =     7.65 sec
+ACT=339 runtime: =     7.65 sec
+ACT=340 runtime: =     7.65 sec
+ACT=340 runtime: =     7.75 sec
+ACT=340 runtime: =     7.77 sec
+ACT=340 runtime: =     7.77 sec
+ACT=340 runtime: =     7.87 sec
+ACT=341 runtime: =     7.87 sec
+ACT=342 runtime: =     7.87 sec
+ACT=342 runtime: =     7.88 sec
+ACT=342 runtime: =     7.95 sec
+ACT=342 runtime: =     8.14 sec
+ACT=342 runtime: =     8.29 sec
+ACT=342 runtime: =     8.32 sec
+ACT=343 runtime: =     8.32 sec
+ACT=344 runtime: =     8.32 sec
+ACT=344 runtime: =     8.33 sec
+ACT=344 runtime: =     8.43 sec
+ACT=344 runtime: =     8.52 sec
+ACT=345 runtime: =     8.52 sec
+ACT=346 runtime: =     8.52 sec
+ACT=346 runtime: =     8.56 sec
+ACT=346 runtime: =     9.29 sec
+ACT=347 runtime: =     9.29 sec
+ACT=348 runtime: =     9.29 sec
+ACT=348 runtime: =     9.41 sec
+ACT=348 runtime: =     9.57 sec
+ACT=348 runtime: =     9.59 sec
+ACT=348 runtime: =     9.91 sec
+ACT=348 runtime: =    10.08 sec
+ACT=349 runtime: =    10.08 sec
+ACT=350 runtime: =    10.08 sec
+ACT=350 runtime: =    10.08 sec
+ACT=350 runtime: =    10.09 sec
+ACT=350 runtime: =    10.25 sec
+ACT=350 runtime: =    10.41 sec
+ACT=350 runtime: =    10.83 sec
+ACT=350 runtime: =    11.16 sec
+ACT=351 runtime: =    11.16 sec
+ACT=352 runtime: =    11.16 sec
+ACT=352 runtime: =    11.17 sec
+ACT=352 runtime: =    11.18 sec
+ACT=352 runtime: =    11.18 sec
+ACT=352 runtime: =    11.48 sec
+ACT=353 runtime: =    11.48 sec
+ACT=354 runtime: =    11.48 sec
+ACT=354 runtime: =    11.65 sec
+ACT=354 runtime: =    11.65 sec
+ACT=354 runtime: =    12.00 sec
+ACT=355 runtime: =    12.00 sec
+ACT=356 runtime: =    12.00 sec
+ACT=356 runtime: =    12.12 sec
+ACT=356 runtime: =    12.16 sec
+ACT=356 runtime: =    12.23 sec
+ACT=356 runtime: =    13.04 sec
+ACT=356 runtime: =    13.05 sec
+ACT=357 runtime: =    13.05 sec
+ACT=358 runtime: =    13.05 sec
+ACT=358 runtime: =    13.05 sec
+ACT=358 runtime: =    13.24 sec
+ACT=358 runtime: =    13.38 sec
+ACT=358 runtime: =    13.79 sec
+ACT=358 runtime: =    13.85 sec
+ACT=359 runtime: =    13.85 sec
+ACT=360 runtime: =    13.85 sec
+ACT=360 runtime: =    13.86 sec
+ACT=360 runtime: =    14.41 sec
+ACT=360 runtime: =    14.70 sec
+ACT=360 runtime: =    14.71 sec
+ACT=361 runtime: =    14.71 sec
+ACT=362 runtime: =    14.71 sec
+ACT=362 runtime: =    17.26 sec
+ACT=362 runtime: =    17.49 sec
+ACT=362 runtime: =    17.55 sec
+ACT=362 runtime: =    17.58 sec
+ACT=363 runtime: =    17.58 sec
+ACT=364 runtime: =    17.58 sec
+ACT=364 runtime: =    17.73 sec
+ACT=364 runtime: =    17.78 sec
+ACT=364 runtime: =    17.78 sec
+ACT=364 runtime: =    17.89 sec
+ACT=364 runtime: =    18.17 sec
+ACT=364 runtime: =    19.17 sec
+ACT=364 runtime: =    19.18 sec
+ACT=365 runtime: =    19.18 sec
+ACT=366 runtime: =    19.18 sec
+ACT=366 runtime: =    19.19 sec
+ACT=366 runtime: =    19.20 sec
+ACT=366 runtime: =    19.28 sec
+ACT=366 runtime: =    19.41 sec
+ACT=366 runtime: =    19.65 sec
+ACT=366 runtime: =    19.70 sec
+ACT=367 runtime: =    19.70 sec
+ACT=368 runtime: =    19.70 sec
+ACT=368 runtime: =    19.71 sec
+ACT=368 runtime: =    19.75 sec
+ACT=368 runtime: =    19.93 sec
+ACT=368 runtime: =    19.94 sec
+ACT=368 runtime: =    20.08 sec
+ACT=368 runtime: =    20.62 sec
+ACT=368 runtime: =    20.90 sec
+ACT=369 runtime: =    20.90 sec
+ACT=370 runtime: =    20.90 sec
+ACT=370 runtime: =    21.08 sec
+ACT=370 runtime: =    21.08 sec
+ACT=370 runtime: =    21.09 sec
+ACT=370 runtime: =    21.28 sec
+ACT=371 runtime: =    21.28 sec
+ACT=372 runtime: =    21.28 sec
+ACT=372 runtime: =    21.35 sec
+ACT=372 runtime: =    21.35 sec
+ACT=372 runtime: =    21.48 sec
+ACT=372 runtime: =    21.56 sec
+ACT=372 runtime: =    21.62 sec
+ACT=372 runtime: =    21.75 sec
+ACT=372 runtime: =    22.69 sec
+ACT=372 runtime: =    22.72 sec
+ACT=373 runtime: =    22.72 sec
+ACT=374 runtime: =    22.72 sec
+ACT=374 runtime: =    22.73 sec
+ACT=374 runtime: =    22.97 sec
+ACT=374 runtime: =    23.12 sec
+ACT=374 runtime: =    23.17 sec
+ACT=374 runtime: =    23.39 sec
+ACT=374 runtime: =    25.12 sec
+ACT=374 runtime: =    25.25 sec
+ACT=375 runtime: =    25.25 sec
+ACT=376 runtime: =    25.25 sec
+ACT=376 runtime: =    25.25 sec
+ACT=376 runtime: =    25.41 sec
+ACT=376 runtime: =    25.44 sec
+ACT=376 runtime: =    25.87 sec
+ACT=376 runtime: =    27.17 sec
+ACT=377 runtime: =    27.17 sec
+ACT=378 runtime: =    27.17 sec
+ACT=378 runtime: =    27.67 sec
+ACT=378 runtime: =    27.89 sec
+ACT=378 runtime: =    27.91 sec
+ACT=378 runtime: =    28.53 sec
+ACT=378 runtime: =    28.66 sec
+ACT=379 runtime: =    28.66 sec
+ACT=380 runtime: =    28.66 sec
+ACT=380 runtime: =    28.77 sec
+ACT=380 runtime: =    29.05 sec
+ACT=380 runtime: =    29.28 sec
+ACT=380 runtime: =    29.28 sec
+ACT=380 runtime: =    29.55 sec
+ACT=380 runtime: =    30.32 sec
+ACT=380 runtime: =    31.38 sec
+ACT=380 runtime: =    31.91 sec
+ACT=381 runtime: =    31.91 sec
+ACT=382 runtime: =    31.91 sec
+ACT=382 runtime: =    31.92 sec
+ACT=382 runtime: =    32.07 sec
+ACT=382 runtime: =    32.08 sec
+ACT=382 runtime: =    32.24 sec
+ACT=382 runtime: =    32.97 sec
+ACT=382 runtime: =    32.99 sec
+ACT=382 runtime: =    33.01 sec
+ACT=382 runtime: =    33.33 sec
+ACT=383 runtime: =    33.33 sec
+ACT=384 runtime: =    33.33 sec
+ACT=384 runtime: =    33.34 sec
+ACT=384 runtime: =    33.44 sec
+ACT=384 runtime: =    33.99 sec
+ACT=384 runtime: =    34.01 sec
+ACT=384 runtime: =    34.17 sec
+ACT=384 runtime: =    34.75 sec
+ACT=385 runtime: =    34.75 sec
+ACT=386 runtime: =    34.75 sec
+ACT=386 runtime: =    34.81 sec
+ACT=386 runtime: =    34.84 sec
+ACT=386 runtime: =    35.10 sec
+ACT=386 runtime: =    35.36 sec
+ACT=386 runtime: =    38.73 sec
+ACT=386 runtime: =    38.79 sec
+ACT=387 runtime: =    38.79 sec
+ACT=388 runtime: =    38.79 sec
+ACT=388 runtime: =    38.84 sec
+ACT=388 runtime: =    38.84 sec
+ACT=388 runtime: =    38.85 sec
+ACT=388 runtime: =    39.96 sec
+ACT=388 runtime: =    41.68 sec
+ACT=388 runtime: =    42.58 sec
+ACT=388 runtime: =    42.66 sec
+ACT=389 runtime: =    42.66 sec
+ACT=390 runtime: =    42.66 sec
+ACT=390 runtime: =    42.85 sec
+ACT=390 runtime: =    42.92 sec
+ACT=390 runtime: =    43.11 sec
+ACT=390 runtime: =    43.16 sec
+ACT=390 runtime: =    43.39 sec
+ACT=390 runtime: =    47.67 sec
+ACT=390 runtime: =    48.14 sec
+ACT=390 runtime: =    48.16 sec
+ACT=391 runtime: =    48.16 sec
+ACT=392 runtime: =    48.16 sec
+ACT=392 runtime: =    53.92 sec
+ACT=392 runtime: =    54.44 sec
+ACT=392 runtime: =    54.64 sec
+ACT=392 runtime: =    55.09 sec
+ACT=392 runtime: =    55.20 sec
+ACT=392 runtime: =    55.23 sec
+ACT=393 runtime: =    55.23 sec
+ACT=394 runtime: =    55.23 sec
+ACT=394 runtime: =    55.50 sec
+ACT=394 runtime: =    55.56 sec
+ACT=394 runtime: =    55.57 sec
+ACT=394 runtime: =    55.86 sec
+ACT=394 runtime: =    57.14 sec
+ACT=394 runtime: =    60.70 sec
+ACT=394 runtime: =    60.71 sec
+ACT=395 runtime: =    60.71 sec
+ACT=396 runtime: =    60.71 sec
+ACT=396 runtime: =    60.85 sec
+ACT=396 runtime: =    60.88 sec
+ACT=396 runtime: =    60.91 sec
+ACT=396 runtime: =    60.92 sec
+ACT=396 runtime: =    61.51 sec
+ACT=396 runtime: =    61.76 sec
+ACT=396 runtime: =    63.28 sec
+ACT=396 runtime: =    63.93 sec
+ACT=396 runtime: =    63.99 sec
+ACT=397 runtime: =    63.99 sec
+ACT=398 runtime: =    63.99 sec
+ACT=398 runtime: =    64.12 sec
+ACT=398 runtime: =    64.13 sec
+ACT=398 runtime: =    64.30 sec
+ACT=398 runtime: =    64.42 sec
+ACT=398 runtime: =    64.47 sec
+ACT=398 runtime: =    67.54 sec
+ACT=398 runtime: =    67.99 sec
+ACT=398 runtime: =    68.01 sec
+ACT=398 runtime: =    68.09 sec
+ACT=398 runtime: =    70.34 sec
+ACT=398 runtime: =    70.58 sec
+ACT=399 runtime: =    70.58 sec
+ACT=400 runtime: =    70.58 sec
+ACT=400 runtime: =    70.78 sec
+ACT=400 runtime: =    72.34 sec
+ACT=400 runtime: =    72.55 sec
+ACT=400 runtime: =    72.55 sec
+ACT=400 runtime: =    73.08 sec
+ACT=400 runtime: =    73.23 sec
+ACT=401 runtime: =    73.23 sec
+ACT=402 runtime: =    73.23 sec
+ACT=402 runtime: =    73.40 sec
+ACT=402 runtime: =    73.40 sec
+ACT=402 runtime: =    73.53 sec
+ACT=402 runtime: =    73.81 sec
+ACT=402 runtime: =    73.86 sec
+ACT=402 runtime: =    74.20 sec
+ACT=402 runtime: =    77.02 sec
+ACT=402 runtime: =    77.05 sec
+ACT=403 runtime: =    77.05 sec
+ACT=404 runtime: =    77.05 sec
+ACT=404 runtime: =    77.17 sec
+ACT=404 runtime: =    77.18 sec
+ACT=404 runtime: =    77.18 sec
+ACT=404 runtime: =    77.18 sec
+ACT=404 runtime: =    77.26 sec
+ACT=404 runtime: =    77.46 sec
+ACT=404 runtime: =    78.33 sec
+ACT=404 runtime: =    79.62 sec
+ACT=404 runtime: =    79.63 sec
+ACT=404 runtime: =    80.86 sec
+ACT=404 runtime: =    84.44 sec
+ACT=404 runtime: =    84.49 sec
+ACT=405 runtime: =    84.49 sec
+ACT=406 runtime: =    84.49 sec
+ACT=406 runtime: =    84.66 sec
+ACT=406 runtime: =    84.74 sec
+ACT=406 runtime: =    84.75 sec
+ACT=406 runtime: =    91.05 sec
+ACT=406 runtime: =    91.89 sec
+ACT=406 runtime: =    91.94 sec
+ACT=406 runtime: =    93.13 sec
+ACT=406 runtime: =    96.09 sec
+ACT=407 runtime: =    96.09 sec
+ACT=408 runtime: =    96.09 sec
+ACT=408 runtime: =    96.28 sec
+ACT=408 runtime: =    96.43 sec
+ACT=408 runtime: =    96.44 sec
+ACT=408 runtime: =    96.63 sec
+ACT=408 runtime: =    98.02 sec
+ACT=408 runtime: =    98.05 sec
+ACT=408 runtime: =    99.80 sec
+ACT=408 runtime: =   100.01 sec
+ACT=409 runtime: =   100.01 sec
+ACT=410 runtime: =   100.01 sec
+ACT=410 runtime: =   100.87 sec
+ACT=410 runtime: =   101.12 sec
+ACT=410 runtime: =   101.36 sec
+ACT=410 runtime: =   101.36 sec
+ACT=410 runtime: =   101.66 sec
+ACT=410 runtime: =   104.45 sec
+ACT=410 runtime: =   107.04 sec
+ACT=410 runtime: =   107.81 sec
+ACT=411 runtime: =   107.81 sec
+ACT=412 runtime: =   107.81 sec
+ACT=412 runtime: =   107.91 sec
+ACT=412 runtime: =   107.96 sec
+ACT=412 runtime: =   108.01 sec
+ACT=412 runtime: =   108.22 sec
+ACT=412 runtime: =   108.68 sec
+ACT=412 runtime: =   108.69 sec
+ACT=412 runtime: =   108.99 sec
+ACT=412 runtime: =   109.71 sec
+ACT=412 runtime: =   118.10 sec
+ACT=412 runtime: =   118.11 sec
+ACT=412 runtime: =   118.15 sec
+ACT=412 runtime: =   118.76 sec
+ACT=413 runtime: =   118.76 sec
+ACT=414 runtime: =   118.76 sec
+ACT=414 runtime: =   118.95 sec
+ACT=414 runtime: =   119.05 sec
+ACT=414 runtime: =   119.06 sec
+ACT=414 runtime: =   119.19 sec
+ACT=414 runtime: =   120.39 sec
+ACT=414 runtime: =   122.85 sec
+ACT=414 runtime: =   124.41 sec
+ACT=414 runtime: =   127.05 sec
+ACT=414 runtime: =   127.06 sec
+ACT=414 runtime: =   127.27 sec
+ACT=414 runtime: =   128.19 sec
+ACT=415 runtime: =   128.19 sec
+ACT=416 runtime: =   128.19 sec
+ACT=416 runtime: =   128.36 sec
+ACT=416 runtime: =   128.37 sec
+ACT=416 runtime: =   128.37 sec
+ACT=416 runtime: =   129.92 sec
+ACT=416 runtime: =   130.08 sec
+Realization of given 4-input function using 7 two-input gates complementary=0:
+10 = 4'b1110( 08 09 )
+09 = 4'b1000( a 05 )
+08 = 4'b0110( 06 07 )
+07 = 4'b0100( d 04 )
+06 = 4'b0100( a 04 )
+05 = 4'b0100( b d )
+04 = 4'b1110( b c )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0011111100111111
+i=5:0011001100000000
+i=6:0100000001000000
+i=7:0000000011000000
+i=8:0100000010000000
+i=9:0001000100000000
+i=10:0101000110000000
+
+Switching Activity=416
+Number of Gates: r=7
+Total runtime =   130.20 sec

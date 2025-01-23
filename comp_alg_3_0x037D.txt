@@ -1,0 +1,3 @@
+ABC command line: "twoexact -N 3 -I 4 0x037D".
+
+Error: Truth table is expected to have 4 hex digits (instead of 6).

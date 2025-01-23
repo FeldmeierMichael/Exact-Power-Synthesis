@@ -1,0 +1,234 @@
+ABC command line: "powertwoexact -N 3 -I 4 -F 14 0016".
+
+###################################################1.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=50 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.01 sec
+ACT=250 runtime: =     0.01 sec
+ACT=250 runtime: =     0.01 sec
+ACT=250 runtime: =     0.01 sec
+ACT=300 runtime: =     0.32 sec
+ACT=300 runtime: =     0.32 sec
+ACT=350 runtime: =     1.37 sec
+ACT=350 runtime: =     1.37 sec
+ACT=350 runtime: =     1.37 sec
+ACT=400 runtime: =    15.51 sec
+ACT=400 runtime: =    15.52 sec
+ACT=400 runtime: =    15.52 sec
+ACT=450 runtime: =    97.63 sec
+ACT=450 runtime: =    97.63 sec
+ACT=448 runtime: =    97.68 sec
+ACT=416 runtime: =    97.78 sec
+ACT=406 runtime: =   106.52 sec
+ACT=406 runtime: =   148.24 sec
+Realization of given 4-input function using 6 two-input gates complementary=0:
+09 = 4'b0110( 06 08 )
+08 = 4'b1000( b 07 )
+07 = 4'b1000( a 06 )
+06 = 4'b0010( d 05 )
+05 = 4'b0110( c 04 )
+04 = 4'b1110( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0111011101110111
+i=5:0111100001111000
+i=6:0111100000000000
+i=7:0101000000000000
+i=8:0001000000000000
+i=9:0110100000000000
+
+Switching Activity=406
+Number of Gates: r=6
+Total runtime =   148.24 sec
+###################################################2.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.01 sec
+ACT=300 runtime: =     0.01 sec
+ACT=300 runtime: =     0.01 sec
+ACT=300 runtime: =     0.01 sec
+ACT=300 runtime: =     0.01 sec
+ACT=400 runtime: =     1.18 sec
+ACT=400 runtime: =     1.18 sec
+ACT=400 runtime: =     1.18 sec
+ACT=400 runtime: =     1.19 sec
+ACT=400 runtime: =     1.19 sec
+ACT=500 runtime: =    84.91 sec
+ACT=500 runtime: =    84.91 sec
+ACT=500 runtime: =    84.91 sec
+ACT=500 runtime: =    84.92 sec
+ACT=472 runtime: =    84.96 sec
+ACT=448 runtime: =    85.06 sec
+ACT=416 runtime: =    85.15 sec
+ACT=406 runtime: =    93.63 sec
+ACT=406 runtime: =   161.00 sec
+Realization of given 4-input function using 6 two-input gates complementary=0:
+09 = 4'b0110( 06 08 )
+08 = 4'b1000( b 07 )
+07 = 4'b1000( a 06 )
+06 = 4'b0010( d 05 )
+05 = 4'b0110( c 04 )
+04 = 4'b1110( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0111011101110111
+i=5:0111100001111000
+i=6:0111100000000000
+i=7:0101000000000000
+i=8:0001000000000000
+i=9:0110100000000000
+
+Switching Activity=406
+Number of Gates: r=6
+Total runtime =   161.00 sec
+###################################################3.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=300 runtime: =     0.00 sec
+ACT=300 runtime: =     0.00 sec
+ACT=300 runtime: =     0.01 sec
+ACT=300 runtime: =     0.01 sec
+ACT=300 runtime: =     0.01 sec
+ACT=300 runtime: =     0.01 sec
+ACT=450 runtime: =     1.11 sec
+ACT=450 runtime: =     1.11 sec
+ACT=450 runtime: =     1.12 sec
+ACT=450 runtime: =     1.12 sec
+ACT=450 runtime: =     1.12 sec
+ACT=450 runtime: =     1.12 sec
+ACT=432 runtime: =     1.17 sec
+ACT=450 runtime: =    38.02 sec
+ACT=432 runtime: =    38.09 sec
+ACT=406 runtime: =    45.69 sec
+ACT=406 runtime: =   152.33 sec
+Realization of given 4-input function using 6 two-input gates complementary=0:
+09 = 4'b0110( 06 08 )
+08 = 4'b1000( b 07 )
+07 = 4'b1000( a 06 )
+06 = 4'b0010( d 05 )
+05 = 4'b0110( c 04 )
+04 = 4'b1110( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0111011101110111
+i=5:0111100001111000
+i=6:0111100000000000
+i=7:0101000000000000
+i=8:0001000000000000
+i=9:0110100000000000
+
+Switching Activity=406
+Number of Gates: r=6
+Total runtime =   152.33 sec
+###################################################4.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=200 runtime: =     0.01 sec
+ACT=400 runtime: =     0.01 sec
+ACT=400 runtime: =     0.01 sec
+ACT=400 runtime: =     0.01 sec
+ACT=400 runtime: =     0.01 sec
+ACT=400 runtime: =     0.01 sec
+ACT=400 runtime: =     0.02 sec
+ACT=400 runtime: =     0.02 sec
+ACT=400 runtime: =     0.02 sec
+ACT=600 runtime: =    79.50 sec
+ACT=600 runtime: =    79.50 sec
+ACT=600 runtime: =    79.51 sec
+ACT=600 runtime: =    79.51 sec
+ACT=600 runtime: =    79.52 sec
+ACT=600 runtime: =    79.52 sec
+ACT=600 runtime: =    79.52 sec
+ACT=472 runtime: =    79.57 sec
+ACT=472 runtime: =    79.66 sec
+ACT=448 runtime: =    79.76 sec
+ACT=416 runtime: =    79.86 sec
+ACT=406 runtime: =    88.28 sec
+ACT=406 runtime: =   155.59 sec
+Realization of given 4-input function using 6 two-input gates complementary=0:
+09 = 4'b0110( 06 08 )
+08 = 4'b1000( b 07 )
+07 = 4'b1000( a 06 )
+06 = 4'b0010( d 05 )
+05 = 4'b0110( c 04 )
+04 = 4'b1110( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0111011101110111
+i=5:0111100001111000
+i=6:0111100000000000
+i=7:0101000000000000
+i=8:0001000000000000
+i=9:0110100000000000
+
+Switching Activity=406
+Number of Gates: r=6
+Total runtime =   155.59 sec
+###################################################5.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=250 runtime: =     0.00 sec
+ACT=250 runtime: =     0.00 sec
+ACT=250 runtime: =     0.00 sec
+ACT=250 runtime: =     0.01 sec
+ACT=250 runtime: =     0.01 sec
+ACT=250 runtime: =     0.01 sec
+ACT=500 runtime: =     0.30 sec
+ACT=500 runtime: =     0.30 sec
+ACT=500 runtime: =     0.30 sec
+ACT=500 runtime: =     0.31 sec
+ACT=500 runtime: =     0.31 sec
+ACT=500 runtime: =     0.31 sec
+ACT=500 runtime: =     0.31 sec
+ACT=500 runtime: =     0.32 sec
+ACT=500 runtime: =     0.33 sec
+ACT=472 runtime: =     0.38 sec
+ACT=500 runtime: =    59.23 sec
+ACT=432 runtime: =    59.28 sec
+ACT=416 runtime: =    59.39 sec
+ACT=406 runtime: =    63.74 sec
+ACT=406 runtime: =   195.94 sec
+Realization of given 4-input function using 6 two-input gates complementary=0:
+09 = 4'b0110( 06 08 )
+08 = 4'b1000( b 07 )
+07 = 4'b1000( a 06 )
+06 = 4'b0010( d 05 )
+05 = 4'b0110( c 04 )
+04 = 4'b1110( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0111011101110111
+i=5:0111100001111000
+i=6:0111100000000000
+i=7:0101000000000000
+i=8:0001000000000000
+i=9:0110100000000000
+
+Switching Activity=406
+Number of Gates: r=6
+Total runtime =   195.94 sec

@@ -176,7 +176,7 @@ void remove_combis(comb_list *list, int r, int *combi)
                     }
                     else
                     {
-                        printf("Removed ACT=%d r=%d p1=%d\n", ptr->act, ptr->r, *combi);
+                        //printf("Removed ACT=%d r=%d p1=%d\n", ptr->act, ptr->r, *combi);
                         l++;
                         ptr_old->next = ptr->next;
                         ptr = ptr_old;
@@ -195,7 +195,7 @@ void remove_combis(comb_list *list, int r, int *combi)
                 break;
         }
 
-        printf("%d combis removed removing\n", l);
+      //  printf("%d combis removed removing\n", l);
     }
 }
 
@@ -220,7 +220,7 @@ void add_satfy_values(comb_list *list, int r, int *combi)
                 }
                 if (match == list->len)
                 {
-                    printf("ACT=%d r=%d p1=%d:\n", ptr->act, ptr->r, *(ptr->combi));
+                    //printf("ACT=%d r=%d p1=%d:\n", ptr->act, ptr->r, *(ptr->combi));
                     for (int sa = 0; sa < list->len; sa++)
                     {
                         // printf("satfy_%d=%d\n",sa+1,*(combi+sa));
@@ -238,7 +238,7 @@ void add_satfy_values(comb_list *list, int r, int *combi)
             if (iptr == list->length - 1)
                 break;
         }
-        printf("added satfy for r=%d %d combis \n", r, l);
+       // printf("added satfy for r=%d %d combis \n", r, l);
     }
 }
 
@@ -5291,7 +5291,7 @@ void Exa_ManExactPowerSynthesis_base_bdd(Bmc_EsPar_t *pPars, int verbose)
     free_comb_list(list);
 }
 /////////////////////////////////////////////////cegar2 bdd
-void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars)
+void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars,int verbose)
 {
     int i, status, iMint = 1;
     abctime clkTotal = Abc_Clock();
@@ -5313,6 +5313,10 @@ void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars)
     int act = 0;
     while (1)
     {
+         if(verbose==1){
+            printf("ACT=%d\ ",act);
+            Abc_PrintTime(1, "runtime:", Abc_Clock() - clkTotal);
+        }
         if (act >= calc_max_act(r + 1, p->nVars))
         {
             r++;
@@ -5326,7 +5330,7 @@ void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars)
             {
                 if (!Exa_ManAddCnf(p, iMint))
                 {
-                    printf("The problem has no solution.\n");
+                     if(verbose==2) printf("The problem has no solution.\n");
                     break;
                 }
             }
@@ -5335,40 +5339,40 @@ void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars)
             if (status == 1)
             {
                 calculate_comb_array(p->nVars, r, list);
-                printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
+                 if(verbose==2)printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
             }
             else
-                printf("######ACT:%d No general Solution for r=%d\n", act, r + 1);
+                if(verbose==2) printf("######ACT:%d No general Solution for r=%d\n", act, r + 1);
         }
         if (list->length > 0)
         {
             if (list->start->act == act)
             {
                 comb *node = pop_comb(list);
-                printf("###ACT:%d,r:%d CONSUMED COMBINATION:", (node->act), node->r + 1);
+                 if(verbose==2)printf("###ACT:%d,r:%d CONSUMED COMBINATION:", (node->act), node->r + 1);
                 for (int im = 0; im < list->len; im++)
                 {
                     printf("%d,", *(node->combi + im));
                 }
-                printf("\n");
+                 if(verbose==2) printf("\n");
                 ////////////////////////////////////////////////////programm sat solver
                 Exa_ManFree(p);
                 pPars->nNodes = node->r + 1;
                 p = Exa_ManAlloc(pPars, pTruth);
                 status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
                 assert(status);
-                printf("Adding Minterm Clauses\n");
+                 if(verbose==2)printf("Adding Minterm Clauses\n");
                 for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
                 {
                     abctime clk = Abc_Clock();
                     if (!Exa_ManAddCnf(p, iMint))
                     {
-                        printf("The problem has no solution.\n");
+                         if(verbose==2)printf("The problem has no solution.\n");
                         break;
                     }
                 }
                 Exa_ManAddPClauses_bdd(p);
-                printf("##Adding Sum Constraints\n");
+                 if(verbose==2)printf("##Adding Sum Constraints\n");
                 int arr_xp[list->len];
                 for (int ax = 0; ax < list->len; ax++)
                 {
@@ -5378,22 +5382,22 @@ void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars)
 
                 for (int i0 = 0; i0 < list->len; i0++)
                 {
-                    printf("#CHECKING p_%d =%d\n", i0 + 1, *(node->satfy + i0));
+                    if(verbose==2) printf("#CHECKING p_%d =%d\n", i0 + 1, *(node->satfy + i0));
                     if (*(node->satfy + i0) != -1)
                     {
                         Exa_ManAddCardinality_P_bdd(p, node->combi, i0);
-                        printf("Already tried p_%d -> skipped\n", i0 + 1);
+                         if(verbose==2)printf("Already tried p_%d -> skipped\n", i0 + 1);
                         arr_xp[i0] = *(node->combi + i0);
                         xp = i0 + 1;
                     }                      
                 }
                 while (xp >= 0)
                 {
-                    printf("#CEGAR Constraining Sum(p_%d) == %d\n", xp + 1, *(node->combi + xp));
+                     if(verbose==2)printf("#CEGAR Constraining Sum(p_%d) == %d\n", xp + 1, *(node->combi + xp));
                     Exa_ManAddCardinality_P_bdd(p, node->combi, xp);
                     arr_xp[xp] = *(node->combi + xp);
                     status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
-                    printf("solution: %d \n", status);
+                    if(verbose==2) printf("solution: %d \n", status);
                     if (status == 1)
                     {
                         add_satfy_values(list, node->r, arr_xp);
@@ -5412,7 +5416,7 @@ void Exa_ManExactPowerSynthesis_cegar2_bdd(Bmc_EsPar_t *pPars)
                     else
                     {
                         xp = -1;
-                        printf("removing combis with no solution\n");
+                         if(verbose==2)printf("removing combis with no solution\n");
                         remove_combis(list, node->r, arr_xp);
                         // print_combi_list(list);
                     }
@@ -5869,7 +5873,7 @@ void Exa_ManExactPowerSynthesis_sw_free_minterm_CEGAR(Bmc_EsPar_t *pPars)
  
 }
 //////////////////////////////////////////////////////////////////////////Accelerated search with smaller than bdd's
-void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars,int verbose,int opt)
+void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars,int verbose,int opt,int stepsize,int divisor)
 {
     int i, status, iMint = 1;
     abctime clkTotal = Abc_Clock();
@@ -5890,7 +5894,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars,int verb
     int r = 0;
     int act = 0;
     int r_min=0;
-    int step=100;
+    int step=stepsize;
     int r_nsat[20];
     int n_p=pow(2,pPars->nVars-1);
     for (int rin = 0; rin < 20; rin++)
@@ -6080,18 +6084,9 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars,int verb
                                     break;
                                 }                               
                                 act=act-step;
-
-                                if(step==100)
-                                    step=50;
-                                else if(step==50)
-                                    step=26;
-                                else if(step=26)
-                                    step=14;
-                                else if(step=14)
-                                    step=8;
-                                else if(step=8)
-                                    step=4;
-                                else if(step=4)
+                                step=step/divisor;
+                              
+                                if(step<2)
                                     step=2;                                
                                 
 
@@ -6964,7 +6959,7 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars,int verbose,int bdd_o
                         printf("ACT=%d ",act);
                         Abc_PrintTime(1, "runtime:", Abc_Clock() - clkTotal);
                     }
-                    if (act >= calc_max_act_top(r + 1, p->nVars,7))
+                    if (act >= calc_max_act(r + 1, p->nVars))
                     {           
                         r++;
                         //////////////////////////Check if there is a general solution for r
@@ -7697,21 +7692,31 @@ void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars)
 
 void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars){
 
-   // printf("###################################################1.free list algorithm optimized bdd\n");
-   // Exa_ManExactPowerSynthesis_sw_free(pPars,1,1);
+    printf("###################################################1.free list algorithm optimized bdd\n");
+    Exa_ManExactPowerSynthesis_sw_free(pPars,1,1);
 
    // printf("###################################################2.free search algorithm non optimized bdd\n");
-   // Exa_ManExactPowerSynthesis_sw_free(pPars,1,0);
+  //  Exa_ManExactPowerSynthesis_sw_free(pPars,1,0);
 
+    printf("###################################################2.free stepsize algorithm optimized bdd\n");
+    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,2);
+  /*  printf("###################################################2.free stepsize algorithm optimized bdd\n");
+    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,4);
     printf("###################################################3.free stepsize algorithm optimized bdd\n");
-    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1);
+    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,6);
+    printf("###################################################4.free stepsize algorithm optimized bdd\n");
+    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,7);
+    printf("###################################################5.free stepsize algorithm optimized bdd\n");
+    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,10);
+*/
+    
 
     printf("###################################################3.free stepsize algorithm non optimized bdd\n");
-    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,0);
+    Exa_ManExactPowerSynthesis_base_bdd(pPars,1);
 
 
-    //printf("###################################################4.listsearch algorithm bdd\n");
-    //Exa_ManExactPowerSynthesis_base_bdd(pPars,1);
+    //printf("###################################################3.listsearch algorithm bdd\n");
+    //Exa_ManExactPowerSynthesis_cegar2_bdd(pPars,1);
 
 
 
