@@ -1,0 +1,800 @@
+ABC command line: "powertwoexact -N 3 -I 4 -F 14 03DD".
+
+###################################################1.free list algorithm optimized bdd
+Pstate:3
+ACT=0 runtime: =     0.00 sec
+ACT=2 runtime: =     0.00 sec
+ACT=4 runtime: =     0.00 sec
+ACT=6 runtime: =     0.00 sec
+ACT=8 runtime: =     0.00 sec
+ACT=10 runtime: =     0.00 sec
+ACT=12 runtime: =     0.00 sec
+ACT=14 runtime: =     0.00 sec
+ACT=16 runtime: =     0.00 sec
+ACT=18 runtime: =     0.00 sec
+ACT=20 runtime: =     0.00 sec
+ACT=22 runtime: =     0.00 sec
+ACT=24 runtime: =     0.00 sec
+ACT=26 runtime: =     0.00 sec
+ACT=28 runtime: =     0.00 sec
+ACT=30 runtime: =     0.00 sec
+ACT=32 runtime: =     0.00 sec
+ACT=34 runtime: =     0.00 sec
+ACT=36 runtime: =     0.00 sec
+ACT=38 runtime: =     0.00 sec
+ACT=40 runtime: =     0.00 sec
+ACT=42 runtime: =     0.00 sec
+ACT=44 runtime: =     0.00 sec
+ACT=46 runtime: =     0.00 sec
+ACT=48 runtime: =     0.00 sec
+ACT=50 runtime: =     0.00 sec
+ACT=52 runtime: =     0.00 sec
+ACT=54 runtime: =     0.00 sec
+ACT=56 runtime: =     0.00 sec
+ACT=58 runtime: =     0.00 sec
+ACT=60 runtime: =     0.00 sec
+ACT=62 runtime: =     0.00 sec
+ACT=64 runtime: =     0.00 sec
+ACT=66 runtime: =     0.00 sec
+ACT=68 runtime: =     0.00 sec
+ACT=70 runtime: =     0.00 sec
+ACT=72 runtime: =     0.00 sec
+ACT=74 runtime: =     0.00 sec
+ACT=76 runtime: =     0.00 sec
+ACT=78 runtime: =     0.00 sec
+ACT=80 runtime: =     0.00 sec
+ACT=82 runtime: =     0.00 sec
+ACT=84 runtime: =     0.00 sec
+ACT=86 runtime: =     0.00 sec
+ACT=88 runtime: =     0.00 sec
+ACT=90 runtime: =     0.00 sec
+ACT=92 runtime: =     0.00 sec
+ACT=94 runtime: =     0.00 sec
+ACT=96 runtime: =     0.00 sec
+ACT=98 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=102 runtime: =     0.00 sec
+ACT=104 runtime: =     0.00 sec
+ACT=106 runtime: =     0.00 sec
+ACT=108 runtime: =     0.00 sec
+ACT=110 runtime: =     0.00 sec
+ACT=112 runtime: =     0.00 sec
+ACT=114 runtime: =     0.00 sec
+ACT=116 runtime: =     0.00 sec
+ACT=118 runtime: =     0.00 sec
+ACT=120 runtime: =     0.00 sec
+ACT=122 runtime: =     0.00 sec
+ACT=124 runtime: =     0.00 sec
+ACT=126 runtime: =     0.00 sec
+ACT=128 runtime: =     0.00 sec
+ACT=130 runtime: =     0.00 sec
+ACT=132 runtime: =     0.00 sec
+ACT=134 runtime: =     0.00 sec
+ACT=136 runtime: =     0.00 sec
+ACT=138 runtime: =     0.00 sec
+ACT=140 runtime: =     0.00 sec
+ACT=142 runtime: =     0.00 sec
+ACT=144 runtime: =     0.00 sec
+ACT=146 runtime: =     0.00 sec
+ACT=148 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=152 runtime: =     0.00 sec
+ACT=154 runtime: =     0.00 sec
+ACT=156 runtime: =     0.00 sec
+ACT=158 runtime: =     0.00 sec
+ACT=160 runtime: =     0.00 sec
+ACT=162 runtime: =     0.00 sec
+ACT=164 runtime: =     0.00 sec
+ACT=166 runtime: =     0.00 sec
+ACT=168 runtime: =     0.00 sec
+ACT=170 runtime: =     0.00 sec
+ACT=172 runtime: =     0.00 sec
+ACT=174 runtime: =     0.00 sec
+ACT=176 runtime: =     0.00 sec
+ACT=178 runtime: =     0.00 sec
+ACT=180 runtime: =     0.00 sec
+ACT=182 runtime: =     0.00 sec
+ACT=184 runtime: =     0.01 sec
+ACT=186 runtime: =     0.01 sec
+ACT=188 runtime: =     0.01 sec
+ACT=190 runtime: =     0.01 sec
+ACT=192 runtime: =     0.01 sec
+ACT=194 runtime: =     0.01 sec
+ACT=196 runtime: =     0.01 sec
+ACT=198 runtime: =     0.01 sec
+ACT=200 runtime: =     0.01 sec
+ACT=202 runtime: =     0.01 sec
+ACT=204 runtime: =     0.01 sec
+ACT=206 runtime: =     0.01 sec
+ACT=208 runtime: =     0.01 sec
+ACT=210 runtime: =     0.01 sec
+ACT=212 runtime: =     0.01 sec
+#r=4,nodecount=104, satcount=12
+ACT=214 runtime: =     0.06 sec
+ACT=216 runtime: =     0.09 sec
+ACT=218 runtime: =     0.13 sec
+ACT=220 runtime: =     0.17 sec
+ACT=222 runtime: =     0.20 sec
+ACT=224 runtime: =     0.24 sec
+ACT=226 runtime: =     0.27 sec
+ACT=228 runtime: =     0.31 sec
+ACT=230 runtime: =     0.34 sec
+ACT=232 runtime: =     0.38 sec
+ACT=234 runtime: =     0.41 sec
+ACT=236 runtime: =     0.45 sec
+ACT=238 runtime: =     0.49 sec
+#r=4,nodecount=103, satcount=12
+ACT=240 runtime: =     0.56 sec
+ACT=242 runtime: =     0.60 sec
+#r=5,nodecount=143, satcount=20
+ACT=244 runtime: =     0.72 sec
+#r=4,nodecount=124, satcount=12
+ACT=246 runtime: =     0.84 sec
+ACT=248 runtime: =     0.94 sec
+ACT=250 runtime: =     1.04 sec
+ACT=252 runtime: =     1.13 sec
+#r=4,nodecount=76, satcount=6
+ACT=254 runtime: =     1.25 sec
+ACT=256 runtime: =     1.33 sec
+ACT=258 runtime: =     1.42 sec
+ACT=260 runtime: =     1.50 sec
+#r=4,nodecount=143, satcount=24
+ACT=262 runtime: =     1.78 sec
+ACT=264 runtime: =     1.87 sec
+#r=4,nodecount=62, satcount=4
+ACT=266 runtime: =     1.96 sec
+ACT=268 runtime: =     2.04 sec
+#r=5,nodecount=162, satcount=30
+ACT=270 runtime: =     2.17 sec
+#r=4,nodecount=123, satcount=12
+ACT=272 runtime: =     2.26 sec
+#r=6,nodecount=182, satcount=30
+ACT=274 runtime: =     2.45 sec
+#r=5,nodecount=171, satcount=20
+ACT=276 runtime: =     2.64 sec
+#r=4,nodecount=116, satcount=12
+ACT=278 runtime: =     3.01 sec
+#r=4,nodecount=105, satcount=12
+ACT=280 runtime: =     3.31 sec
+ACT=282 runtime: =     3.48 sec
+#r=5,nodecount=106, satcount=10
+ACT=284 runtime: =     3.70 sec
+#r=4,nodecount=126, satcount=12
+ACT=286 runtime: =     4.07 sec
+#r=4,nodecount=99, satcount=12
+ACT=288 runtime: =     4.45 sec
+ACT=290 runtime: =     4.62 sec
+#r=5,nodecount=224, satcount=60
+ACT=292 runtime: =     4.84 sec
+#r=4,nodecount=254, satcount=48
+ACT=294 runtime: =     5.22 sec
+#r=5,nodecount=141, satcount=20
+ACT=296 runtime: =     5.42 sec
+#r=4,nodecount=74, satcount=4
+ACT=298 runtime: =     5.59 sec
+#r=6,nodecount=221, satcount=60
+ACT=300 runtime: =     5.78 sec
+#r=4,nodecount=104, satcount=12
+#r=5,nodecount=194, satcount=30
+ACT=302 runtime: =     6.23 sec
+#r=4,nodecount=159, satcount=24
+#r=7,nodecount=221, satcount=42
+ACT=304 runtime: =     7.35 sec
+#r=4,nodecount=72, satcount=6
+#r=6,nodecount=218, satcount=30
+ACT=306 runtime: =     7.78 sec
+#r=5,nodecount=161, satcount=20
+ACT=308 runtime: =     8.16 sec
+#r=4,nodecount=295, satcount=48
+#r=5,nodecount=166, satcount=30
+ACT=310 runtime: =     8.86 sec
+#r=4,nodecount=173, satcount=24
+ACT=312 runtime: =     9.45 sec
+#r=6,nodecount=136, satcount=15
+ACT=314 runtime: =     9.87 sec
+#r=5,nodecount=175, satcount=20
+ACT=316 runtime: =    10.29 sec
+#r=4,nodecount=92, satcount=6
+#r=5,nodecount=221, satcount=60
+ACT=318 runtime: =    10.82 sec
+#r=4,nodecount=214, satcount=28
+ACT=320 runtime: =    11.39 sec
+#r=5,nodecount=80, satcount=5
+#r=6,nodecount=305, satcount=120
+ACT=322 runtime: =    11.83 sec
+#r=5,nodecount=397, satcount=120
+ACT=324 runtime: =    12.36 sec
+#r=4,nodecount=300, satcount=48
+#r=6,nodecount=220, satcount=60
+ACT=326 runtime: =    12.96 sec
+#r=4,nodecount=99, satcount=12
+#r=5,nodecount=169, satcount=20
+ACT=328 runtime: =    13.37 sec
+#r=4,nodecount=110, satcount=12
+#r=7,nodecount=280, satcount=105
+ACT=330 runtime: =    13.84 sec
+#r=5,nodecount=166, satcount=30
+#r=6,nodecount=265, satcount=60
+ACT=332 runtime: =    14.28 sec
+#r=4,nodecount=210, satcount=36
+#r=5,nodecount=250, satcount=60
+#r=8,nodecount=260, satcount=56
+ACT=334 runtime: =    15.45 sec
+#r=4,nodecount=258, satcount=36
+#r=5,nodecount=164, satcount=30
+#r=7,nodecount=265, satcount=42
+ACT=336 runtime: =    16.65 sec
+#r=4,nodecount=120, satcount=12
+#r=6,nodecount=206, satcount=30
+ACT=338 runtime: =    17.71 sec
+#r=5,nodecount=461, satcount=140
+#r=6,nodecount=227, satcount=60
+ACT=340 runtime: =    19.18 sec
+#r=4,nodecount=300, satcount=60
+#r=5,nodecount=272, satcount=60
+ACT=342 runtime: =    20.49 sec
+#r=4,nodecount=211, satcount=24
+#r=5,nodecount=136, satcount=20
+#r=7,nodecount=166, satcount=21
+ACT=344 runtime: =    21.64 sec
+#r=4,nodecount=62, satcount=4
+#r=6,nodecount=224, satcount=30
+ACT=346 runtime: =    22.86 sec
+#r=5,nodecount=130, satcount=10
+#r=6,nodecount=343, satcount=180
+ACT=348 runtime: =    23.78 sec
+#r=4,nodecount=144, satcount=18
+#r=5,nodecount=429, satcount=130
+ACT=350 runtime: =    25.19 sec
+#r=4,nodecount=311, satcount=48
+#r=6,nodecount=179, satcount=30
+#r=7,nodecount=386, satcount=210
+ACT=352 runtime: =    26.46 sec
+#r=5,nodecount=96, satcount=5
+#r=6,nodecount=540, satcount=240
+ACT=354 runtime: =    27.52 sec
+#r=5,nodecount=472, satcount=120
+#r=7,nodecount=299, satcount=140
+ACT=356 runtime: =    28.63 sec
+#r=4,nodecount=362, satcount=72
+#r=5,nodecount=224, satcount=60
+#r=6,nodecount=264, satcount=60
+ACT=358 runtime: =    29.78 sec
+#r=4,nodecount=201, satcount=36
+#r=5,nodecount=247, satcount=60
+#r=8,nodecount=339, satcount=168
+ACT=360 runtime: =    31.41 sec
+#r=4,nodecount=122, satcount=12
+#r=5,nodecount=100, satcount=10
+#r=6,nodecount=228, satcount=60
+#r=7,nodecount=336, satcount=105
+ACT=362 runtime: =    32.47 sec
+#r=5,nodecount=333, satcount=90
+#r=6,nodecount=341, satcount=120
+#r=9,nodecount=299, satcount=72
+ACT=364 runtime: =    35.24 sec
+#r=4,nodecount=220, satcount=36
+#r=5,nodecount=514, satcount=150
+#r=6,nodecount=256, satcount=90
+#r=8,nodecount=312, satcount=56
+ACT=366 runtime: =    38.39 sec
+#r=4,nodecount=259, satcount=28
+#r=5,nodecount=269, satcount=60
+#r=7,nodecount=251, satcount=42
+ACT=368 runtime: =    41.32 sec
+#r=4,nodecount=166, satcount=18
+Realization of given 4-input function using 5 two-input gates complementary=1:
+08 = 4'b1001( 06 07 )
+07 = 4'b0010( b 05 )
+06 = 4'b1000( d 04 )
+05 = 4'b0100( a d )
+04 = 4'b1110( b c )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0011111100111111
+i=5:0101010100000000
+i=6:0000000000111111
+i=7:0100010000000000
+i=8:1011101111000000
+
+Switching Activity=368
+Number of Gates: r=5
+Total runtime =    41.37 sec
+###################################################2.free search algorithm non optimized bdd
+Pstate:3
+ACT=0 runtime: =     0.00 sec
+ACT=2 runtime: =     0.00 sec
+ACT=4 runtime: =     0.00 sec
+ACT=6 runtime: =     0.00 sec
+ACT=8 runtime: =     0.00 sec
+ACT=10 runtime: =     0.00 sec
+ACT=12 runtime: =     0.00 sec
+ACT=14 runtime: =     0.00 sec
+ACT=16 runtime: =     0.00 sec
+ACT=18 runtime: =     0.00 sec
+ACT=20 runtime: =     0.00 sec
+ACT=22 runtime: =     0.00 sec
+ACT=24 runtime: =     0.00 sec
+ACT=26 runtime: =     0.00 sec
+ACT=28 runtime: =     0.00 sec
+ACT=30 runtime: =     0.00 sec
+ACT=32 runtime: =     0.00 sec
+ACT=34 runtime: =     0.00 sec
+ACT=36 runtime: =     0.00 sec
+ACT=38 runtime: =     0.00 sec
+ACT=40 runtime: =     0.00 sec
+ACT=42 runtime: =     0.00 sec
+ACT=44 runtime: =     0.00 sec
+ACT=46 runtime: =     0.00 sec
+ACT=48 runtime: =     0.00 sec
+ACT=50 runtime: =     0.00 sec
+ACT=52 runtime: =     0.00 sec
+ACT=54 runtime: =     0.00 sec
+ACT=56 runtime: =     0.00 sec
+ACT=58 runtime: =     0.00 sec
+ACT=60 runtime: =     0.00 sec
+ACT=62 runtime: =     0.00 sec
+ACT=64 runtime: =     0.00 sec
+ACT=66 runtime: =     0.00 sec
+ACT=68 runtime: =     0.00 sec
+ACT=70 runtime: =     0.00 sec
+ACT=72 runtime: =     0.00 sec
+ACT=74 runtime: =     0.00 sec
+ACT=76 runtime: =     0.00 sec
+ACT=78 runtime: =     0.00 sec
+ACT=80 runtime: =     0.00 sec
+ACT=82 runtime: =     0.00 sec
+ACT=84 runtime: =     0.00 sec
+ACT=86 runtime: =     0.00 sec
+ACT=88 runtime: =     0.00 sec
+ACT=90 runtime: =     0.00 sec
+ACT=92 runtime: =     0.00 sec
+ACT=94 runtime: =     0.00 sec
+ACT=96 runtime: =     0.00 sec
+ACT=98 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=102 runtime: =     0.00 sec
+ACT=104 runtime: =     0.00 sec
+ACT=106 runtime: =     0.00 sec
+ACT=108 runtime: =     0.00 sec
+ACT=110 runtime: =     0.00 sec
+ACT=112 runtime: =     0.00 sec
+ACT=114 runtime: =     0.00 sec
+ACT=116 runtime: =     0.00 sec
+ACT=118 runtime: =     0.00 sec
+ACT=120 runtime: =     0.00 sec
+ACT=122 runtime: =     0.00 sec
+ACT=124 runtime: =     0.00 sec
+ACT=126 runtime: =     0.00 sec
+ACT=128 runtime: =     0.00 sec
+ACT=130 runtime: =     0.00 sec
+ACT=132 runtime: =     0.00 sec
+ACT=134 runtime: =     0.00 sec
+ACT=136 runtime: =     0.00 sec
+ACT=138 runtime: =     0.00 sec
+ACT=140 runtime: =     0.00 sec
+ACT=142 runtime: =     0.00 sec
+ACT=144 runtime: =     0.00 sec
+ACT=146 runtime: =     0.00 sec
+ACT=148 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=152 runtime: =     0.00 sec
+ACT=154 runtime: =     0.00 sec
+ACT=156 runtime: =     0.00 sec
+ACT=158 runtime: =     0.00 sec
+ACT=160 runtime: =     0.00 sec
+ACT=162 runtime: =     0.00 sec
+ACT=164 runtime: =     0.00 sec
+ACT=166 runtime: =     0.00 sec
+ACT=168 runtime: =     0.00 sec
+ACT=170 runtime: =     0.00 sec
+ACT=172 runtime: =     0.00 sec
+ACT=174 runtime: =     0.00 sec
+ACT=176 runtime: =     0.00 sec
+ACT=178 runtime: =     0.00 sec
+ACT=180 runtime: =     0.00 sec
+ACT=182 runtime: =     0.00 sec
+ACT=184 runtime: =     0.00 sec
+ACT=186 runtime: =     0.00 sec
+ACT=188 runtime: =     0.00 sec
+ACT=190 runtime: =     0.00 sec
+ACT=192 runtime: =     0.00 sec
+ACT=194 runtime: =     0.00 sec
+ACT=196 runtime: =     0.00 sec
+ACT=198 runtime: =     0.00 sec
+ACT=200 runtime: =     0.00 sec
+ACT=202 runtime: =     0.00 sec
+ACT=204 runtime: =     0.00 sec
+ACT=206 runtime: =     0.00 sec
+ACT=208 runtime: =     0.00 sec
+ACT=210 runtime: =     0.00 sec
+ACT=212 runtime: =     0.00 sec
+#r=4,nodecount=223, satcount=96
+ACT=214 runtime: =     0.23 sec
+ACT=216 runtime: =     0.26 sec
+#r=4,nodecount=168, satcount=52
+ACT=218 runtime: =     0.30 sec
+#r=4,nodecount=97, satcount=16
+ACT=220 runtime: =     0.35 sec
+#r=4,nodecount=226, satcount=96
+ACT=222 runtime: =     0.38 sec
+ACT=224 runtime: =     0.42 sec
+#r=4,nodecount=32, satcount=1
+ACT=226 runtime: =     0.46 sec
+#r=4,nodecount=220, satcount=96
+ACT=228 runtime: =     0.54 sec
+ACT=230 runtime: =     0.58 sec
+ACT=232 runtime: =     0.61 sec
+ACT=234 runtime: =     0.65 sec
+#r=4,nodecount=223, satcount=96
+ACT=236 runtime: =     0.73 sec
+#r=4,nodecount=217, satcount=96
+ACT=238 runtime: =     0.78 sec
+#r=4,nodecount=223, satcount=96
+ACT=240 runtime: =     0.97 sec
+ACT=242 runtime: =     1.01 sec
+#r=4,nodecount=309, satcount=192
+#r=5,nodecount=319, satcount=250
+ACT=244 runtime: =     1.20 sec
+#r=4,nodecount=211, satcount=96
+ACT=246 runtime: =     1.29 sec
+#r=4,nodecount=103, satcount=16
+#r=5,nodecount=240, satcount=125
+ACT=248 runtime: =     1.41 sec
+#r=4,nodecount=220, satcount=96
+#r=5,nodecount=129, satcount=25
+ACT=250 runtime: =     1.52 sec
+#r=5,nodecount=416, satcount=500
+ACT=252 runtime: =     1.61 sec
+#r=4,nodecount=291, satcount=132
+ACT=254 runtime: =     1.72 sec
+#r=5,nodecount=135, satcount=25
+ACT=256 runtime: =     1.81 sec
+#r=5,nodecount=316, satcount=250
+ACT=258 runtime: =     1.90 sec
+#r=4,nodecount=217, satcount=96
+ACT=260 runtime: =     1.98 sec
+#r=4,nodecount=369, satcount=256
+ACT=262 runtime: =     2.10 sec
+#r=4,nodecount=217, satcount=96
+ACT=264 runtime: =     2.20 sec
+#r=4,nodecount=294, satcount=128
+#r=5,nodecount=319, satcount=250
+ACT=266 runtime: =     2.32 sec
+#r=4,nodecount=323, satcount=192
+#r=5,nodecount=313, satcount=250
+ACT=268 runtime: =     2.47 sec
+#r=4,nodecount=269, satcount=132
+#r=5,nodecount=413, satcount=500
+ACT=270 runtime: =     2.60 sec
+#r=4,nodecount=211, satcount=96
+ACT=272 runtime: =     2.69 sec
+#r=5,nodecount=497, satcount=750
+#r=6,nodecount=415, satcount=540
+ACT=274 runtime: =     2.88 sec
+#r=4,nodecount=362, satcount=256
+#r=5,nodecount=307, satcount=250
+ACT=276 runtime: =     3.04 sec
+#r=4,nodecount=217, satcount=96
+#r=5,nodecount=322, satcount=250
+#r=6,nodecount=312, satcount=261
+ACT=278 runtime: =     3.25 sec
+#r=4,nodecount=270, satcount=112
+#r=5,nodecount=316, satcount=250
+#r=6,nodecount=161, satcount=36
+ACT=280 runtime: =     3.47 sec
+#r=4,nodecount=136, satcount=36
+#r=5,nodecount=40, satcount=1
+#r=6,nodecount=608, satcount=1800
+ACT=282 runtime: =     3.63 sec
+#r=4,nodecount=308, satcount=192
+#r=5,nodecount=505, satcount=600
+ACT=284 runtime: =     3.85 sec
+#r=4,nodecount=485, satcount=352
+#r=6,nodecount=286, satcount=225
+ACT=286 runtime: =     4.17 sec
+#r=4,nodecount=226, satcount=96
+#r=6,nodecount=412, satcount=540
+ACT=288 runtime: =     4.70 sec
+#r=4,nodecount=100, satcount=16
+#r=5,nodecount=313, satcount=250
+ACT=290 runtime: =     4.88 sec
+#r=4,nodecount=483, satcount=368
+#r=5,nodecount=625, satcount=1250
+ACT=292 runtime: =     5.17 sec
+#r=4,nodecount=527, satcount=512
+#r=5,nodecount=407, satcount=500
+ACT=294 runtime: =     5.53 sec
+#r=4,nodecount=99, satcount=16
+#r=5,nodecount=575, satcount=600
+#r=6,nodecount=415, satcount=540
+ACT=296 runtime: =     5.76 sec
+#r=4,nodecount=380, satcount=208
+#r=5,nodecount=467, satcount=500
+#r=6,nodecount=409, satcount=540
+ACT=298 runtime: =     5.99 sec
+#r=4,nodecount=211, satcount=96
+#r=5,nodecount=564, satcount=1000
+#r=6,nodecount=605, satcount=1800
+ACT=300 runtime: =     6.19 sec
+#r=4,nodecount=447, satcount=228
+#r=5,nodecount=401, satcount=500
+ACT=302 runtime: =     6.77 sec
+#r=4,nodecount=353, satcount=256
+#r=5,nodecount=135, satcount=25
+#r=6,nodecount=689, satcount=2340
+#r=7,nodecount=511, satcount=1029
+ACT=304 runtime: =     7.57 sec
+#r=4,nodecount=140, satcount=36
+#r=5,nodecount=618, satcount=1250
+#r=6,nodecount=403, satcount=540
+ACT=306 runtime: =     8.01 sec
+#r=4,nodecount=454, satcount=288
+#r=5,nodecount=313, satcount=250
+#r=6,nodecount=608, satcount=1800
+#r=7,nodecount=384, satcount=490
+ACT=308 runtime: =     8.51 sec
+#r=4,nodecount=568, satcount=448
+#r=5,nodecount=563, satcount=750
+#r=6,nodecount=412, satcount=540
+#r=7,nodecount=193, satcount=49
+ACT=310 runtime: =     9.24 sec
+#r=4,nodecount=478, satcount=352
+#r=5,nodecount=208, satcount=100
+#r=6,nodecount=167, satcount=36
+#r=7,nodecount=800, satcount=5145
+ACT=312 runtime: =     9.87 sec
+#r=4,nodecount=228, satcount=133
+#r=5,nodecount=496, satcount=750
+#r=6,nodecount=721, satcount=2025
+ACT=314 runtime: =    10.31 sec
+#r=4,nodecount=494, satcount=448
+#r=5,nodecount=789, satcount=1500
+#r=7,nodecount=469, satcount=1225
+ACT=316 runtime: =    10.95 sec
+#r=4,nodecount=551, satcount=388
+#r=5,nodecount=625, satcount=1250
+#r=7,nodecount=508, satcount=1029
+ACT=318 runtime: =    11.43 sec
+#r=4,nodecount=375, satcount=208
+#r=5,nodecount=313, satcount=250
+#r=6,nodecount=409, satcount=540
+ACT=320 runtime: =    12.05 sec
+#r=5,nodecount=869, satcount=1775
+#r=6,nodecount=881, satcount=4320
+ACT=322 runtime: =    12.54 sec
+#r=4,nodecount=434, satcount=352
+#r=5,nodecount=911, satcount=2500
+#r=6,nodecount=599, satcount=1800
+ACT=324 runtime: =    13.15 sec
+#r=4,nodecount=601, satcount=512
+#r=5,nodecount=389, satcount=350
+#r=6,nodecount=925, satcount=2740
+#r=7,nodecount=511, satcount=1029
+ACT=326 runtime: =    13.75 sec
+#r=4,nodecount=375, satcount=192
+#r=5,nodecount=729, satcount=1000
+#r=6,nodecount=611, satcount=1080
+#r=7,nodecount=505, satcount=1029
+ACT=328 runtime: =    14.37 sec
+#r=4,nodecount=403, satcount=192
+#r=5,nodecount=307, satcount=250
+#r=6,nodecount=917, satcount=5175
+#r=7,nodecount=797, satcount=5145
+ACT=330 runtime: =    15.07 sec
+#r=4,nodecount=348, satcount=272
+#r=5,nodecount=932, satcount=1850
+#r=6,nodecount=593, satcount=1800
+ACT=332 runtime: =    15.53 sec
+#r=4,nodecount=745, satcount=740
+#r=5,nodecount=609, satcount=1250
+#r=6,nodecount=418, satcount=540
+#r=7,nodecount=881, satcount=6174
+#r=8,nodecount=607, satcount=1792
+ACT=334 runtime: =    17.09 sec
+#r=4,nodecount=471, satcount=352
+#r=5,nodecount=458, satcount=525
+#r=6,nodecount=874, satcount=4320
+#r=7,nodecount=499, satcount=1029
+ACT=336 runtime: =    18.25 sec
+#r=4,nodecount=214, satcount=96
+#r=5,nodecount=766, satcount=1250
+#r=6,nodecount=449, satcount=541
+#r=7,nodecount=926, satcount=8575
+#r=8,nodecount=456, satcount=848
+ACT=338 runtime: =    19.39 sec
+#r=4,nodecount=543, satcount=448
+#r=5,nodecount=1030, satcount=2750
+#r=6,nodecount=914, satcount=3600
+#r=7,nodecount=508, satcount=1029
+#r=8,nodecount=225, satcount=64
+ACT=340 runtime: =    20.86 sec
+#r=4,nodecount=612, satcount=608
+#r=5,nodecount=999, satcount=2500
+#r=6,nodecount=280, satcount=225
+#r=7,nodecount=358, satcount=441
+#r=8,nodecount=992, satcount=12544
+ACT=342 runtime: =    22.05 sec
+#r=4,nodecount=484, satcount=288
+#r=5,nodecount=642, satcount=875
+#r=6,nodecount=688, satcount=2340
+#r=7,nodecount=937, satcount=5586
+ACT=344 runtime: =    23.26 sec
+#r=4,nodecount=424, satcount=288
+#r=5,nodecount=920, satcount=2025
+#r=6,nodecount=1093, satcount=4860
+#r=8,nodecount=668, satcount=4900
+ACT=346 runtime: =    24.43 sec
+#r=4,nodecount=407, satcount=352
+#r=5,nodecount=1092, satcount=2700
+#r=6,nodecount=1101, satcount=8100
+#r=8,nodecount=604, satcount=1792
+ACT=348 runtime: =    25.35 sec
+#r=4,nodecount=537, satcount=324
+#r=5,nodecount=961, satcount=2600
+#r=6,nodecount=599, satcount=1800
+#r=7,nodecount=505, satcount=1029
+ACT=350 runtime: =    26.69 sec
+#r=4,nodecount=594, satcount=448
+#r=5,nodecount=131, satcount=25
+#r=6,nodecount=1375, satcount=7200
+#r=7,nodecount=1137, satcount=12005
+ACT=352 runtime: =    27.83 sec
+#r=4,nodecount=136, satcount=36
+#r=5,nodecount=920, satcount=2525
+#r=6,nodecount=1295, satcount=8640
+#r=7,nodecount=791, satcount=5145
+ACT=354 runtime: =    28.80 sec
+#r=4,nodecount=495, satcount=368
+#r=5,nodecount=1049, satcount=2500
+#r=6,nodecount=820, satcount=3600
+#r=7,nodecount=1307, satcount=10829
+#r=8,nodecount=607, satcount=1792
+ACT=356 runtime: =    30.01 sec
+#r=4,nodecount=743, satcount=768
+#r=5,nodecount=995, satcount=2000
+#r=6,nodecount=1144, satcount=4140
+#r=7,nodecount=755, satcount=2058
+#r=8,nodecount=601, satcount=1792
+ACT=358 runtime: =    33.02 sec
+#r=4,nodecount=551, satcount=448
+#r=5,nodecount=916, satcount=1750
+#r=6,nodecount=546, satcount=576
+#r=7,nodecount=1277, satcount=20580
+#r=8,nodecount=989, satcount=12544
+ACT=360 runtime: =    34.87 sec
+#r=4,nodecount=457, satcount=224
+#r=5,nodecount=748, satcount=1600
+#r=6,nodecount=1496, satcount=10125
+#r=7,nodecount=785, satcount=5145
+ACT=362 runtime: =    35.98 sec
+#r=4,nodecount=563, satcount=624
+#r=5,nodecount=1435, satcount=4750
+#r=6,nodecount=865, satcount=4320
+#r=7,nodecount=800, satcount=5145
+#r=8,nodecount=1073, satcount=14336
+#r=9,nodecount=703, satcount=2916
+ACT=364 runtime: =    38.55 sec
+#r=4,nodecount=708, satcount=644
+#r=5,nodecount=1142, satcount=3000
+#r=6,nodecount=914, satcount=3915
+#r=7,nodecount=1130, satcount=12005
+#r=8,nodecount=595, satcount=1792
+ACT=366 runtime: =    42.49 sec
+#r=4,nodecount=444, satcount=208
+#r=5,nodecount=782, satcount=1500
+#r=6,nodecount=1086, satcount=4140
+#r=7,nodecount=664, satcount=1078
+#r=8,nodecount=1246, satcount=31360
+#r=9,nodecount=528, satcount=1377
+ACT=368 runtime: =    47.60 sec
+#r=4,nodecount=290, satcount=132
+Realization of given 4-input function using 5 two-input gates complementary=1:
+08 = 4'b1001( 05 07 )
+07 = 4'b1000( d 06 )
+06 = 4'b1110( b c )
+05 = 4'b0010( b 04 )
+04 = 4'b0100( a d )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0101010100000000
+i=5:0100010000000000
+i=6:0011111100111111
+i=7:0000000000111111
+i=8:1011101111000000
+
+Switching Activity=368
+Number of Gates: r=5
+Total runtime =    47.65 sec
+###################################################2.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=75 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+#r=4,nodecount=104, satcount=12
+ACT=300 runtime: =     0.04 sec
+ACT=300 runtime: =     0.04 sec
+ACT=300 runtime: =     0.04 sec
+#r=4,nodecount=353, satcount=182
+#r=5,nodecount=366, satcount=190
+#r=6,nodecount=240, satcount=90
+ACT=375 runtime: =     0.59 sec
+ACT=375 runtime: =     0.59 sec
+ACT=375 runtime: =     0.60 sec
+ACT=375 runtime: =     0.60 sec
+#r=4,nodecount=640, satcount=756
+ACT=368 runtime: =     0.63 sec
+ACT=368 runtime: =    12.24 sec
+Realization of given 4-input function using 5 two-input gates complementary=1:
+08 = 4'b1001( 05 07 )
+07 = 4'b0100( d 06 )
+06 = 4'b1110( b c )
+05 = 4'b1110( d 04 )
+04 = 4'b0100( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0100010001000100
+i=5:0100010011111111
+i=6:0011111100111111
+i=7:0000000011000000
+i=8:1011101111000000
+
+Switching Activity=368
+Number of Gates: r=5
+Total runtime =    12.24 sec
+###################################################2.free stepsize algorithm non optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=75 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+#r=4,nodecount=314, satcount=473
+ACT=300 runtime: =     0.09 sec
+ACT=300 runtime: =     0.09 sec
+ACT=300 runtime: =     0.09 sec
+#r=4,nodecount=697, satcount=4496
+#r=5,nodecount=903, satcount=9026
+#r=6,nodecount=750, satcount=7591
+ACT=375 runtime: =     3.86 sec
+ACT=375 runtime: =     3.86 sec
+ACT=375 runtime: =     3.86 sec
+ACT=375 runtime: =     3.86 sec
+#r=4,nodecount=1060, satcount=12977
+ACT=368 runtime: =     3.90 sec
+ACT=368 runtime: =    15.51 sec
+Realization of given 4-input function using 5 two-input gates complementary=1:
+08 = 4'b1001( 06 07 )
+07 = 4'b0010( d 04 )
+06 = 4'b1000( d 05 )
+05 = 4'b1110( b c )
+04 = 4'b0100( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0100010001000100
+i=5:0011111100111111
+i=6:0000000000111111
+i=7:0100010000000000
+i=8:1011101111000000
+
+Switching Activity=368
+Number of Gates: r=5
+Total runtime =    15.51 sec

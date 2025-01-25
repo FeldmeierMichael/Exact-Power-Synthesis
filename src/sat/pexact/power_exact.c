@@ -5911,12 +5911,12 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars,int verb
                 Abc_PrintTime(1, "runtime:", Abc_Clock() - clkTotal);
             }
                     
-                    if(r>0 && act<calc_max_act(r, p->nVars)){
+                    /*if(r>0 && act<calc_max_act(r, p->nVars)){
                         r--;
                         if(verbose==2)
                             printf("######ACT:%d -> R= %d removed\n", act, r + 1);
                         continue;                        
-                    }
+                    }*/
                     if (act >= calc_max_act(r + 1, p->nVars))
                     {           
                         r++;
@@ -5972,6 +5972,12 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars,int verb
                                 bdd_done();
                                 continue;                                
                             }
+                             
+                            if(verbose==1){
+                                int bddnodes=bdd_nodecount(o);
+                                int satcount=bdd_satcount(o);
+                                printf("#r=%d,nodecount=%d, satcount=%d\n",rn,bddnodes,satcount);
+                            }
                             
                             if(verbose==2)
                                 printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
@@ -5998,7 +6004,7 @@ void Exa_ManExactPowerSynthesis_sw_free_smaller_than(Bmc_EsPar_t *pPars,int verb
                             if(verbose==2) printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));                           
                             bdd_done();
                             status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
-                             if(verbose==2) printf("###Solution: %d \n", status); 
+                            if(verbose==2) printf("###Solution: %d \n", status); 
                             
                                                             
                                                     
@@ -7016,7 +7022,8 @@ void Exa_ManExactPowerSynthesis_sw_free(Bmc_EsPar_t *pPars,int verbose,int bdd_o
                             }
                             if(verbose==1){
                                 int bddnodes=bdd_nodecount(o);
-                                printf("#r=%d,nodecount=%d\n",rn,bddnodes);
+                                int satcount=bdd_satcount(o);
+                                printf("#r=%d,nodecount=%d, satcount=%d\n",rn,bddnodes,satcount);
                             }
 
                            
@@ -7694,15 +7701,13 @@ void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars){
 
     printf("###################################################1.free list algorithm optimized bdd\n");
     Exa_ManExactPowerSynthesis_sw_free(pPars,1,1);
-
-   // printf("###################################################2.free search algorithm non optimized bdd\n");
-  //  Exa_ManExactPowerSynthesis_sw_free(pPars,1,0);
-
+    printf("###################################################2.free search algorithm non optimized bdd\n");
+    Exa_ManExactPowerSynthesis_sw_free(pPars,1,0);
     printf("###################################################2.free stepsize algorithm optimized bdd\n");
     Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,2);
-  /*  printf("###################################################2.free stepsize algorithm optimized bdd\n");
-    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,4);
-    printf("###################################################3.free stepsize algorithm optimized bdd\n");
+    printf("###################################################2.free stepsize algorithm non optimized bdd\n");
+    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,0,75,2);
+  /*  printf("###################################################3.free stepsize algorithm optimized bdd\n");
     Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,6);
     printf("###################################################4.free stepsize algorithm optimized bdd\n");
     Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,7);
@@ -7711,8 +7716,8 @@ void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars){
 */
     
 
-    printf("###################################################3.free stepsize algorithm non optimized bdd\n");
-    Exa_ManExactPowerSynthesis_base_bdd(pPars,1);
+    //printf("###################################################3.free stepsize algorithm non optimized bdd\n");
+    //Exa_ManExactPowerSynthesis_base_bdd(pPars,1);
 
 
     //printf("###################################################3.listsearch algorithm bdd\n");

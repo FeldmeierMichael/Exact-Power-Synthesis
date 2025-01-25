@@ -1,0 +1,1362 @@
+ABC command line: "powertwoexact -N 3 -I 4 -F 14 016B".
+
+###################################################1.free list algorithm optimized bdd
+Pstate:3
+ACT=0 runtime: =     0.00 sec
+ACT=2 runtime: =     0.00 sec
+ACT=4 runtime: =     0.00 sec
+ACT=6 runtime: =     0.00 sec
+ACT=8 runtime: =     0.00 sec
+ACT=10 runtime: =     0.00 sec
+ACT=12 runtime: =     0.00 sec
+ACT=14 runtime: =     0.00 sec
+ACT=16 runtime: =     0.00 sec
+ACT=18 runtime: =     0.00 sec
+ACT=20 runtime: =     0.00 sec
+ACT=22 runtime: =     0.00 sec
+ACT=24 runtime: =     0.00 sec
+ACT=26 runtime: =     0.00 sec
+ACT=28 runtime: =     0.00 sec
+ACT=30 runtime: =     0.00 sec
+ACT=32 runtime: =     0.00 sec
+ACT=34 runtime: =     0.00 sec
+ACT=36 runtime: =     0.00 sec
+ACT=38 runtime: =     0.00 sec
+ACT=40 runtime: =     0.00 sec
+ACT=42 runtime: =     0.00 sec
+ACT=44 runtime: =     0.00 sec
+ACT=46 runtime: =     0.00 sec
+ACT=48 runtime: =     0.00 sec
+ACT=50 runtime: =     0.00 sec
+ACT=52 runtime: =     0.00 sec
+ACT=54 runtime: =     0.00 sec
+ACT=56 runtime: =     0.00 sec
+ACT=58 runtime: =     0.00 sec
+ACT=60 runtime: =     0.00 sec
+ACT=62 runtime: =     0.00 sec
+ACT=64 runtime: =     0.00 sec
+ACT=66 runtime: =     0.00 sec
+ACT=68 runtime: =     0.00 sec
+ACT=70 runtime: =     0.00 sec
+ACT=72 runtime: =     0.00 sec
+ACT=74 runtime: =     0.00 sec
+ACT=76 runtime: =     0.00 sec
+ACT=78 runtime: =     0.00 sec
+ACT=80 runtime: =     0.00 sec
+ACT=82 runtime: =     0.00 sec
+ACT=84 runtime: =     0.00 sec
+ACT=86 runtime: =     0.00 sec
+ACT=88 runtime: =     0.00 sec
+ACT=90 runtime: =     0.00 sec
+ACT=92 runtime: =     0.00 sec
+ACT=94 runtime: =     0.00 sec
+ACT=96 runtime: =     0.00 sec
+ACT=98 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=102 runtime: =     0.00 sec
+ACT=104 runtime: =     0.00 sec
+ACT=106 runtime: =     0.00 sec
+ACT=108 runtime: =     0.00 sec
+ACT=110 runtime: =     0.00 sec
+ACT=112 runtime: =     0.00 sec
+ACT=114 runtime: =     0.00 sec
+ACT=116 runtime: =     0.00 sec
+ACT=118 runtime: =     0.00 sec
+ACT=120 runtime: =     0.00 sec
+ACT=122 runtime: =     0.00 sec
+ACT=124 runtime: =     0.00 sec
+ACT=126 runtime: =     0.00 sec
+ACT=128 runtime: =     0.00 sec
+ACT=130 runtime: =     0.00 sec
+ACT=132 runtime: =     0.00 sec
+ACT=134 runtime: =     0.00 sec
+ACT=136 runtime: =     0.00 sec
+ACT=138 runtime: =     0.00 sec
+ACT=140 runtime: =     0.00 sec
+ACT=142 runtime: =     0.00 sec
+ACT=144 runtime: =     0.00 sec
+ACT=146 runtime: =     0.00 sec
+ACT=148 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=152 runtime: =     0.00 sec
+ACT=154 runtime: =     0.00 sec
+ACT=156 runtime: =     0.00 sec
+ACT=158 runtime: =     0.00 sec
+ACT=160 runtime: =     0.00 sec
+ACT=162 runtime: =     0.00 sec
+ACT=164 runtime: =     0.00 sec
+ACT=166 runtime: =     0.00 sec
+ACT=168 runtime: =     0.00 sec
+ACT=170 runtime: =     0.00 sec
+ACT=172 runtime: =     0.00 sec
+ACT=174 runtime: =     0.00 sec
+ACT=176 runtime: =     0.00 sec
+ACT=178 runtime: =     0.00 sec
+ACT=180 runtime: =     0.00 sec
+ACT=182 runtime: =     0.00 sec
+ACT=184 runtime: =     0.01 sec
+ACT=186 runtime: =     0.01 sec
+ACT=188 runtime: =     0.01 sec
+ACT=190 runtime: =     0.01 sec
+ACT=192 runtime: =     0.01 sec
+ACT=194 runtime: =     0.01 sec
+ACT=196 runtime: =     0.01 sec
+ACT=198 runtime: =     0.01 sec
+ACT=200 runtime: =     0.01 sec
+ACT=202 runtime: =     0.01 sec
+ACT=204 runtime: =     0.01 sec
+ACT=206 runtime: =     0.01 sec
+ACT=208 runtime: =     0.01 sec
+ACT=210 runtime: =     0.01 sec
+ACT=212 runtime: =     0.01 sec
+ACT=214 runtime: =     0.17 sec
+ACT=216 runtime: =     0.17 sec
+ACT=218 runtime: =     0.17 sec
+ACT=220 runtime: =     0.17 sec
+ACT=222 runtime: =     0.17 sec
+ACT=224 runtime: =     0.17 sec
+ACT=226 runtime: =     0.17 sec
+ACT=228 runtime: =     0.17 sec
+ACT=230 runtime: =     0.17 sec
+ACT=232 runtime: =     0.17 sec
+ACT=234 runtime: =     0.17 sec
+ACT=236 runtime: =     0.17 sec
+ACT=238 runtime: =     0.17 sec
+ACT=240 runtime: =     0.17 sec
+ACT=242 runtime: =     0.17 sec
+#r=5,nodecount=143, satcount=20
+ACT=244 runtime: =     0.26 sec
+ACT=246 runtime: =     0.31 sec
+ACT=248 runtime: =     0.36 sec
+ACT=250 runtime: =     0.41 sec
+ACT=252 runtime: =     0.46 sec
+ACT=254 runtime: =     0.52 sec
+ACT=256 runtime: =     0.57 sec
+ACT=258 runtime: =     0.62 sec
+ACT=260 runtime: =     0.67 sec
+ACT=262 runtime: =     0.72 sec
+ACT=264 runtime: =     0.77 sec
+ACT=266 runtime: =     0.81 sec
+ACT=268 runtime: =     0.86 sec
+#r=5,nodecount=162, satcount=30
+ACT=270 runtime: =     0.93 sec
+ACT=272 runtime: =     0.98 sec
+#r=6,nodecount=182, satcount=30
+ACT=274 runtime: =     1.16 sec
+#r=5,nodecount=171, satcount=20
+ACT=276 runtime: =     1.31 sec
+ACT=278 runtime: =     1.45 sec
+ACT=280 runtime: =     1.59 sec
+ACT=282 runtime: =     1.73 sec
+#r=5,nodecount=106, satcount=10
+ACT=284 runtime: =     1.90 sec
+ACT=286 runtime: =     2.03 sec
+ACT=288 runtime: =     2.17 sec
+ACT=290 runtime: =     2.31 sec
+#r=5,nodecount=224, satcount=60
+ACT=292 runtime: =     2.46 sec
+ACT=294 runtime: =     2.60 sec
+#r=5,nodecount=141, satcount=20
+ACT=296 runtime: =     2.75 sec
+ACT=298 runtime: =     2.89 sec
+#r=6,nodecount=221, satcount=60
+ACT=300 runtime: =     3.06 sec
+#r=5,nodecount=194, satcount=30
+ACT=302 runtime: =     3.21 sec
+#r=7,nodecount=221, satcount=42
+ACT=304 runtime: =     3.59 sec
+#r=6,nodecount=218, satcount=30
+ACT=306 runtime: =     3.94 sec
+#r=5,nodecount=161, satcount=20
+ACT=308 runtime: =     4.36 sec
+#r=5,nodecount=166, satcount=30
+ACT=310 runtime: =     4.88 sec
+ACT=312 runtime: =     5.22 sec
+#r=6,nodecount=136, satcount=15
+ACT=314 runtime: =     5.60 sec
+#r=5,nodecount=175, satcount=20
+ACT=316 runtime: =     6.04 sec
+#r=5,nodecount=221, satcount=60
+ACT=318 runtime: =     6.77 sec
+ACT=320 runtime: =     7.11 sec
+#r=5,nodecount=80, satcount=5
+#r=6,nodecount=305, satcount=120
+ACT=322 runtime: =     7.51 sec
+#r=5,nodecount=397, satcount=120
+ACT=324 runtime: =     8.09 sec
+#r=6,nodecount=220, satcount=60
+ACT=326 runtime: =     8.46 sec
+#r=5,nodecount=169, satcount=20
+ACT=328 runtime: =     8.83 sec
+#r=7,nodecount=280, satcount=105
+ACT=330 runtime: =     9.19 sec
+#r=5,nodecount=166, satcount=30
+#r=6,nodecount=265, satcount=60
+ACT=332 runtime: =     9.58 sec
+#r=5,nodecount=250, satcount=60
+#r=8,nodecount=260, satcount=56
+ACT=334 runtime: =    11.87 sec
+#r=5,nodecount=164, satcount=30
+#r=7,nodecount=265, satcount=42
+ACT=336 runtime: =    12.84 sec
+#r=6,nodecount=206, satcount=30
+ACT=338 runtime: =    13.70 sec
+#r=5,nodecount=461, satcount=140
+#r=6,nodecount=227, satcount=60
+ACT=340 runtime: =    16.03 sec
+#r=5,nodecount=272, satcount=60
+ACT=342 runtime: =    16.97 sec
+#r=5,nodecount=136, satcount=20
+#r=7,nodecount=166, satcount=21
+ACT=344 runtime: =    17.87 sec
+#r=6,nodecount=224, satcount=30
+ACT=346 runtime: =    18.83 sec
+#r=5,nodecount=130, satcount=10
+#r=6,nodecount=343, satcount=180
+ACT=348 runtime: =    19.72 sec
+#r=5,nodecount=429, satcount=130
+ACT=350 runtime: =    23.84 sec
+#r=6,nodecount=179, satcount=30
+#r=7,nodecount=386, satcount=210
+ACT=352 runtime: =    24.70 sec
+#r=5,nodecount=96, satcount=5
+#r=6,nodecount=540, satcount=240
+ACT=354 runtime: =    25.88 sec
+#r=5,nodecount=472, satcount=120
+#r=7,nodecount=299, satcount=140
+ACT=356 runtime: =    26.88 sec
+#r=5,nodecount=224, satcount=60
+#r=6,nodecount=264, satcount=60
+ACT=358 runtime: =    28.10 sec
+#r=5,nodecount=247, satcount=60
+#r=8,nodecount=339, satcount=168
+ACT=360 runtime: =    29.47 sec
+#r=5,nodecount=100, satcount=10
+#r=6,nodecount=228, satcount=60
+#r=7,nodecount=336, satcount=105
+ACT=362 runtime: =    30.66 sec
+#r=5,nodecount=333, satcount=90
+#r=6,nodecount=341, satcount=120
+#r=9,nodecount=299, satcount=72
+ACT=364 runtime: =    33.49 sec
+#r=5,nodecount=514, satcount=150
+#r=6,nodecount=256, satcount=90
+#r=8,nodecount=312, satcount=56
+ACT=366 runtime: =    36.57 sec
+#r=5,nodecount=269, satcount=60
+#r=7,nodecount=251, satcount=42
+ACT=368 runtime: =    38.89 sec
+#r=6,nodecount=627, satcount=330
+#r=7,nodecount=288, satcount=105
+ACT=370 runtime: =    41.54 sec
+#r=5,nodecount=547, satcount=240
+#r=6,nodecount=371, satcount=120
+ACT=372 runtime: =    43.82 sec
+#r=5,nodecount=336, satcount=60
+#r=6,nodecount=299, satcount=120
+#r=8,nodecount=196, satcount=28
+ACT=374 runtime: =    46.66 sec
+#r=5,nodecount=322, satcount=60
+#r=7,nodecount=273, satcount=42
+ACT=376 runtime: =    51.04 sec
+#r=6,nodecount=256, satcount=21
+#r=7,nodecount=465, satcount=420
+ACT=378 runtime: =    53.04 sec
+#r=5,nodecount=248, satcount=60
+#r=6,nodecount=644, satcount=380
+ACT=380 runtime: =    56.28 sec
+#r=5,nodecount=607, satcount=210
+#r=7,nodecount=278, satcount=105
+#r=8,nodecount=467, satcount=336
+ACT=382 runtime: =    64.08 sec
+#r=5,nodecount=156, satcount=30
+#r=6,nodecount=215, satcount=30
+#r=7,nodecount=683, satcount=420
+ACT=384 runtime: =    66.63 sec
+#r=5,nodecount=152, satcount=20
+#r=6,nodecount=644, satcount=240
+#r=8,nodecount=378, satcount=280
+ACT=386 runtime: =    69.04 sec
+#r=5,nodecount=638, satcount=260
+#r=6,nodecount=349, satcount=180
+#r=7,nodecount=359, satcount=140
+ACT=388 runtime: =    73.17 sec
+#r=5,nodecount=448, satcount=180
+#r=6,nodecount=384, satcount=180
+#r=9,nodecount=398, satcount=252
+ACT=390 runtime: =    81.37 sec
+#r=5,nodecount=381, satcount=80
+#r=6,nodecount=223, satcount=60
+#r=7,nodecount=290, satcount=105
+#r=8,nodecount=407, satcount=168
+ACT=392 runtime: =    86.08 sec
+#r=5,nodecount=166, satcount=20
+#r=6,nodecount=456, satcount=180
+#r=7,nodecount=432, satcount=210
+#r=10,nodecount=338, satcount=90
+ACT=394 runtime: =    91.75 sec
+#r=5,nodecount=351, satcount=90
+#r=6,nodecount=778, satcount=480
+#r=7,nodecount=348, satcount=210
+#r=9,nodecount=359, satcount=72
+ACT=396 runtime: =    99.20 sec
+#r=5,nodecount=640, satcount=200
+#r=6,nodecount=418, satcount=180
+#r=8,nodecount=296, satcount=56
+ACT=398 runtime: =   109.74 sec
+#r=5,nodecount=378, satcount=90
+#r=6,nodecount=173, satcount=30
+#r=7,nodecount=793, satcount=672
+#r=8,nodecount=349, satcount=168
+ACT=400 runtime: =   120.71 sec
+#r=5,nodecount=100, satcount=10
+#r=6,nodecount=794, satcount=660
+#r=7,nodecount=470, satcount=210
+ACT=402 runtime: =   128.16 sec
+#r=5,nodecount=688, satcount=300
+#r=6,nodecount=461, satcount=120
+#r=7,nodecount=462, satcount=420
+#r=9,nodecount=226, satcount=36
+ACT=404 runtime: =   133.52 sec
+#r=5,nodecount=510, satcount=150
+#r=6,nodecount=609, satcount=300
+#r=8,nodecount=322, satcount=56
+ACT=406 runtime: =   150.22 sec
+#r=5,nodecount=501, satcount=140
+#r=7,nodecount=394, satcount=63
+#r=8,nodecount=587, satcount=840
+ACT=408 runtime: =   161.55 sec
+#r=6,nodecount=457, satcount=156
+#r=7,nodecount=859, satcount=875
+ACT=410 runtime: =   170.65 sec
+#r=5,nodecount=457, satcount=180
+#r=6,nodecount=903, satcount=600
+#r=8,nodecount=377, satcount=280
+#r=9,nodecount=548, satcount=504
+ACT=412 runtime: =   178.42 sec
+#r=5,nodecount=758, satcount=330
+#r=6,nodecount=344, satcount=180
+#r=7,nodecount=334, satcount=105
+#r=8,nodecount=826, satcount=672
+ACT=414 runtime: =   190.30 sec
+#r=5,nodecount=353, satcount=95
+#r=6,nodecount=335, satcount=120
+#r=7,nodecount=816, satcount=420
+#r=9,nodecount=457, satcount=504
+ACT=416 runtime: =   204.53 sec
+#r=5,nodecount=170, satcount=20
+#r=6,nodecount=976, satcount=735
+#r=7,nodecount=474, satcount=420
+#r=8,nodecount=454, satcount=280
+ACT=418 runtime: =   216.37 sec
+#r=5,nodecount=754, satcount=380
+#r=6,nodecount=695, satcount=540
+#r=7,nodecount=521, satcount=420
+#r=10,nodecount=457, satcount=360
+ACT=420 runtime: =   229.89 sec
+#r=5,nodecount=601, satcount=240
+#r=6,nodecount=733, satcount=360
+#r=7,nodecount=346, satcount=210
+#r=8,nodecount=352, satcount=168
+#r=9,nodecount=478, satcount=252
+ACT=422 runtime: =   246.81 sec
+#r=5,nodecount=465, satcount=100
+#r=6,nodecount=365, satcount=120
+#r=7,nodecount=579, satcount=315
+#r=8,nodecount=523, satcount=336
+#r=11,nodecount=377, satcount=110
+ACT=424 runtime: =   263.08 sec
+#r=5,nodecount=246, satcount=40
+#r=6,nodecount=482, satcount=180
+#r=7,nodecount=1042, satcount=1260
+#r=8,nodecount=440, satcount=420
+#r=10,nodecount=406, satcount=90
+ACT=426 runtime: =   285.16 sec
+#r=5,nodecount=426, satcount=100
+#r=6,nodecount=1038, satcount=840
+#r=7,nodecount=567, satcount=420
+#r=9,nodecount=341, satcount=72
+ACT=428 runtime: =   304.21 sec
+#r=5,nodecount=844, satcount=380
+#r=6,nodecount=590, satcount=270
+#r=7,nodecount=377, satcount=210
+#r=8,nodecount=959, satcount=1232
+#r=9,nodecount=410, satcount=252
+ACT=430 runtime: =   336.12 sec
+#r=5,nodecount=479, satcount=150
+#r=6,nodecount=430, satcount=120
+#r=7,nodecount=1041, satcount=1470
+#r=8,nodecount=569, satcount=336
+ACT=432 runtime: =   367.45 sec
+#r=5,nodecount=188, satcount=30
+#r=6,nodecount=1019, satcount=840
+#r=7,nodecount=658, satcount=217
+#r=8,nodecount=625, satcount=1120
+#r=10,nodecount=256, satcount=45
+ACT=434 runtime: =   387.42 sec
+#r=5,nodecount=841, satcount=420
+#r=6,nodecount=777, satcount=480
+#r=7,nodecount=896, satcount=980
+#r=9,nodecount=371, satcount=72
+ACT=436 runtime: =   429.02 sec
+#r=5,nodecount=669, satcount=270
+#r=6,nodecount=921, satcount=660
+#r=8,nodecount=532, satcount=196
+#r=9,nodecount=709, satcount=1512
+ACT=438 runtime: =   466.99 sec
+#r=5,nodecount=591, satcount=200
+#r=6,nodecount=213, satcount=60
+#r=7,nodecount=682, satcount=357
+#r=8,nodecount=1074, satcount=1736
+ACT=440 runtime: =   492.10 sec
+#r=5,nodecount=80, satcount=5
+#r=6,nodecount=823, satcount=510
+#r=7,nodecount=1199, satcount=1365
+#r=9,nodecount=476, satcount=630
+#r=10,nodecount=629, satcount=720
+ACT=442 runtime: =   513.19 sec
+#r=5,nodecount=509, satcount=210
+#r=6,nodecount=1217, satcount=1200
+#r=7,nodecount=532, satcount=630
+#r=8,nodecount=453, satcount=280
+#r=9,nodecount=969, satcount=1008
+ACT=444 runtime: =   543.43 sec
+#r=5,nodecount=873, satcount=340
+#r=6,nodecount=723, satcount=555
+#r=7,nodecount=518, satcount=420
+#r=8,nodecount=988, satcount=672
+#r=10,nodecount=536, satcount=840
+ACT=446 runtime: =   608.93 sec
+#r=5,nodecount=527, satcount=170
+#r=6,nodecount=504, satcount=150
+#r=7,nodecount=1323, satcount=1785
+#r=8,nodecount=599, satcount=840
+#r=9,nodecount=549, satcount=504
+ACT=448 runtime: =   642.18 sec
+#r=5,nodecount=176, satcount=30
+#r=6,nodecount=1234, satcount=1350
+#r=7,nodecount=942, satcount=1260
+#r=8,nodecount=658, satcount=840
+#r=11,nodecount=516, satcount=495
+ACT=450 runtime: =   681.90 sec
+#r=5,nodecount=768, satcount=380
+#r=6,nodecount=936, satcount=720
+#r=7,nodecount=1095, satcount=1260
+#r=8,nodecount=469, satcount=560
+#r=9,nodecount=414, satcount=252
+#r=10,nodecount=549, satcount=360
+ACT=452 runtime: =   728.80 sec
+#r=5,nodecount=737, satcount=300
+#r=6,nodecount=997, satcount=600
+#r=7,nodecount=564, satcount=420
+#r=8,nodecount=702, satcount=504
+#r=9,nodecount=614, satcount=504
+#r=12,nodecount=416, satcount=132
+ACT=454 runtime: =   791.91 sec
+#r=5,nodecount=622, satcount=200
+#r=6,nodecount=545, satcount=240
+#r=7,nodecount=778, satcount=357
+#r=8,nodecount=1306, satcount=2856
+#r=9,nodecount=532, satcount=756
+#r=11,nodecount=453, satcount=110
+ACT=456 runtime: =   900.53 sec
+#r=5,nodecount=264, satcount=60
+#r=6,nodecount=722, satcount=320
+#r=7,nodecount=1436, satcount=2555
+#r=8,nodecount=716, satcount=840
+#r=10,nodecount=386, satcount=90
+ACT=458 runtime: =   986.86 sec
+#r=5,nodecount=484, satcount=230
+#r=6,nodecount=1386, satcount=1560
+#r=7,nodecount=802, satcount=630
+#r=8,nodecount=581, satcount=840
+#r=9,nodecount=1125, satcount=2088
+#r=10,nodecount=471, satcount=360
+ACT=460 runtime: =  1057.35 sec
+#r=5,nodecount=909, satcount=480
+#r=6,nodecount=897, satcount=630
+#r=7,nodecount=789, satcount=630
+#r=8,nodecount=1288, satcount=2856
+#r=9,nodecount=668, satcount=504
+ACT=462 runtime: =  1198.51 sec
+#r=5,nodecount=585, satcount=155
+#r=6,nodecount=691, satcount=330
+#r=7,nodecount=1350, satcount=1890
+#r=8,nodecount=863, satcount=392
+#r=9,nodecount=788, satcount=2520
+#r=11,nodecount=286, satcount=55
+ACT=464 runtime: =  1280.87 sec
+#r=5,nodecount=274, satcount=50
+#r=6,nodecount=1285, satcount=1410
+#r=7,nodecount=1133, satcount=1267
+#r=8,nodecount=1183, satcount=2520
+#r=10,nodecount=420, satcount=90
+ACT=466 runtime: =  1391.91 sec
+#r=5,nodecount=812, satcount=420
+#r=6,nodecount=1107, satcount=1140
+#r=7,nodecount=1341, satcount=2100
+#r=9,nodecount=670, satcount=540
+#r=10,nodecount=831, satcount=2520
+ACT=468 runtime: =  1556.09 sec
+#r=5,nodecount=734, satcount=330
+#r=6,nodecount=1209, satcount=1080
+#r=7,nodecount=464, satcount=420
+#r=8,nodecount=907, satcount=756
+#r=9,nodecount=1289, satcount=3108
+ACT=470 runtime: =  1646.30 sec
+#r=5,nodecount=691, satcount=220
+#r=6,nodecount=510, satcount=210
+#r=7,nodecount=1211, satcount=1260
+#r=8,nodecount=1495, satcount=2688
+#r=10,nodecount=575, satcount=1260
+#r=11,nodecount=710, satcount=990
+ACT=472 runtime: =  1804.90 sec
+#r=5,nodecount=162, satcount=20
+Realization of given 4-input function using 6 two-input gates complementary=1:
+09 = 4'b1001( 05 08 )
+08 = 4'b0010( d 07 )
+07 = 4'b0110( a 06 )
+06 = 4'b1000( b c )
+05 = 4'b1110( c 04 )
+04 = 4'b1110( a b )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0111011101110111
+i=5:0111111101111111
+i=6:0000001100000011
+i=7:0101011001010110
+i=8:0101011000000000
+i=9:1101011010000000
+
+Switching Activity=472
+Number of Gates: r=6
+Total runtime =  1805.07 sec
+###################################################2.free search algorithm non optimized bdd
+Pstate:3
+ACT=0 runtime: =     0.00 sec
+ACT=2 runtime: =     0.00 sec
+ACT=4 runtime: =     0.00 sec
+ACT=6 runtime: =     0.00 sec
+ACT=8 runtime: =     0.00 sec
+ACT=10 runtime: =     0.00 sec
+ACT=12 runtime: =     0.00 sec
+ACT=14 runtime: =     0.00 sec
+ACT=16 runtime: =     0.00 sec
+ACT=18 runtime: =     0.00 sec
+ACT=20 runtime: =     0.00 sec
+ACT=22 runtime: =     0.00 sec
+ACT=24 runtime: =     0.00 sec
+ACT=26 runtime: =     0.00 sec
+ACT=28 runtime: =     0.00 sec
+ACT=30 runtime: =     0.00 sec
+ACT=32 runtime: =     0.00 sec
+ACT=34 runtime: =     0.00 sec
+ACT=36 runtime: =     0.00 sec
+ACT=38 runtime: =     0.00 sec
+ACT=40 runtime: =     0.00 sec
+ACT=42 runtime: =     0.00 sec
+ACT=44 runtime: =     0.00 sec
+ACT=46 runtime: =     0.00 sec
+ACT=48 runtime: =     0.00 sec
+ACT=50 runtime: =     0.00 sec
+ACT=52 runtime: =     0.00 sec
+ACT=54 runtime: =     0.00 sec
+ACT=56 runtime: =     0.00 sec
+ACT=58 runtime: =     0.00 sec
+ACT=60 runtime: =     0.00 sec
+ACT=62 runtime: =     0.00 sec
+ACT=64 runtime: =     0.00 sec
+ACT=66 runtime: =     0.00 sec
+ACT=68 runtime: =     0.00 sec
+ACT=70 runtime: =     0.00 sec
+ACT=72 runtime: =     0.00 sec
+ACT=74 runtime: =     0.00 sec
+ACT=76 runtime: =     0.00 sec
+ACT=78 runtime: =     0.00 sec
+ACT=80 runtime: =     0.00 sec
+ACT=82 runtime: =     0.00 sec
+ACT=84 runtime: =     0.00 sec
+ACT=86 runtime: =     0.00 sec
+ACT=88 runtime: =     0.00 sec
+ACT=90 runtime: =     0.00 sec
+ACT=92 runtime: =     0.00 sec
+ACT=94 runtime: =     0.00 sec
+ACT=96 runtime: =     0.00 sec
+ACT=98 runtime: =     0.00 sec
+ACT=100 runtime: =     0.00 sec
+ACT=102 runtime: =     0.00 sec
+ACT=104 runtime: =     0.00 sec
+ACT=106 runtime: =     0.00 sec
+ACT=108 runtime: =     0.00 sec
+ACT=110 runtime: =     0.00 sec
+ACT=112 runtime: =     0.00 sec
+ACT=114 runtime: =     0.00 sec
+ACT=116 runtime: =     0.00 sec
+ACT=118 runtime: =     0.00 sec
+ACT=120 runtime: =     0.00 sec
+ACT=122 runtime: =     0.00 sec
+ACT=124 runtime: =     0.00 sec
+ACT=126 runtime: =     0.00 sec
+ACT=128 runtime: =     0.00 sec
+ACT=130 runtime: =     0.00 sec
+ACT=132 runtime: =     0.00 sec
+ACT=134 runtime: =     0.00 sec
+ACT=136 runtime: =     0.00 sec
+ACT=138 runtime: =     0.00 sec
+ACT=140 runtime: =     0.00 sec
+ACT=142 runtime: =     0.00 sec
+ACT=144 runtime: =     0.00 sec
+ACT=146 runtime: =     0.00 sec
+ACT=148 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=152 runtime: =     0.00 sec
+ACT=154 runtime: =     0.00 sec
+ACT=156 runtime: =     0.00 sec
+ACT=158 runtime: =     0.00 sec
+ACT=160 runtime: =     0.00 sec
+ACT=162 runtime: =     0.00 sec
+ACT=164 runtime: =     0.00 sec
+ACT=166 runtime: =     0.00 sec
+ACT=168 runtime: =     0.00 sec
+ACT=170 runtime: =     0.00 sec
+ACT=172 runtime: =     0.00 sec
+ACT=174 runtime: =     0.00 sec
+ACT=176 runtime: =     0.00 sec
+ACT=178 runtime: =     0.00 sec
+ACT=180 runtime: =     0.00 sec
+ACT=182 runtime: =     0.00 sec
+ACT=184 runtime: =     0.01 sec
+ACT=186 runtime: =     0.01 sec
+ACT=188 runtime: =     0.01 sec
+ACT=190 runtime: =     0.01 sec
+ACT=192 runtime: =     0.01 sec
+ACT=194 runtime: =     0.01 sec
+ACT=196 runtime: =     0.01 sec
+ACT=198 runtime: =     0.01 sec
+ACT=200 runtime: =     0.01 sec
+ACT=202 runtime: =     0.01 sec
+ACT=204 runtime: =     0.01 sec
+ACT=206 runtime: =     0.01 sec
+ACT=208 runtime: =     0.01 sec
+ACT=210 runtime: =     0.01 sec
+ACT=212 runtime: =     0.01 sec
+ACT=214 runtime: =     0.17 sec
+ACT=216 runtime: =     0.17 sec
+ACT=218 runtime: =     0.17 sec
+ACT=220 runtime: =     0.17 sec
+ACT=222 runtime: =     0.17 sec
+ACT=224 runtime: =     0.17 sec
+ACT=226 runtime: =     0.17 sec
+ACT=228 runtime: =     0.17 sec
+ACT=230 runtime: =     0.17 sec
+ACT=232 runtime: =     0.17 sec
+ACT=234 runtime: =     0.17 sec
+ACT=236 runtime: =     0.17 sec
+ACT=238 runtime: =     0.17 sec
+ACT=240 runtime: =     0.17 sec
+ACT=242 runtime: =     0.17 sec
+#r=5,nodecount=319, satcount=250
+ACT=244 runtime: =     0.28 sec
+ACT=246 runtime: =     0.32 sec
+#r=5,nodecount=240, satcount=125
+ACT=248 runtime: =     0.52 sec
+#r=5,nodecount=129, satcount=25
+ACT=250 runtime: =     0.57 sec
+#r=5,nodecount=416, satcount=500
+ACT=252 runtime: =     0.65 sec
+ACT=254 runtime: =     0.68 sec
+#r=5,nodecount=135, satcount=25
+ACT=256 runtime: =     0.72 sec
+#r=5,nodecount=316, satcount=250
+ACT=258 runtime: =     0.78 sec
+ACT=260 runtime: =     0.81 sec
+ACT=262 runtime: =     0.86 sec
+ACT=264 runtime: =     0.91 sec
+#r=5,nodecount=319, satcount=250
+ACT=266 runtime: =     1.11 sec
+#r=5,nodecount=313, satcount=250
+ACT=268 runtime: =     1.17 sec
+#r=5,nodecount=413, satcount=500
+ACT=270 runtime: =     1.22 sec
+ACT=272 runtime: =     1.27 sec
+#r=5,nodecount=497, satcount=750
+#r=6,nodecount=415, satcount=540
+ACT=274 runtime: =     1.44 sec
+#r=5,nodecount=307, satcount=250
+ACT=276 runtime: =     1.58 sec
+#r=5,nodecount=322, satcount=250
+#r=6,nodecount=312, satcount=261
+ACT=278 runtime: =     1.73 sec
+#r=5,nodecount=316, satcount=250
+#r=6,nodecount=161, satcount=36
+ACT=280 runtime: =     1.89 sec
+#r=5,nodecount=40, satcount=1
+#r=6,nodecount=608, satcount=1800
+ACT=282 runtime: =     2.05 sec
+#r=5,nodecount=505, satcount=600
+ACT=284 runtime: =     2.19 sec
+#r=6,nodecount=286, satcount=225
+ACT=286 runtime: =     2.33 sec
+#r=6,nodecount=412, satcount=540
+ACT=288 runtime: =     2.45 sec
+#r=5,nodecount=313, satcount=250
+ACT=290 runtime: =     2.57 sec
+#r=5,nodecount=625, satcount=1250
+ACT=292 runtime: =     2.72 sec
+#r=5,nodecount=407, satcount=500
+ACT=294 runtime: =     2.86 sec
+#r=5,nodecount=575, satcount=600
+#r=6,nodecount=415, satcount=540
+ACT=296 runtime: =     3.02 sec
+#r=5,nodecount=467, satcount=500
+#r=6,nodecount=409, satcount=540
+ACT=298 runtime: =     3.17 sec
+#r=5,nodecount=564, satcount=1000
+#r=6,nodecount=605, satcount=1800
+ACT=300 runtime: =     3.32 sec
+#r=5,nodecount=401, satcount=500
+ACT=302 runtime: =     3.49 sec
+#r=5,nodecount=135, satcount=25
+#r=6,nodecount=689, satcount=2340
+#r=7,nodecount=511, satcount=1029
+ACT=304 runtime: =     3.88 sec
+#r=5,nodecount=618, satcount=1250
+#r=6,nodecount=403, satcount=540
+ACT=306 runtime: =     4.34 sec
+#r=5,nodecount=313, satcount=250
+#r=6,nodecount=608, satcount=1800
+#r=7,nodecount=384, satcount=490
+ACT=308 runtime: =     4.71 sec
+#r=5,nodecount=563, satcount=750
+#r=6,nodecount=412, satcount=540
+#r=7,nodecount=193, satcount=49
+ACT=310 runtime: =     5.25 sec
+#r=5,nodecount=208, satcount=100
+#r=6,nodecount=167, satcount=36
+#r=7,nodecount=800, satcount=5145
+ACT=312 runtime: =     5.59 sec
+#r=5,nodecount=496, satcount=750
+#r=6,nodecount=721, satcount=2025
+ACT=314 runtime: =     5.99 sec
+#r=5,nodecount=789, satcount=1500
+#r=7,nodecount=469, satcount=1225
+ACT=316 runtime: =     6.37 sec
+#r=5,nodecount=625, satcount=1250
+#r=7,nodecount=508, satcount=1029
+ACT=318 runtime: =     6.73 sec
+#r=5,nodecount=313, satcount=250
+#r=6,nodecount=409, satcount=540
+ACT=320 runtime: =     7.05 sec
+#r=5,nodecount=869, satcount=1775
+#r=6,nodecount=881, satcount=4320
+ACT=322 runtime: =     7.41 sec
+#r=5,nodecount=911, satcount=2500
+#r=6,nodecount=599, satcount=1800
+ACT=324 runtime: =     8.02 sec
+#r=5,nodecount=389, satcount=350
+#r=6,nodecount=925, satcount=2740
+#r=7,nodecount=511, satcount=1029
+ACT=326 runtime: =     8.45 sec
+#r=5,nodecount=729, satcount=1000
+#r=6,nodecount=611, satcount=1080
+#r=7,nodecount=505, satcount=1029
+ACT=328 runtime: =     8.81 sec
+#r=5,nodecount=307, satcount=250
+#r=6,nodecount=917, satcount=5175
+#r=7,nodecount=797, satcount=5145
+ACT=330 runtime: =     9.16 sec
+#r=5,nodecount=932, satcount=1850
+#r=6,nodecount=593, satcount=1800
+ACT=332 runtime: =     9.70 sec
+#r=5,nodecount=609, satcount=1250
+#r=6,nodecount=418, satcount=540
+#r=7,nodecount=881, satcount=6174
+#r=8,nodecount=607, satcount=1792
+ACT=334 runtime: =    10.81 sec
+#r=5,nodecount=458, satcount=525
+#r=6,nodecount=874, satcount=4320
+#r=7,nodecount=499, satcount=1029
+ACT=336 runtime: =    11.98 sec
+#r=5,nodecount=766, satcount=1250
+#r=6,nodecount=449, satcount=541
+#r=7,nodecount=926, satcount=8575
+#r=8,nodecount=456, satcount=848
+ACT=338 runtime: =    12.95 sec
+#r=5,nodecount=1030, satcount=2750
+#r=6,nodecount=914, satcount=3600
+#r=7,nodecount=508, satcount=1029
+#r=8,nodecount=225, satcount=64
+ACT=340 runtime: =    14.31 sec
+#r=5,nodecount=999, satcount=2500
+#r=6,nodecount=280, satcount=225
+#r=7,nodecount=358, satcount=441
+#r=8,nodecount=992, satcount=12544
+ACT=342 runtime: =    15.42 sec
+#r=5,nodecount=642, satcount=875
+#r=6,nodecount=688, satcount=2340
+#r=7,nodecount=937, satcount=5586
+ACT=344 runtime: =    16.31 sec
+#r=5,nodecount=920, satcount=2025
+#r=6,nodecount=1093, satcount=4860
+#r=8,nodecount=668, satcount=4900
+ACT=346 runtime: =    17.20 sec
+#r=5,nodecount=1092, satcount=2700
+#r=6,nodecount=1101, satcount=8100
+#r=8,nodecount=604, satcount=1792
+ACT=348 runtime: =    18.04 sec
+#r=5,nodecount=961, satcount=2600
+#r=6,nodecount=599, satcount=1800
+#r=7,nodecount=505, satcount=1029
+ACT=350 runtime: =    20.69 sec
+#r=5,nodecount=131, satcount=25
+#r=6,nodecount=1375, satcount=7200
+#r=7,nodecount=1137, satcount=12005
+ACT=352 runtime: =    21.55 sec
+#r=5,nodecount=920, satcount=2525
+#r=6,nodecount=1295, satcount=8640
+#r=7,nodecount=791, satcount=5145
+ACT=354 runtime: =    22.76 sec
+#r=5,nodecount=1049, satcount=2500
+#r=6,nodecount=820, satcount=3600
+#r=7,nodecount=1307, satcount=10829
+#r=8,nodecount=607, satcount=1792
+ACT=356 runtime: =    24.33 sec
+#r=5,nodecount=995, satcount=2000
+#r=6,nodecount=1144, satcount=4140
+#r=7,nodecount=755, satcount=2058
+#r=8,nodecount=601, satcount=1792
+ACT=358 runtime: =    26.00 sec
+#r=5,nodecount=916, satcount=1750
+#r=6,nodecount=546, satcount=576
+#r=7,nodecount=1277, satcount=20580
+#r=8,nodecount=989, satcount=12544
+ACT=360 runtime: =    27.54 sec
+#r=5,nodecount=748, satcount=1600
+#r=6,nodecount=1496, satcount=10125
+#r=7,nodecount=785, satcount=5145
+ACT=362 runtime: =    29.07 sec
+#r=5,nodecount=1435, satcount=4750
+#r=6,nodecount=865, satcount=4320
+#r=7,nodecount=800, satcount=5145
+#r=8,nodecount=1073, satcount=14336
+#r=9,nodecount=703, satcount=2916
+ACT=364 runtime: =    31.87 sec
+#r=5,nodecount=1142, satcount=3000
+#r=6,nodecount=914, satcount=3915
+#r=7,nodecount=1130, satcount=12005
+#r=8,nodecount=595, satcount=1792
+ACT=366 runtime: =    35.00 sec
+#r=5,nodecount=782, satcount=1500
+#r=6,nodecount=1086, satcount=4140
+#r=7,nodecount=664, satcount=1078
+#r=8,nodecount=1246, satcount=31360
+#r=9,nodecount=528, satcount=1377
+ACT=368 runtime: =    38.73 sec
+#r=5,nodecount=1015, satcount=3025
+#r=6,nodecount=1550, satcount=12960
+#r=7,nodecount=1296, satcount=13720
+#r=8,nodecount=604, satcount=1792
+#r=9,nodecount=257, satcount=81
+ACT=370 runtime: =    41.51 sec
+#r=5,nodecount=1336, satcount=5625
+#r=6,nodecount=1603, satcount=12420
+#r=7,nodecount=352, satcount=441
+#r=8,nodecount=597, satcount=3136
+#r=9,nodecount=1184, satcount=27216
+ACT=372 runtime: =    43.99 sec
+#r=5,nodecount=1188, satcount=2500
+#r=6,nodecount=1246, satcount=6570
+#r=7,nodecount=880, satcount=6174
+#r=8,nodecount=1153, satcount=13328
+ACT=374 runtime: =    46.76 sec
+#r=5,nodecount=1113, satcount=2250
+#r=6,nodecount=1469, satcount=7200
+#r=7,nodecount=1397, satcount=13034
+#r=9,nodecount=868, satcount=15876
+ACT=376 runtime: =    52.07 sec
+#r=5,nodecount=723, satcount=1750
+#r=6,nodecount=1803, satcount=14481
+#r=7,nodecount=1581, satcount=36015
+#r=9,nodecount=700, satcount=2916
+ACT=378 runtime: =    54.13 sec
+#r=5,nodecount=1268, satcount=3250
+#r=6,nodecount=1675, satcount=16600
+#r=7,nodecount=917, satcount=8575
+#r=8,nodecount=601, satcount=1792
+ACT=380 runtime: =    58.16 sec
+#r=5,nodecount=1430, satcount=4875
+#r=6,nodecount=509, satcount=765
+#r=7,nodecount=1979, satcount=26754
+#r=8,nodecount=1393, satcount=28672
+ACT=382 runtime: =    65.22 sec
+#r=5,nodecount=687, satcount=1000
+#r=6,nodecount=1554, satcount=12960
+#r=7,nodecount=1679, satcount=24010
+#r=8,nodecount=983, satcount=12544
+ACT=384 runtime: =    70.12 sec
+#r=5,nodecount=1229, satcount=3000
+#r=6,nodecount=1497, satcount=8640
+#r=7,nodecount=1356, satcount=24010
+#r=8,nodecount=1691, satcount=36288
+#r=9,nodecount=703, satcount=2916
+ACT=386 runtime: =    72.72 sec
+#r=5,nodecount=1515, satcount=5875
+#r=6,nodecount=1805, satcount=14220
+#r=7,nodecount=1590, satcount=14749
+#r=8,nodecount=899, satcount=3584
+#r=9,nodecount=697, satcount=2916
+ACT=388 runtime: =    77.52 sec
+#r=5,nodecount=1555, satcount=6225
+#r=6,nodecount=1520, satcount=9900
+#r=7,nodecount=942, satcount=2058
+#r=8,nodecount=1637, satcount=67424
+#r=9,nodecount=1181, satcount=27216
+ACT=390 runtime: =    87.58 sec
+#r=5,nodecount=1176, satcount=2351
+#r=6,nodecount=1349, satcount=7956
+#r=7,nodecount=2064, satcount=41601
+#r=8,nodecount=977, satcount=12544
+ACT=392 runtime: =    91.29 sec
+#r=5,nodecount=1246, satcount=4250
+#r=6,nodecount=2229, satcount=21915
+#r=7,nodecount=1153, satcount=12006
+#r=8,nodecount=1246, satcount=31360
+#r=9,nodecount=1265, satcount=30132
+#r=10,nodecount=799, satcount=4500
+ACT=394 runtime: =    97.27 sec
+#r=5,nodecount=1610, satcount=5875
+#r=6,nodecount=2002, satcount=20520
+#r=7,nodecount=1434, satcount=20580
+#r=8,nodecount=1386, satcount=28672
+#r=9,nodecount=691, satcount=2916
+ACT=396 runtime: =   105.01 sec
+#r=5,nodecount=1402, satcount=3750
+#r=6,nodecount=1603, satcount=12420
+#r=7,nodecount=1406, satcount=11319
+#r=8,nodecount=944, satcount=2576
+#r=9,nodecount=1566, satcount=95256
+#r=10,nodecount=600, satcount=2125
+ACT=398 runtime: =   114.93 sec
+#r=5,nodecount=945, satcount=2000
+#r=6,nodecount=1802, satcount=15300
+#r=7,nodecount=2078, satcount=49049
+#r=8,nodecount=1680, satcount=43904
+#r=9,nodecount=700, satcount=2916
+#r=10,nodecount=289, satcount=100
+ACT=400 runtime: =   126.56 sec
+#r=5,nodecount=1263, satcount=3975
+#r=6,nodecount=2240, satcount=31896
+#r=7,nodecount=2211, satcount=48020
+#r=8,nodecount=424, satcount=784
+#r=9,nodecount=868, satcount=15876
+#r=10,nodecount=1376, satcount=54000
+ACT=402 runtime: =   133.14 sec
+#r=5,nodecount=1631, satcount=6875
+#r=6,nodecount=2133, satcount=16420
+#r=7,nodecount=1986, satcount=42826
+#r=8,nodecount=1072, satcount=14336
+#r=9,nodecount=1369, satcount=28512
+ACT=404 runtime: =   139.45 sec
+#r=5,nodecount=1531, satcount=4500
+#r=6,nodecount=2059, satcount=16560
+#r=7,nodecount=2108, satcount=23324
+#r=8,nodecount=1701, satcount=30464
+#r=10,nodecount=1068, satcount=44100
+ACT=406 runtime: =   157.48 sec
+#r=5,nodecount=1494, satcount=3750
+#r=6,nodecount=1182, satcount=6156
+#r=7,nodecount=2653, satcount=64925
+#r=8,nodecount=2061, satcount=125440
+#r=10,nodecount=796, satcount=4500
+ACT=408 runtime: =   167.41 sec
+#r=5,nodecount=1081, satcount=2375
+#r=6,nodecount=2268, satcount=23211
+#r=7,nodecount=2395, satcount=73255
+#r=8,nodecount=1237, satcount=31360
+#r=9,nodecount=697, satcount=2916
+ACT=410 runtime: =   174.70 sec
+#r=5,nodecount=1830, satcount=8125
+#r=6,nodecount=2387, satcount=29340
+#r=7,nodecount=1076, satcount=10290
+#r=8,nodecount=2634, satcount=93184
+#r=9,nodecount=1649, satcount=61236
+ACT=412 runtime: =   188.67 sec
+#r=5,nodecount=1784, satcount=8000
+#r=6,nodecount=1661, satcount=12015
+#r=7,nodecount=2273, satcount=53165
+#r=8,nodecount=2063, satcount=57344
+#r=9,nodecount=1175, satcount=27216
+ACT=414 runtime: =   199.89 sec
+#r=5,nodecount=964, satcount=2025
+#r=6,nodecount=2190, satcount=18540
+#r=7,nodecount=2072, satcount=24059
+#r=8,nodecount=1930, satcount=119168
+#r=9,nodecount=2075, satcount=105228
+#r=10,nodecount=799, satcount=4500
+ACT=416 runtime: =   213.32 sec
+#r=5,nodecount=1444, satcount=4500
+#r=6,nodecount=2473, satcount=32625
+#r=7,nodecount=2731, satcount=77175
+#r=8,nodecount=2038, satcount=45696
+#r=9,nodecount=1043, satcount=5832
+#r=10,nodecount=793, satcount=4500
+ACT=418 runtime: =   224.54 sec
+#r=5,nodecount=1782, satcount=9000
+#r=6,nodecount=2816, satcount=45540
+#r=7,nodecount=2128, satcount=41160
+#r=8,nodecount=1468, satcount=14336
+#r=9,nodecount=1997, satcount=190512
+#r=10,nodecount=1373, satcount=54000
+ACT=420 runtime: =   261.20 sec
+#r=5,nodecount=1765, satcount=7075
+#r=6,nodecount=2327, satcount=18256
+#r=7,nodecount=2133, satcount=37044
+#r=8,nodecount=2632, satcount=138768
+#r=9,nodecount=1169, satcount=27216
+ACT=422 runtime: =   281.00 sec
+#r=5,nodecount=1476, satcount=3525
+#r=6,nodecount=2346, satcount=23400
+#r=7,nodecount=3037, satcount=80605
+#r=8,nodecount=1505, satcount=28736
+#r=9,nodecount=1724, satcount=142884
+#r=10,nodecount=1457, satcount=58500
+#r=11,nodecount=895, satcount=6655
+ACT=424 runtime: =   298.12 sec
+#r=5,nodecount=1407, satcount=4350
+#r=6,nodecount=2669, satcount=37260
+#r=7,nodecount=2980, satcount=112847
+#r=8,nodecount=2001, satcount=86240
+#r=9,nodecount=1642, satcount=61236
+#r=10,nodecount=787, satcount=4500
+ACT=426 runtime: =   320.97 sec
+#r=5,nodecount=1748, satcount=5350
+#r=6,nodecount=2708, satcount=39240
+#r=7,nodecount=2545, satcount=72030
+#r=8,nodecount=1726, satcount=26880
+#r=9,nodecount=1287, satcount=9972
+#r=10,nodecount=1886, satcount=252000
+#r=11,nodecount=672, satcount=3146
+ACT=428 runtime: =   342.73 sec
+#r=5,nodecount=1912, satcount=8125
+#r=6,nodecount=2054, satcount=16335
+#r=7,nodecount=2787, satcount=70315
+#r=8,nodecount=2606, satcount=155904
+#r=9,nodecount=2064, satcount=122472
+#r=10,nodecount=796, satcount=4500
+#r=11,nodecount=321, satcount=121
+ACT=430 runtime: =   366.98 sec
+#r=5,nodecount=1276, satcount=4125
+#r=6,nodecount=2455, satcount=28440
+#r=7,nodecount=3270, satcount=133084
+#r=8,nodecount=2819, satcount=154112
+#r=9,nodecount=496, satcount=1296
+#r=10,nodecount=1155, satcount=63504
+#r=11,nodecount=1568, satcount=99825
+ACT=432 runtime: =   400.62 sec
+#r=5,nodecount=1461, satcount=4025
+#r=6,nodecount=2661, satcount=39960
+#r=7,nodecount=3270, satcount=90944
+#r=8,nodecount=2790, satcount=218932
+#r=9,nodecount=1264, satcount=30132
+#r=10,nodecount=1585, satcount=56025
+ACT=434 runtime: =   418.17 sec
+#r=5,nodecount=1964, satcount=9375
+#r=6,nodecount=2867, satcount=34740
+#r=7,nodecount=3191, satcount=101185
+#r=8,nodecount=2810, satcount=74368
+#r=9,nodecount=2005, satcount=64152
+#r=11,nodecount=1268, satcount=108900
+ACT=436 runtime: =   464.57 sec
+#r=5,nodecount=1943, satcount=8625
+#r=6,nodecount=2957, satcount=37035
+#r=7,nodecount=1888, satcount=18620
+#r=8,nodecount=3616, satcount=255248
+#r=9,nodecount=2541, satcount=367416
+#r=11,nodecount=892, satcount=6655
+ACT=438 runtime: =   496.64 sec
+#r=5,nodecount=1689, satcount=4875
+#r=6,nodecount=2209, satcount=15840
+#r=7,nodecount=3466, satcount=127596
+#r=8,nodecount=3115, satcount=254016
+#r=9,nodecount=1557, satcount=95256
+#r=10,nodecount=793, satcount=4500
+ACT=440 runtime: =   527.77 sec
+#r=5,nodecount=1214, satcount=5175
+#r=6,nodecount=3282, satcount=54720
+#r=7,nodecount=3347, satcount=125195
+#r=8,nodecount=1796, satcount=86240
+#r=9,nodecount=3320, satcount=302292
+#r=10,nodecount=1905, satcount=120000
+ACT=442 runtime: =   561.21 sec
+#r=5,nodecount=1959, satcount=9600
+#r=6,nodecount=3237, satcount=61920
+#r=7,nodecount=2902, satcount=92267
+#r=8,nodecount=3040, satcount=185472
+#r=9,nodecount=2447, satcount=122472
+#r=10,nodecount=1367, satcount=54000
+ACT=444 runtime: =   589.80 sec
+#r=5,nodecount=1927, satcount=7325
+#r=6,nodecount=2503, satcount=34110
+#r=7,nodecount=3291, satcount=92610
+#r=8,nodecount=2775, satcount=59136
+#r=9,nodecount=2506, satcount=476280
+#r=10,nodecount=2459, satcount=270900
+#r=11,nodecount=895, satcount=6655
+ACT=446 runtime: =   681.82 sec
+#r=5,nodecount=1279, satcount=3500
+#r=6,nodecount=2744, satcount=31536
+#r=7,nodecount=3630, satcount=149254
+#r=8,nodecount=3719, satcount=338688
+#r=9,nodecount=2486, satcount=125388
+#r=10,nodecount=1187, satcount=9000
+#r=11,nodecount=889, satcount=6655
+ACT=448 runtime: =   717.25 sec
+#r=5,nodecount=1414, satcount=4250
+#r=6,nodecount=3190, satcount=67500
+#r=7,nodecount=4238, satcount=236327
+#r=8,nodecount=2760, satcount=137985
+#r=9,nodecount=2090, satcount=98172
+#r=10,nodecount=2357, satcount=479250
+#r=11,nodecount=1565, satcount=99825
+ACT=450 runtime: =   759.94 sec
+#r=5,nodecount=1868, satcount=9000
+#r=6,nodecount=3382, satcount=59080
+#r=7,nodecount=3702, satcount=123431
+#r=8,nodecount=3026, satcount=160384
+#r=9,nodecount=3200, satcount=395928
+#r=10,nodecount=1361, satcount=54000
+ACT=452 runtime: =   813.55 sec
+#r=5,nodecount=1996, satcount=9125
+#r=6,nodecount=3093, satcount=33300
+#r=7,nodecount=3731, satcount=116620
+#r=8,nodecount=3845, satcount=250208
+#r=9,nodecount=1921, satcount=62532
+#r=10,nodecount=2204, satcount=529200
+#r=11,nodecount=1649, satcount=106480
+#r=12,nodecount=991, satcount=9504
+ACT=454 runtime: =   897.55 sec
+#r=5,nodecount=1752, satcount=5350
+#r=6,nodecount=2773, satcount=30960
+#r=7,nodecount=4066, satcount=187621
+#r=8,nodecount=3972, satcount=505344
+#r=9,nodecount=2599, satcount=306180
+#r=10,nodecount=1898, satcount=120000
+#r=11,nodecount=883, satcount=6655
+ACT=456 runtime: =   993.77 sec
+#r=5,nodecount=1483, satcount=4250
+#r=6,nodecount=3286, satcount=46615
+#r=7,nodecount=4291, satcount=265874
+#r=8,nodecount=3549, satcount=326144
+#r=9,nodecount=2046, satcount=57348
+#r=10,nodecount=1678, satcount=48600
+#r=11,nodecount=2206, satcount=598950
+#r=12,nodecount=744, satcount=4500
+ACT=458 runtime: =  1090.20 sec
+#r=5,nodecount=1914, satcount=9375
+#r=6,nodecount=3635, satcount=78120
+#r=7,nodecount=3458, satcount=100695
+#r=8,nodecount=3951, satcount=323456
+#r=9,nodecount=3134, satcount=431568
+#r=10,nodecount=2448, satcount=306000
+#r=11,nodecount=892, satcount=6655
+#r=12,nodecount=353, satcount=144
+ACT=460 runtime: =  1169.44 sec
+#r=5,nodecount=2107, satcount=11000
+#r=6,nodecount=2847, satcount=39555
+#r=7,nodecount=3947, satcount=164640
+#r=8,nodecount=4405, satcount=453376
+#r=9,nodecount=3427, satcount=428652
+#r=10,nodecount=568, satcount=2025
+#r=11,nodecount=1443, satcount=213444
+#r=12,nodecount=1760, satcount=174240
+ACT=462 runtime: =  1324.70 sec
+#r=5,nodecount=1375, satcount=3525
+#r=6,nodecount=3242, satcount=39600
+#r=7,nodecount=3824, satcount=168119
+#r=8,nodecount=4577, satcount=440832
+#r=9,nodecount=3598, satcount=901692
+#r=10,nodecount=1456, satcount=58500
+#r=11,nodecount=1801, satcount=102850
+ACT=464 runtime: =  1409.02 sec
+#r=5,nodecount=1655, satcount=5125
+#r=6,nodecount=3537, satcount=68265
+#r=7,nodecount=4538, satcount=220941
+#r=8,nodecount=4417, satcount=492800
+#r=9,nodecount=3544, satcount=234252
+#r=10,nodecount=2309, satcount=124500
+#r=12,nodecount=1468, satcount=245025
+ACT=466 runtime: =  1532.64 sec
+#r=5,nodecount=1951, satcount=10000
+#r=6,nodecount=3841, satcount=91260
+#r=7,nodecount=4653, satcount=243873
+#r=8,nodecount=2787, satcount=66304
+#r=9,nodecount=4647, satcount=906228
+#r=10,nodecount=3021, satcount=945000
+#r=12,nodecount=988, satcount=9504
+ACT=468 runtime: =  1702.61 sec
+#r=5,nodecount=1990, satcount=8625
+#r=6,nodecount=3627, satcount=59216
+#r=7,nodecount=3749, satcount=103929
+#r=8,nodecount=4754, satcount=569184
+#r=9,nodecount=3835, satcount=741888
+#r=10,nodecount=1877, satcount=252000
+#r=11,nodecount=889, satcount=6655
+ACT=470 runtime: =  1791.54 sec
+#r=5,nodecount=1925, satcount=5775
+#r=6,nodecount=2879, satcount=41400
+#r=7,nodecount=5011, satcount=286062
+#r=8,nodecount=4403, satcount=424768
+#r=9,nodecount=2601, satcount=523908
+#r=10,nodecount=4008, satcount=905700
+#r=11,nodecount=2161, satcount=219615
+ACT=472 runtime: =  1921.43 sec
+#r=5,nodecount=1474, satcount=5475
+Realization of given 4-input function using 6 two-input gates complementary=1:
+09 = 4'b1001( 07 08 )
+08 = 4'b1110( 04 06 )
+07 = 4'b0010( d 06 )
+06 = 4'b0110( a 05 )
+05 = 4'b1000( b c )
+04 = 4'b1110( b c )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0011111100111111
+i=5:0000001100000011
+i=6:0101011001010110
+i=7:0101011000000000
+i=8:0111111101111111
+i=9:1101011010000000
+
+Switching Activity=472
+Number of Gates: r=6
+Total runtime =  1921.62 sec
+###################################################2.free stepsize algorithm optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=75 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.01 sec
+ACT=225 runtime: =     0.16 sec
+ACT=300 runtime: =     0.16 sec
+ACT=300 runtime: =     0.19 sec
+ACT=300 runtime: =     0.20 sec
+#r=5,nodecount=366, satcount=190
+#r=6,nodecount=240, satcount=90
+ACT=375 runtime: =     0.43 sec
+ACT=375 runtime: =     0.44 sec
+ACT=375 runtime: =     0.45 sec
+ACT=375 runtime: =     0.50 sec
+#r=5,nodecount=901, satcount=1670
+#r=6,nodecount=881, satcount=1755
+#r=7,nodecount=644, satcount=854
+#r=8,nodecount=486, satcount=308
+#r=9,nodecount=299, satcount=72
+ACT=450 runtime: =    11.54 sec
+ACT=450 runtime: =    11.54 sec
+ACT=450 runtime: =    11.54 sec
+#r=5,nodecount=1420, satcount=5910
+#r=6,nodecount=1890, satcount=13787
+#r=7,nodecount=2030, satcount=17374
+#r=8,nodecount=1667, satcount=11872
+#r=9,nodecount=1278, satcount=5922
+#r=10,nodecount=971, satcount=2505
+#r=11,nodecount=535, satcount=605
+ACT=525 runtime: =   268.13 sec
+ACT=525 runtime: =   268.14 sec
+ACT=525 runtime: =   268.15 sec
+ACT=525 runtime: =   268.16 sec
+#r=5,nodecount=1575, satcount=8846
+ACT=472 runtime: =   268.53 sec
+ACT=472 runtime: =   749.49 sec
+Realization of given 4-input function using 6 two-input gates complementary=1:
+09 = 4'b1001( 07 08 )
+08 = 4'b0010( d 06 )
+07 = 4'b1110( 05 06 )
+06 = 4'b0110( a 04 )
+05 = 4'b1110( b c )
+04 = 4'b1000( b c )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0000001100000011
+i=5:0011111100111111
+i=6:0101011001010110
+i=7:0111111101111111
+i=8:0101011000000000
+i=9:1101011010000000
+
+Switching Activity=472
+Number of Gates: r=6
+Total runtime =   749.49 sec
+###################################################2.free stepsize algorithm non optimized bdd
+ACT=0 runtime: =     0.00 sec
+ACT=75 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=150 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.00 sec
+ACT=225 runtime: =     0.01 sec
+ACT=225 runtime: =     0.16 sec
+ACT=300 runtime: =     0.16 sec
+ACT=300 runtime: =     0.19 sec
+ACT=300 runtime: =     0.20 sec
+#r=5,nodecount=903, satcount=9026
+#r=6,nodecount=750, satcount=7591
+ACT=375 runtime: =     0.45 sec
+ACT=375 runtime: =     0.47 sec
+ACT=375 runtime: =     0.48 sec
+ACT=375 runtime: =     0.52 sec
+#r=5,nodecount=1762, satcount=63375
+#r=6,nodecount=2210, satcount=136868
+#r=7,nodecount=2075, satcount=147392
+#r=8,nodecount=1468, satcount=108932
+#r=9,nodecount=1232, satcount=59058
+ACT=450 runtime: =    11.95 sec
+ACT=450 runtime: =    11.95 sec
+ACT=450 runtime: =    11.96 sec
+#r=5,nodecount=2760, satcount=195626
+#r=6,nodecount=4196, satcount=987352
+#r=7,nodecount=5120, satcount=2392279
+#r=8,nodecount=4285, satcount=3162581
+#r=9,nodecount=3965, satcount=3047076
+#r=10,nodecount=3122, satcount=1617604
+#r=11,nodecount=1853, satcount=375826
+ACT=525 runtime: =   207.43 sec
+ACT=525 runtime: =   207.43 sec
+ACT=525 runtime: =   207.45 sec
+ACT=525 runtime: =   207.46 sec
+#r=5,nodecount=2981, satcount=253451
+ACT=472 runtime: =   207.57 sec
+ACT=472 runtime: =   690.67 sec
+Realization of given 4-input function using 6 two-input gates complementary=1:
+09 = 4'b1001( 06 08 )
+08 = 4'b0010( d 07 )
+07 = 4'b0110( a 05 )
+06 = 4'b1110( b 04 )
+05 = 4'b1000( b c )
+04 = 4'b1110( a c )
+Printing overall Truth Table...
+i=0:0101010101010101
+i=1:0011001100110011
+i=2:0000111100001111
+i=3:0000000011111111
+i=4:0101111101011111
+i=5:0000001100000011
+i=6:0111111101111111
+i=7:0101011001010110
+i=8:0101011000000000
+i=9:1101011010000000
+
+Switching Activity=472
+Number of Gates: r=6
+Total runtime =   690.67 sec

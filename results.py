@@ -6,8 +6,8 @@ import subprocess, datetime, signal
 import matplotlib.pyplot as plt
 import numpy 
 
-output_files='comp_alg_3_'
-list=['0016','0116','0168','018A','019E','01BE','033F','036C','037D','03D4','03DD','066F','0697','0776','077A']
+output_files='comp_bdd_4_'
+list=['0016','016B','0168','018A','019E','01BE','033F','036C','037D','03D4','03DD','066F','0697','0776','077A']
 
 p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 14 "
 command_base="./abc -c 'twoexact -N 3 -I 4 "
