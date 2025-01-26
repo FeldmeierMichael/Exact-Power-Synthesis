@@ -6,7 +6,7 @@ import subprocess, datetime, signal
 import matplotlib.pyplot as plt
 import numpy 
 
-output_files='comp_bdd_4_'
+output_files='comp_sw_est_6_'
 list=['0016','016B','0168','018A','019E','01BE','033F','036C','037D','03D4','03DD','066F','0697','0776','077A']
 
 p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 14 "
