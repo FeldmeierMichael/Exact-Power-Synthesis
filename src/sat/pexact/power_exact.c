@@ -4702,7 +4702,7 @@ int value_of_nthbit(int value, int n){
     return ret;
 }
 ////////////////////////////////////////////////////////////////////base
-void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars)
+void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars,int verbose)
 {
     int i, status, iMint = 1;
     abctime clkTotal = Abc_Clock();
@@ -4724,14 +4724,17 @@ void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars)
     int act = 0;
     while (1)
     {
-        //printf("ACT=%d\n",act);
+         if(verbose==1){
+            printf("ACT=%d\ ",act);
+            Abc_PrintTime(1, "runtime:", Abc_Clock() - clkTotal);
+        }       
         if (act >= calc_max_act(r + 1, p->nVars))
         {
            
             r++;
             pPars->nNodes = r + 1;
             calculate_comb_array(p->nVars, r, list);
-            printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
+            if(verbose==2) printf("######ACT:%d -> R= %d ADDED\n", act, r + 1);
             //print_combi_list(list);
         }
         if (list->length > 0)
@@ -4739,39 +4742,39 @@ void Exa_ManExactPowerSynthesis_base(Bmc_EsPar_t *pPars)
             if (list->start->act == act)
             {
                 comb *node = pop_comb(list);
-                printf("###ACT:%d,r:%d CONSUMED COMBINATION:", (node->act), node->r + 1);
+                if(verbose==2) printf("###ACT:%d,r:%d CONSUMED COMBINATION:", (node->act), node->r + 1);
                 for (int im = 0; im < list->len; im++)
                 {
-                    printf("%d,", *(node->combi + im));
+                    if(verbose==2) printf("%d,", *(node->combi + im));
                 }
-                printf("\n");
+                if(verbose==2) printf("\n");
                 ////////////////////////////////////////////////////programm sat solver
                 Exa_ManFree(p);
                 pPars->nNodes = node->r + 1;
                 p = Exa_ManAlloc(pPars, pTruth);
                 status = Exa_ManAddCnfStart(p, pPars->fOnlyAnd);
-                printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                if(verbose==2) printf("#Added Base Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 assert(status);                
                 for (iMint = 1; iMint < pow(2, p->nVars); iMint++)
                 {
                     abctime clk = Abc_Clock();
                     if (!Exa_ManAddCnf(p, iMint))
                     {
-                        printf("The problem has no solution.\n");
+                        if(verbose==2) printf("The problem has no solution.\n");
                         break;
                     }
                 }
-                printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));            
+                if(verbose==2) printf("#Added Minterm Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));            
                 
                 Exa_ManAddPClauses(p);
-                printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                if(verbose==2) printf("#Added P Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 for (int i0 = 0; i0 < list->len; i0++)
                 {
                     Exa_ManAddCardinality_P(p, node->combi, i0,0);
                 }
-                printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
+                if(verbose==2) printf("#Added P Card. Constraints -> %d Clauses\n",sat_solver_nclauses(p->pSat));
                 status = sat_solver_solve(p->pSat, NULL, NULL, 0, 0, 0, 0);
-                printf("###Solution: %d \n", status);
+                if(verbose==2) printf("###Solution: %d \n", status);
                 if (status == 1)
                 {
                     free(node->satfy);
@@ -7724,16 +7727,18 @@ void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars)
 
 
 void Exa_ManExactPowerSynthesis_exp(Bmc_EsPar_t *pPars){
-    printf("###################################################1.free list algorithm sw_opt \n");
-    Exa_ManExactPowerSynthesis_sw_free(pPars,1,1,1);
-    printf("###################################################2.free search algorithm no sw_opt \n");
-    Exa_ManExactPowerSynthesis_sw_free(pPars,1,1,0);
-    printf("###################################################3.free stepsize algorithm sw_opt \n");
-    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,2,1);
-    printf("###################################################4.free stepsize algorithm non sw_opt \n");
-    Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,2,0);
-    printf("###################################################5.list algorithm  sw_opt\n");
+  //  printf("###################################################1.free list algorithm sw_opt \n");
+  //  Exa_ManExactPowerSynthesis_sw_free(pPars,1,1,1);
+  //  printf("###################################################2.free search algorithm no sw_opt \n");
+  //  Exa_ManExactPowerSynthesis_sw_free(pPars,1,1,0);
+  //  printf("###################################################3.free stepsize algorithm sw_opt \n");
+  //  Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,2,1);
+  //  printf("###################################################4.free stepsize algorithm non sw_opt \n");
+  //  Exa_ManExactPowerSynthesis_sw_free_smaller_than(pPars,1,1,75,2,0);
+    printf("###################################################5.list algorithm bdd\n");
     Exa_ManExactPowerSynthesis_base_bdd(pPars,1,1);
-    printf("###################################################6.list algorithm non sw_opt \n");
-    Exa_ManExactPowerSynthesis_base_bdd(pPars,1,0);
+    printf("###################################################5.list algorithm non bdd\n");
+    Exa_ManExactPowerSynthesis_base(pPars,1);
+    //printf("###################################################6.list algorithm non sw_opt \n");
+    //Exa_ManExactPowerSynthesis_base_bdd(pPars,1,0);
 }

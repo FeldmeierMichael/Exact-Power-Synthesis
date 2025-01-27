@@ -6,8 +6,10 @@ import subprocess, datetime, signal
 import matplotlib.pyplot as plt
 import numpy 
 
-output_files='comp_sw_est_6_'
-list=['0016','016B','0168','018A','019E','01BE','033F','036C','037D','03D4','03DD','066F','0697','0776','077A']
+output_files='comp_Popt_2_'
+#list=['0016','016B','0168','018A','019E','01BE','033F','036C','037D','03D4','03DD','066F','0697','0776','077A']
+list=['0016','0017','001B','003D','006B','007E','0119','011A','0198','01A8','01AF','01BF','01EB','0358','037C']
+
 
 p_command_base="./abc -c 'powertwoexact -N 3 -I 4 -F 14 "
 command_base="./abc -c 'twoexact -N 3 -I 4 "
